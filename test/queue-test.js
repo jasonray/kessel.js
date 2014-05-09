@@ -39,3 +39,15 @@ exports.pushPop = function(test) {
 	test.equals(null, queue.pop());
 	test.done();
 };
+
+exports.pushPop = function(test) {
+	var queue = new queueModule.queue();
+	queue.push('apple');
+	queue.push('banana');
+	queue.push('coconut');
+	test.equals('apple', queue.pop());
+	test.equals('banana', queue.pop());
+	test.equals('coconut', queue.pop());
+	test.equals(null, queue.pop());
+	test.done();
+};

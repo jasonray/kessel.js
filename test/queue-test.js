@@ -15,5 +15,12 @@ exports.isNotEmpty = function(test) {
 
 exports.peekEmptyQueue = function(test) {
 	var queue = new queueModule.queue();
-	test.equals(false, queue.peek());
+	test.equals(null, queue.peek());
+	test.done();
+};
+exports.peekNonEmptyQueue = function(test) {
+	var queue = new queueModule.queue();
+	queue.push('apple');
+	test.equals('apple', queue.peek());
+	test.done();
 };

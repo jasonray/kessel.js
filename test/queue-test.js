@@ -18,9 +18,24 @@ exports.peekEmptyQueue = function(test) {
 	test.equals(null, queue.peek());
 	test.done();
 };
+
 exports.peekNonEmptyQueue = function(test) {
 	var queue = new queueModule.queue();
 	queue.push('apple');
 	test.equals('apple', queue.peek());
+	test.done();
+};
+
+exports.popEmpty = function(test) {
+	var queue = new queueModule.queue();
+	test.equals(null, queue.pop());
+	test.done();
+};
+
+exports.pushPop = function(test) {
+	var queue = new queueModule.queue();
+	queue.push('apple');
+	test.equals('apple', queue.pop());
+	test.equals(null, queue.pop());
 	test.done();
 };

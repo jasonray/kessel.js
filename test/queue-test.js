@@ -5,3 +5,10 @@ exports.isEmpty = function(test) {
 	test.equals(true, queue.isEmpty());
 	test.done();
 };
+
+exports.isNotEmpty = function(test) {
+	var queue = new queueModule.queue();
+	queue.push('apple');
+	test.equals(false, queue.isEmpty());
+	test.done();
+};

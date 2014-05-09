@@ -12,3 +12,8 @@ exports.isNotEmpty = function(test) {
 	test.equals(false, queue.isEmpty());
 	test.done();
 };
+
+exports.peekEmptyQueue = function(test) {
+	var queue = new queueModule.queue();
+	test.equals(false, queue.peek());
+};

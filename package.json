@@ -1,0 +1,18 @@
+{
+  "name": "kessel",
+  "version": "0.0.1",
+  "description": "lightweight framework for handling distributed delay job processing",
+  "main": "app.js",
+  "scripts": {
+    "test": "node_modules/nodeunit/bin/nodeunit test/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jasonray/kessel.git"
+  },
+  "author": "jason ray <jason@jayray.net> (https://github.com/jasonray)",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/jasonray/kessel/issues"
+  }
+}

@@ -22,6 +22,7 @@
     "express": "~4.1.2",
     "bunyan": "~0.22.3",
     "statman": "0.0.3",
-    "underscore": "~1.6.0"
+    "underscore": "~1.6.0",
+    "body-parser": "~1.0.2"
   }
 }

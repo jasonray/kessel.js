@@ -12,10 +12,34 @@ var logger = require('bunyan').createLogger({
 	name: "server"
 });
 
+var bodyParser = require('body-parser');
+// app.use(bodyParser());
+
+// parse plain text
+app.use(function(req, res, next) {
+	if (req.is('text/*')) {
+		logger.info('parsing text into body');
+		req.text = '';
+		req.setEncoding('utf8');
+		req.on('data', function(chunk) {
+			req.text += chunk;
+		});
+		req.on('end', next);
+	} else {
+		next();
+	}
+});
+
 app.bindGet = function(root, subpath, binding) {
-	var path = root + subpath;
+	var path = root + '/' + subpath;
 	logger.info('binding GET ' + path + ' to ' + binding);
 	app.get(path, binding);
+};
+
+app.bindPost = function(root, subpath, binding) {
+	var path = root + '/' + subpath;
+	logger.info('binding POST ' + path + ' to ' + binding);
+	app.post(path, binding);
 };
 
 // log the request to stdout

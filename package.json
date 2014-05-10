@@ -16,6 +16,12 @@
     "url": "https://github.com/jasonray/kessel/issues"
   },
   "dependencies": {
-    "nodeunit": "~0.8.7"
+    "nodeunit": "~0.8.7",
+    "minimist": "0.0.9",
+    "morgan": "~1.0.1",
+    "express": "~4.1.2",
+    "bunyan": "~0.22.3",
+    "statman": "0.0.3",
+    "underscore": "~1.6.0"
   }
 }

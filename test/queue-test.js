@@ -32,7 +32,7 @@ exports.popEmpty = function(test) {
 	test.done();
 };
 
-exports.pushPop = function(test) {
+exports.overPop = function(test) {
 	var queue = new queueModule.queue();
 	queue.push('apple');
 	test.equals('apple', queue.pop());
@@ -41,6 +41,14 @@ exports.pushPop = function(test) {
 };
 
 exports.pushPop = function(test) {
+	var queue = new queueModule.queue();
+	queue.push('apple');
+	test.equals('apple', queue.pop());
+	test.equals(null, queue.pop());
+	test.done();
+};
+
+exports.pushPop3 = function(test) {
 	var queue = new queueModule.queue();
 	queue.push('apple');
 	queue.push('banana');

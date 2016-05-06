@@ -1,33 +1,33 @@
-var queueModule = require('../lib/queue');
+var Queue = require('../lib/queue');
 
 exports.isEmpty = function(test) {
-	var queue = new queueModule.queue();
+	var queue = new Queue();
 	test.equals(true, queue.isEmpty());
 	test.done();
 };
 
 exports.isNotEmpty = function(test) {
-	var queue = new queueModule.queue();
+	var queue = new Queue();
 	queue.push('apple');
 	test.equals(false, queue.isEmpty());
 	test.done();
 };
 
 exports.peekEmptyQueue = function(test) {
-	var queue = new queueModule.queue();
+	var queue = new Queue();
 	test.equals(null, queue.peek());
 	test.done();
 };
 
 exports.peekNonEmptyQueue = function(test) {
-	var queue = new queueModule.queue();
+	var queue = new Queue();
 	queue.push('apple');
 	test.equals('apple', queue.peek());
 	test.done();
 };
 
 exports.peekNonEmptyQueueWithTwoItems = function(test) {
-	var queue = new queueModule.queue();
+	var queue = new Queue();
 	queue.push('apple');
 	queue.push('banana');
 	test.equals('apple', queue.peek());
@@ -35,13 +35,13 @@ exports.peekNonEmptyQueueWithTwoItems = function(test) {
 };
 
 exports.popEmpty = function(test) {
-	var queue = new queueModule.queue();
+	var queue = new Queue();
 	test.equals(null, queue.pop());
 	test.done();
 };
 
 exports.overPop = function(test) {
-	var queue = new queueModule.queue();
+	var queue = new Queue();
 	queue.push('apple');
 	test.equals('apple', queue.pop());
 	test.equals(null, queue.pop());
@@ -49,7 +49,7 @@ exports.overPop = function(test) {
 };
 
 exports.pushPop = function(test) {
-	var queue = new queueModule.queue();
+	var queue = new Queue();
 	queue.push('apple');
 	test.equals('apple', queue.pop());
 	test.equals(null, queue.pop());
@@ -57,7 +57,7 @@ exports.pushPop = function(test) {
 };
 
 exports.pushPop3 = function(test) {
-	var queue = new queueModule.queue();
+	var queue = new Queue();
 	queue.push('apple');
 	queue.push('banana');
 	queue.push('coconut');
@@ -69,7 +69,7 @@ exports.pushPop3 = function(test) {
 };
 
 exports.mixPop = function(test) {
-	var queue = new queueModule.queue();
+	var queue = new Queue();
 	queue.push('apple');
 	queue.push('banana');
 	test.equals('apple', queue.pop());

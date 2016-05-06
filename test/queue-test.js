@@ -67,3 +67,19 @@ exports.pushPop3 = function(test) {
 	test.equals(null, queue.pop());
 	test.done();
 };
+
+exports.mixPop = function(test) {
+	var queue = new queueModule.queue();
+	queue.push('apple');
+	queue.push('banana');
+	test.equals('apple', queue.pop());
+	test.equals('banana', queue.pop());
+	queue.push('coconut');
+	test.equals('coconut', queue.pop());
+	test.equals(null, queue.pop());
+	queue.push('donut');
+	test.equals('donut', queue.pop());
+	test.equals(null, queue.pop());
+	test.done();
+};
+

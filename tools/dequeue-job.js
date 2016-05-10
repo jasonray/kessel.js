@@ -18,15 +18,12 @@ var Dequeuer = function() {
 
 
     function processNextJob() {
-        console.log('processing next job')
         self.client.reserve_with_timeout(1000, function(err, jobID, payload) {
             if (err) {
                 console.log('err: %s', err);
             } else {
                 console.log('reserved job %s [%s]', jobID, payload);
                 self.client.destroy(jobID, function() {
-                    console.log('deleted %s', jobID);
-                    console.log('emitting next');
                     self.emit('next');
                 });
             }

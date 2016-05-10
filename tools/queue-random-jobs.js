@@ -17,7 +17,7 @@ client.on('connect', function() {
 });
 
 function periodicallyQueueJobs() {
-    setInterval(queueJob, 1000);
+    setInterval(queueJob, 1);
 }
 
 function queueJob() {

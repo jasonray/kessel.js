@@ -13,9 +13,17 @@ var job = {
 
 var client = new fivebeans.client(connection.host, connection.port);
 client.on('connect', function() {
+    periodicallyQueueJobs();
+});
+
+function periodicallyQueueJobs() {
+    setInterval(queueJob, 1000);
+}
+
+function queueJob() {
     client.put(0, 0, 60, JSON.stringify(['testtube', job]), function(err, jobid) {
         console.log('queued job ' + jobid);
     });
-});
+}
 
 client.connect();

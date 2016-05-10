@@ -48,7 +48,7 @@ var argv = require('yargs')
     .default('host', 'localhost').alias('h', 'host')
     .default('port', '11300').alias('p', 'port')
     .default('tube', 'default').alias('t', 'tube')
-    .default('frequency', 1000)
+    .default('frequency', 1000).alias('f', 'frequency')
     .argv;
 
 var connection = {

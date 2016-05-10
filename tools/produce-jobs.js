@@ -9,7 +9,7 @@ var FrequencyProducer = function(connection, frequency, content) {
     });
 
     self.client.on('error', function(err) {
-        console.log('error occurred in queue client');
+        console.log('error occurred in queue client [%s]', err);
     });
 
     self.client.on('close', function(err) {
@@ -37,15 +37,25 @@ FrequencyProducer.prototype.connect = function() {
     self.client.connect();
 }
 
-var samplejob = 'helloworld';
+
+
+
+
+// start script
+
+var argv = require('yargs')
+    .default('payload', 'helloworld')
+    .default('host', 'localhost').alias('h', 'host')
+    .default('port', '11300').alias('p', 'port')
+    .default('tube', 'default').alias('t', 'tube')
+    .default('frequency', 1000)
+    .argv;
 
 var connection = {
-    host: 'localhost',
-    port: 11300,
-    tube: 'example'
+    host: argv.host,
+    port: argv.port,
+    tube: argv.tube
 };
 
-const frequencyInMilliseconds = 1000;
-
-var producer = new FrequencyProducer(connection, frequencyInMilliseconds, samplejob);
+var producer = new FrequencyProducer(connection, argv.frequency, argv.payload);
 producer.connect();

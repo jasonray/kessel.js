@@ -12,8 +12,8 @@ var Dequeuer = function() {
     self.fivebeans = require('fivebeans');
     self.connection = {
         host: 'localhost',
-        port: 11300,
-        tube: 'testtube'
+        port: 11000,
+        tube: 'example'
     }
 
 

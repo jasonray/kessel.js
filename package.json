@@ -18,6 +18,7 @@
   "dependencies": {
     "bunyan": "~1.8.1",
     "fivebeans": "^1.4.0",
+    "mocha": "^3.2.0",
     "nodeunit": "~0.8.7",
     "yargs": "^4.7.0"
   }

@@ -17,13 +17,12 @@
     "url": "https://github.com/jasonray/kessel/issues"
   },
   "dependencies": {
-    "bunyan": "~1.8.1",
-    "fivebeans": "^1.4.0",
-    "js-schema": "^1.0.1",
+    "bunyan": "^1.8.5",
+    "fivebeans": "^1.5.0",
     "minimist": "^1.2.0",
     "statman": "^0.1.6",
     "underscore": "^1.8.3",
-    "yargs": "^4.7.0"
+    "yargs": "^4.8.1"
   },
   "devDependencies": {
     "nodeunit": "~0.8.7",

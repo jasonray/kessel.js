@@ -4,7 +4,8 @@
   "description": "lightweight framework for handling distributed delay job processing",
   "main": "app.js",
   "scripts": {
-    "test": "node_modules/nodeunit/bin/nodeunit test/"
+    "test": "node_modules/nodeunit/bin/nodeunit test/",
+    "test-mocha": "mocha mocha-test/"
   },
   "repository": {
     "type": "git",
@@ -19,8 +20,13 @@
     "bunyan": "~1.8.1",
     "fivebeans": "^1.4.0",
     "js-schema": "^1.0.1",
-    "mocha": "^3.2.0",
-    "nodeunit": "~0.8.7",
+    "minimist": "^1.2.0",
+    "statman": "^0.1.6",
+    "underscore": "^1.8.3",
     "yargs": "^4.7.0"
+  },
+  "devDependencies": {
+    "nodeunit": "~0.8.7",
+    "mocha": "^3.2.0"
   }
 }

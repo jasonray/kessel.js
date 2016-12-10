@@ -21,7 +21,7 @@ describe('basic queue', function () {
         it('isEmpty after push / pop returns true', function () {
             var queue = new Queue();
             queue.push('apple');
-            assert.equal(  queue.isEmpty(), false);
+            assert.equal(queue.isEmpty(), false);
         });
     });
 

@@ -6,24 +6,28 @@ var assert = require('assert');
 var Queue = require('../lib/queue');
 
 describe('basic queue', function () {
-    it('isEmpty on empty queue returns true', function () {
-        var queue = new Queue();
-        assert.equal(true, queue.isEmpty());
+    describe('isEmpty', function () {
+        it('isEmpty on empty queue returns true', function () {
+            var queue = new Queue();
+            assert.equal(true, queue.isEmpty());
+        });
+
+        it('isEmpty on a non-empty queue returns false', function () {
+            var queue = new Queue();
+            queue.push('apple');
+            assert.equal(false, queue.isEmpty());
+        });
+
+        it('isEmpty after push / pop returns true', function () {
+            var queue = new Queue();
+            queue.push('apple');
+            assert.equal(false, queue.isEmpty());
+        });
     });
 
-    it('isEmpty on a non-empty queue returns false', function () {
-        var queue = new Queue();
-        queue.push('apple');
-        assert.equal(false, queue.isEmpty());
-    });
 
-    it('isEmpty after push / pop returns true', function () {
-        var queue = new Queue();
-        queue.push('apple');
-        assert.equal(false, queue.isEmpty());
-    });
-
-    it('peekEmptyQueue', function () {
+    describe('peek', function () {
+    it('peek o', function () {
         var queue = new Queue();
         assert.equal(null, queue.peek());
     });
@@ -32,6 +36,7 @@ describe('basic queue', function () {
         var queue = new Queue();
         queue.push('apple');
         assert.equal('apple', queue.peek());
+    });
     });
 
     it('peekNonEmptyQueueWithTwoItems', function () {

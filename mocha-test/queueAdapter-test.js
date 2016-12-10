@@ -30,6 +30,20 @@ describe('queueAdapter', function () {
             assert.equal(queueAdapter.isEmpty(), false);
         });
     });
+    describe('enqueue / dequeue', function () {
+        it('enqueue then dequeue returns job request', function (done) {
+            var dequeueCallback = function (jobRequest, jobRequestProcessingCallback) {
+                assert.equal(jobRequest.ref, 'testjob');
+                done();
+            }
+
+            var queueAdapter = new QueueAdapter();
+            var request = createSampleJobRequest('testjob');
+            queueAdapter.enqueue(request)
+            queueAdapter.dequeue(dequeueCallback);
+
+        });
+    });
 });
 
 function createSampleJobRequest(ref) {

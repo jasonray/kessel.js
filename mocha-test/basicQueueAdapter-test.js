@@ -3,9 +3,9 @@
 
 var mocha = require('mocha');
 var assert = require('assert');
-var QueueAdapter = require('../lib/QueueAdapter');
+var QueueAdapter = require('../lib/basicQueueAdapter');
 
-describe('queueAdapter', function () {
+describe('basicQueueAdapter', function () {
     describe('size', function () {
         it('initial size is 0', function () {
             var queueAdapter = new QueueAdapter();

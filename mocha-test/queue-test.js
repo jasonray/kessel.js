@@ -79,8 +79,8 @@ describe('basic queue', function () {
             queue.push('apple');
             queue.push('banana');
             assert.equal(queue.pop(), 'apple');
-            assert.equal(queue.pop(), 'banana');
             queue.push('coconut');
+            assert.equal(queue.pop(), 'banana');
             assert.equal(queue.pop(), 'coconut');
             assert.equal(queue.pop(), null);
             queue.push('donut');

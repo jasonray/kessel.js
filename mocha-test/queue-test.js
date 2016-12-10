@@ -50,12 +50,11 @@ describe('basic queue', function () {
             assert.equal(queue.pop(), null);
         });
 
-
         it('overPop', function () {
             var queue = new Queue();
             queue.push('apple');
-            assert.equal('apple', queue.pop());
-            assert.equal(null, queue.pop());
+            assert.equal(queue.pop(), 'apple');
+            assert.equal(queue.pop(), null);
         });
 
         it('pushPop', function () {

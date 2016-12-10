@@ -3,10 +3,12 @@
 
 var mocha = require('mocha');
 var assert = require('assert');
+var QueueAdapter = require('../lib/QueueAdapter');
 
-describe('sample', function () {
-    it('will pass', function () {
-        assert.ok(true);
+describe('queueAdapter', function () {
+    it('initial size is 0', function () {
+        var queueAdapter = new QueueAdapter();
+        assert.equal(queueAdapter.size(), 0);
     });
     // it('will fail', function () {
     //     assert.ok(false);

@@ -87,18 +87,18 @@ describe('basic queue', function () {
             assert.equal(queue.pop(), 'donut');
             assert.equal(queue.pop(), null);
         });
+    });
 
-        describe('dual queue', function () {
-            it('show that two queues are independent', function () {
-                var queue1 = new Queue();
-                var queue2 = new Queue();
-                queue1.push('apple');
-                queue2.push('banana');
-                assert.equal('apple', queue1.pop());
-                assert.equal(null, queue1.pop());
-                assert.equal('banana', queue2.pop());
-                assert.equal(null, queue2.pop());
-            });
+    describe('dual queue', function () {
+        it('show that two queues are independent', function () {
+            var queue1 = new Queue();
+            var queue2 = new Queue();
+            queue1.push('apple');
+            queue2.push('banana');
+            assert.equal('apple', queue1.pop());
+            assert.equal(null, queue1.pop());
+            assert.equal('banana', queue2.pop());
+            assert.equal(null, queue2.pop());
         });
     });
 });

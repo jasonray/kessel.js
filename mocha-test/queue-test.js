@@ -44,50 +44,50 @@ describe('basic queue', function () {
         });
     });
 
+    describe('pop', function () {
+        it('popEmpty', function () {
+            var queue = new Queue();
+            assert.equal(null, queue.pop());
+        });
 
-    it('popEmpty', function () {
-        var queue = new Queue();
-        assert.equal(null, queue.pop());
+
+        it('overPop', function () {
+            var queue = new Queue();
+            queue.push('apple');
+            assert.equal('apple', queue.pop());
+            assert.equal(null, queue.pop());
+        });
+
+        it('pushPop', function () {
+            var queue = new Queue();
+            queue.push('apple');
+            assert.equal('apple', queue.pop());
+            assert.equal(null, queue.pop());
+        });
+
+        it('pushPop3', function () {
+            var queue = new Queue();
+            queue.push('apple');
+            queue.push('banana');
+            queue.push('coconut');
+            assert.equal('apple', queue.pop());
+            assert.equal('banana', queue.pop());
+            assert.equal('coconut', queue.pop());
+            assert.equal(null, queue.pop());
+        });
+
+        it('mixPop', function () {
+            var queue = new Queue();
+            queue.push('apple');
+            queue.push('banana');
+            assert.equal('apple', queue.pop());
+            assert.equal('banana', queue.pop());
+            queue.push('coconut');
+            assert.equal('coconut', queue.pop());
+            assert.equal(null, queue.pop());
+            queue.push('donut');
+            assert.equal('donut', queue.pop());
+            assert.equal(null, queue.pop());
+        });
     });
-
-
-    it('overPop', function () {
-        var queue = new Queue();
-        queue.push('apple');
-        assert.equal('apple', queue.pop());
-        assert.equal(null, queue.pop());
-    });
-
-    it('pushPop', function () {
-        var queue = new Queue();
-        queue.push('apple');
-        assert.equal('apple', queue.pop());
-        assert.equal(null, queue.pop());
-    });
-
-    it('pushPop3', function () {
-        var queue = new Queue();
-        queue.push('apple');
-        queue.push('banana');
-        queue.push('coconut');
-        assert.equal('apple', queue.pop());
-        assert.equal('banana', queue.pop());
-        assert.equal('coconut', queue.pop());
-        assert.equal(null, queue.pop());
-    });
-
-    it('mixPop', function () {
-        var queue = new Queue();
-        queue.push('apple');
-        queue.push('banana');
-        assert.equal('apple', queue.pop());
-        assert.equal('banana', queue.pop());
-        queue.push('coconut');
-        assert.equal('coconut', queue.pop());
-        assert.equal(null, queue.pop());
-        queue.push('donut');
-        assert.equal('donut', queue.pop());
-        assert.equal(null, queue.pop());
-    });
-
 });

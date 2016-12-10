@@ -34,13 +34,13 @@ describe('basic queue', function () {
         it('peek non-empty queue returns first items', function () {
             var queue = new Queue();
             queue.push('apple');
-            assert.equal('apple', queue.peek());
+            assert.equal(queue.peek(), 'apple');
         });
         it('peekNonEmptyQueueWithTwoItems', function () {
             var queue = new Queue();
             queue.push('apple');
             queue.push('banana');
-            assert.equal('apple', queue.peek());
+            assert.equal(queue.peek(), 'apple');
         });
     });
 

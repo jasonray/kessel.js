@@ -9,7 +9,7 @@ describe('basic queue', function () {
     describe('isEmpty', function () {
         it('isEmpty on empty queue returns true', function () {
             var queue = new Queue();
-            assert.equal(  queue.isEmpty() , true);
+            assert.equal(queue.isEmpty(), true);
         });
 
         it('isEmpty on a non-empty queue returns false', function () {

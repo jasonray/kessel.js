@@ -47,7 +47,7 @@ describe('basic queue', function () {
     describe('pop', function () {
         it('popEmpty', function () {
             var queue = new Queue();
-            assert.equal(null, queue.pop());
+            assert.equal(queue.pop(), null);
         });
 
 

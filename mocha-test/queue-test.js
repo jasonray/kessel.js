@@ -25,7 +25,6 @@ describe('basic queue', function () {
         });
     });
 
-
     describe('peek', function () {
         it('peek empty queue returns null', function () {
             var queue = new Queue();

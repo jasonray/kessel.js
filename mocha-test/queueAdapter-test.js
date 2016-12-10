@@ -30,7 +30,18 @@ describe('queueAdapter', function () {
             assert.equal(queueAdapter.isEmpty(), false);
         });
     });
+
+
     describe('enqueue / dequeue', function () {
+        it('dequeue on empty returns empty', function (done) {
+            var dequeueCallback = function (jobRequest, jobRequestProcessingCallback) {
+                assert.equal(jobRequest, null);
+                done();
+            }
+
+            var queueAdapter = new QueueAdapter();
+            queueAdapter.dequeue(dequeueCallback);
+        });
         it('enqueue then dequeue returns job request', function (done) {
             var dequeueCallback = function (jobRequest, jobRequestProcessingCallback) {
                 assert.equal(jobRequest.ref, 'testjob');
@@ -41,7 +52,6 @@ describe('queueAdapter', function () {
             var request = createSampleJobRequest('testjob');
             queueAdapter.enqueue(request)
             queueAdapter.dequeue(dequeueCallback);
-
         });
     });
 });

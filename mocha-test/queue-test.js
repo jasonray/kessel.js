@@ -6,12 +6,18 @@ var assert = require('assert');
 var Queue = require('../lib/queue');
 
 describe('basic queue', function () {
-    it('isEmpty on empty queue return true', function () {
+    it('isEmpty on empty queue returns true', function () {
         var queue = new Queue();
         assert.equal(true, queue.isEmpty());
     });
 
-    it('isNotEmpty', function () {
+    it('isEmpty on a non-empty queue returns false', function () {
+        var queue = new Queue();
+        queue.push('apple');
+        assert.equal(false, queue.isEmpty());
+    });
+
+    it('isEmpty after push / pop returns true', function () {
         var queue = new Queue();
         queue.push('apple');
         assert.equal(false, queue.isEmpty());

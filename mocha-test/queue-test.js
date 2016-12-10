@@ -28,7 +28,7 @@ describe('basic queue', function () {
     describe('peek', function () {
         it('peek empty queue returns null', function () {
             var queue = new Queue();
-            assert.equal(null, queue.peek());
+            assert.equal(queue.peek(), null);
         });
 
         it('peek non-empty queue returns first items', function () {

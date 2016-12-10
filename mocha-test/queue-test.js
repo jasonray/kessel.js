@@ -63,16 +63,15 @@ describe('basic queue', function () {
             assert.equal(queue.pop(), null);
         });
 
-
         it('pushPop3', function () {
             var queue = new Queue();
             queue.push('apple');
             queue.push('banana');
             queue.push('coconut');
-            assert.equal('apple', queue.pop());
-            assert.equal('banana', queue.pop());
-            assert.equal('coconut', queue.pop());
-            assert.equal(null, queue.pop());
+            assert.equal(queue.pop(), 'apple');
+            assert.equal(queue.pop(), 'banana');
+            assert.equal(queue.pop(), 'coconut');
+            assert.equal(queue.pop(), null);
         });
 
         it('mixPop', function () {

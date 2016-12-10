@@ -27,24 +27,24 @@ describe('basic queue', function () {
 
 
     describe('peek', function () {
-    it('peek o', function () {
-        var queue = new Queue();
-        assert.equal(null, queue.peek());
+        it('peek empty queue returns null', function () {
+            var queue = new Queue();
+            assert.equal(null, queue.peek());
+        });
+
+        it('peek non-empty queue returns first items', function () {
+            var queue = new Queue();
+            queue.push('apple');
+            assert.equal('apple', queue.peek());
+        });
+        it('peekNonEmptyQueueWithTwoItems', function () {
+            var queue = new Queue();
+            queue.push('apple');
+            queue.push('banana');
+            assert.equal('apple', queue.peek());
+        });
     });
 
-    it('peekNonEmptyQueue', function () {
-        var queue = new Queue();
-        queue.push('apple');
-        assert.equal('apple', queue.peek());
-    });
-    });
-
-    it('peekNonEmptyQueueWithTwoItems', function () {
-        var queue = new Queue();
-        queue.push('apple');
-        queue.push('banana');
-        assert.equal('apple', queue.peek());
-    });
 
     it('popEmpty', function () {
         var queue = new Queue();

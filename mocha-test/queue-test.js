@@ -6,93 +6,78 @@ var assert = require('assert');
 var Queue = require('../lib/queue');
 
 describe('basic queue', function () {
-    it('initial size is 0', function () {
-        var queueAdapter = new QueueAdapter();
-        assert.equal(queueAdapter.size(), 0);
+    it('isEmpty on empty queue return true', function () {
+        var queue = new Queue();
+        assert.equal(true, queue.isEmpty());
     });
+
+    it('isNotEmpty', function () {
+        var queue = new Queue();
+        queue.push('apple');
+        assert.equal(false, queue.isEmpty());
+    });
+
+    it('peekEmptyQueue', function () {
+        var queue = new Queue();
+        assert.equal(null, queue.peek());
+    });
+
+    it('peekNonEmptyQueue', function () {
+        var queue = new Queue();
+        queue.push('apple');
+        assert.equal('apple', queue.peek());
+    });
+
+    it('peekNonEmptyQueueWithTwoItems', function () {
+        var queue = new Queue();
+        queue.push('apple');
+        queue.push('banana');
+        assert.equal('apple', queue.peek());
+    });
+
+    it('popEmpty', function () {
+        var queue = new Queue();
+        assert.equal(null, queue.pop());
+    });
+
+
+    it('overPop', function () {
+        var queue = new Queue();
+        queue.push('apple');
+        assert.equal('apple', queue.pop());
+        assert.equal(null, queue.pop());
+    });
+
+    it('pushPop', function () {
+        var queue = new Queue();
+        queue.push('apple');
+        assert.equal('apple', queue.pop());
+        assert.equal(null, queue.pop());
+    });
+
+    it('pushPop3', function () {
+        var queue = new Queue();
+        queue.push('apple');
+        queue.push('banana');
+        queue.push('coconut');
+        assert.equal('apple', queue.pop());
+        assert.equal('banana', queue.pop());
+        assert.equal('coconut', queue.pop());
+        assert.equal(null, queue.pop());
+    });
+
+    it('mixPop', function () {
+        var queue = new Queue();
+        queue.push('apple');
+        queue.push('banana');
+        assert.equal('apple', queue.pop());
+        assert.equal('banana', queue.pop());
+        queue.push('coconut');
+        assert.equal('coconut', queue.pop());
+        assert.equal(null, queue.pop());
+        queue.push('donut');
+        assert.equal('donut', queue.pop());
+        assert.equal(null, queue.pop());
+    });
+
 });
-
-
-exports.isEmpty = function (test) {
-    var queue = new Queue();
-    test.equals(true, queue.isEmpty());
-    test.done();
-};
-
-exports.isNotEmpty = function (test) {
-    var queue = new Queue();
-    queue.push('apple');
-    test.equals(false, queue.isEmpty());
-    test.done();
-};
-
-exports.peekEmptyQueue = function (test) {
-    var queue = new Queue();
-    test.equals(null, queue.peek());
-    test.done();
-};
-
-exports.peekNonEmptyQueue = function (test) {
-    var queue = new Queue();
-    queue.push('apple');
-    test.equals('apple', queue.peek());
-    test.done();
-};
-
-exports.peekNonEmptyQueueWithTwoItems = function (test) {
-    var queue = new Queue();
-    queue.push('apple');
-    queue.push('banana');
-    test.equals('apple', queue.peek());
-    test.done();
-};
-
-exports.popEmpty = function (test) {
-    var queue = new Queue();
-    test.equals(null, queue.pop());
-    test.done();
-};
-
-exports.overPop = function (test) {
-    var queue = new Queue();
-    queue.push('apple');
-    test.equals('apple', queue.pop());
-    test.equals(null, queue.pop());
-    test.done();
-};
-
-exports.pushPop = function (test) {
-    var queue = new Queue();
-    queue.push('apple');
-    test.equals('apple', queue.pop());
-    test.equals(null, queue.pop());
-    test.done();
-};
-
-exports.pushPop3 = function (test) {
-    var queue = new Queue();
-    queue.push('apple');
-    queue.push('banana');
-    queue.push('coconut');
-    test.equals('apple', queue.pop());
-    test.equals('banana', queue.pop());
-    test.equals('coconut', queue.pop());
-    test.equals(null, queue.pop());
-    test.done();
-};
-
-exports.mixPop = function (test) {
-    var queue = new Queue();
-    queue.push('apple');
-    queue.push('banana');
-    test.equals('apple', queue.pop());
-    test.equals('banana', queue.pop());
-    queue.push('coconut');
-    test.equals('coconut', queue.pop());
-    test.equals(null, queue.pop());
-    queue.push('donut');
-    test.equals('donut', queue.pop());
-    test.equals(null, queue.pop());
-    test.done();
-};
-

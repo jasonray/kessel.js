@@ -11,7 +11,7 @@
     "url": "git://github.com/jasonray/kessel.git"
   },
   "author": "jason ray <jason@jayray.net> (https://github.com/jasonray)",
-  "license": "BSD",
+  "license": "UNLICENSED",
   "bugs": {
     "url": "https://github.com/jasonray/kessel/issues"
   },
@@ -24,7 +24,7 @@
     "yargs": "^4.8.1"
   },
   "devDependencies": {
-    "nodeunit": "~0.8.7",
     "mocha": "^3.2.0"
-  }
+  },
+  "homepage": "https://github.com/jasonray/kessel#readme"
 }

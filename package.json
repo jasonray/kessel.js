@@ -4,7 +4,7 @@
   "description": "lightweight framework for handling distributed delay job processing",
   "main": "app.js",
   "scripts": {
-    "test": "mocha mocha-test/"
+    "test": "mocha test/"
   },
   "repository": {
     "type": "git",

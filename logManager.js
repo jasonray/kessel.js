@@ -3,25 +3,32 @@ var _ = require('underscore');
 function LogManager() {
     var self = this;
 
+
     self._bunyan = require('bunyan');
+    self._rootLogName = 'root';
     self._loggers = {};
+}
+
+LogManager.prototype._createLogger = function (name) {
+    var self = this;
+    console.log('creating logger: ', name);
+    var logger = self._bunyan.createLogger({
+        name: name,
+        streams: [{
+            level: 'trace',
+            stream: process.stdout
+        }]
+    });
+    self._loggers[name] = logger;
 }
 
 LogManager.prototype.getLogger = function (name) {
     var self = this;
-    if (!self._doesLogExist(name)) createLogger(name);
+    if (!self._doesLogExist(name)) self._createLogger(name);
     return self._loggers[name];
 
-    function createLogger(logname) {
-        console.log('creating logger: ', logname);
-        var logger = self._bunyan.createLogger({
-            name: logname,
-            streams: [{
-                level: 'trace',
-                stream: process.stdout
-            }]
-        });
-        self._loggers[logname] = logger;
+    function createLogger(name) {
+
     }
 }
 

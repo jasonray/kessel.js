@@ -30,5 +30,11 @@ describe('logManager', function () {
             var manager = new LogManager();
             assert.ok(manager.getLogger('log1'));
         });
+        it('get logger twice should not create two loggers', function () {
+            //TODO: I do not know how to assert this, so for now this is a manual check, and lack of error is success
+            var manager = new LogManager();
+            assert.ok(manager.getLogger('please just once'));
+            assert.ok(manager.getLogger('please just once'));
+        });
     });
 });

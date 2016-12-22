@@ -7,22 +7,22 @@ function LogManager() {
     self._loggers = {};
 }
 
-LogManager.prototype._createLogger = function (name) {
-    var self = this;
-    var logger = self._bunyan.createLogger({
-        name: name,
-        streams: [{
-            level: 'trace',
-            stream: process.stdout
-        }]
-    });
-    return logger;
-}
-
 LogManager.prototype.getLogger = function (name) {
     var self = this;
-    self._loggers[name] = self._createLogger(name);
+    if (!self._doesLogExist(name)) createLogger(name);
     return self._loggers[name];
+
+    function createLogger(logname) {
+        console.log('creating logger: ', logname);
+        var logger = self._bunyan.createLogger({
+            name: logname,
+            streams: [{
+                level: 'trace',
+                stream: process.stdout
+            }]
+        });
+        self._loggers[logname] = logger;
+    }
 }
 
 LogManager.prototype._doesLogExist = function (name) {

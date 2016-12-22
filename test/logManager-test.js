@@ -3,7 +3,7 @@
 
 var mocha = require('mocha');
 var assert = require('assert');
-var LogManager = require('../logManager');
+var LogManager = require('../lib/logManager');
 
 describe('logManager', function () {
     it('init', function () {

@@ -5,7 +5,7 @@
 var pargv = require('minimist')(process.argv.splice(2));
 var _ = require('underscore');
 var JobManager = require('./lib/jobManager');
-var LogManager = require('./logManager');
+var LogManager = require('./lib/logManager');
 
 var context = {};
 context.logManager = new LogManager();

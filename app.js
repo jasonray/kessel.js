@@ -4,13 +4,16 @@
 // https://github.com/substack/minimist
 var pargv = require('minimist')(process.argv.splice(2));
 var _ = require('underscore');
-
-
-
-logger.info('starting kessel');
 var JobManager = require('./lib/jobManager');
-logger.debug('init job manager');
-var manager = new JobManager();
-logger.debug('starting job manager');
+var LogManager = require('./logManager');
+
+var context = {};
+context.logManager = new LogManager();
+logger = context.logManager.getLogger('app');
+
+logger.info('starting kessel app script');
+logger.trace('init job manager');
+var manager = new JobManager(context);
+logger.trace('starting job manager');
 manager.start();
-logger.debug('post start job manager');
+logger.trace('post start job manager');

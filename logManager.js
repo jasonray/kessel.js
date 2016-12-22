@@ -11,7 +11,6 @@ function LogManager() {
 
 LogManager.prototype._createLogger = function (name) {
     var self = this;
-    console.log('creating logger: ', name);
     var logger = self._bunyan.createLogger({
         name: name,
         streams: [{

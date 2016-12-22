@@ -25,4 +25,10 @@ describe('logManager', function () {
             assert.equal(manager._doesLogExist('log1'), true);
         });
     });
+    describe('getLogger', function () {
+        it('get will create log', function () {
+            var manager = new LogManager();
+            assert.ok(manager.getLogger('log1'));
+        });
+    });
 });

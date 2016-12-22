@@ -12,7 +12,17 @@ describe('logManager', function () {
     describe('_doesLogExist', function () {
         it('false if loggers empty', function () {
             var manager = new LogManager();
-            assert.equal(manager._doesLogExist('logname'), false);
+            assert.equal(manager._doesLogExist('log1'), false);
+        });
+        it('false if logger has not been created', function () {
+            var manager = new LogManager();
+            manager.getLogger('log1');
+            assert.equal(manager._doesLogExist('log2'), false);
+        });
+        it('true if logger has been created', function () {
+            var manager = new LogManager();
+            manager.getLogger('log1');
+            assert.equal(manager._doesLogExist('log1'), true);
         });
     });
 });

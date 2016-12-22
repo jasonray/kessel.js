@@ -4,6 +4,7 @@
   "description": "lightweight framework for handling distributed delay job processing",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "mocha test/"
   },
   "repository": {

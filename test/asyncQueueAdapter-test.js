@@ -35,16 +35,16 @@ describe('asyncQueueAdapter', function () {
         });
     });
     describe('enqueue / dequeue', function () {
-        // it('dequeue on empty returns empty', function (done) {
-        //     var dequeueCallback = function (reservedJobRequest, commitJobA, rollbackJobA) {
-        //         console.log('invoked dequeue callback');
-        //         assert.equal(reservedJobRequest, null);
-        //         done();
-        //     }
-        //
-        //     var queueAdapter = new QueueAdapter();
-        //     queueAdapter.dequeue(dequeueCallback);
-        // });
+        it('dequeue on empty returns empty', function (done) {
+            var dequeueCallback = function (reservedJobRequest, commitJobA, rollbackJobA) {
+                console.log('invoked dequeue callback');
+                assert.equal(reservedJobRequest, null);
+                done();
+            }
+
+            var queueAdapter = new QueueAdapter();
+            queueAdapter.dequeue(dequeueCallback);
+        });
         it('enqueue then dequeue returns job request', function (done) {
             var dequeueCallback = function (jobRequest, commitJobA, rollbackJobA) {
                 assert.equal(jobRequest.ref, 'testjob');

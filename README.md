@@ -49,7 +49,9 @@ enqueue(jobRequest, callback)
 dequeue(callback)
 - where callback is a function(jobRequest, commit, rollback)
 - jobRequest represents the job dequeued.  Will be null/empty if there was no item on the queue
-- where commit is a function()
-- where rollback is a function()
+- where commit is a function(commitComplete)
+-- where, of course, commitComplete is a function indicating that commit is complete
+- where rollback is a function(rollbackComplete)
+-- where, of course, rollbackComplete is a function indicating that rollback is complete
 - TODO: consider error queue and rollback with delay
 

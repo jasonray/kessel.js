@@ -3,7 +3,7 @@
 
 var mocha = require('mocha');
 var assert = require('assert');
-var Queue = require('../lib/queue');
+var Queue = require('../lib/queue/queue');
 
 describe('basic queue', function () {
     describe('isEmpty', function () {

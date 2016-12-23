@@ -42,8 +42,12 @@ result: success|failed|failed-transient
 
 Queue Adapter API
 -----------------
-enqueue(jobRequest)
+enqueue(jobRequest, callback)
+- jobRequest: see job request model
+- callback(err, jobRequest)
 
 dequeue(callback)
 where callback is a function that returns f(commit)
 where commit is a f(jobResult)
+
+

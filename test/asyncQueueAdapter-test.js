@@ -37,26 +37,29 @@ describe('asyncQueueAdapter', function () {
     //
     //
     describe('enqueue / dequeue', function () {
-    //     it('dequeue on empty returns empty', function (done) {
-    //         var dequeueCallback = function (jobRequest, jobRequestProcessingCallback) {
-    //             assert.equal(jobRequest, null);
-    //             done();
-    //         }
-    //
-    //         var queueAdapter = new QueueAdapter();
-    //         queueAdapter.dequeue(dequeueCallback);
-    //     });
-    //     it('enqueue then dequeue returns job request', function (done) {
-    //         var dequeueCallback = function (jobRequest, jobRequestProcessingCallback) {
-    //             assert.equal(jobRequest.ref, 'testjob');
-    //             done();
-    //         }
-    //
-    //         var queueAdapter = new QueueAdapter();
-    //         var request = createSampleJobRequest('testjob');
-    //         queueAdapter.enqueue(request)
-    //         queueAdapter.dequeue(dequeueCallback);
-    //     });
+        it('dequeue on empty returns empty', function (done) {
+            var dequeueCallback = function (jobRequest, jobRequestProcessingCallback) {
+                assert.equal(jobRequest, null);
+                done();
+            }
+
+            var queueAdapter = new QueueAdapter();
+            queueAdapter.dequeue(dequeueCallback);
+        });
+        it('enqueue then dequeue returns job request', function (done) {
+            var dequeueCallback = function (jobRequest, jobRequestProcessingCallback) {
+                assert.equal(jobRequest.ref, 'testjob');
+                done();
+            }
+
+            var afterEnqueueCallback = function (err, jobRequest) {
+                queueAdapter.dequeue(dequeueCallback);
+            }
+
+            var queueAdapter = new QueueAdapter();
+            var request = createSampleJobRequest('testjob');
+            queueAdapter.enqueue(request, afterEnqueueCallback)
+        });
     });
 });
 

@@ -61,5 +61,22 @@ describe('jobManager', function () {
             var manager = new JobManager();
             manager.processSingleJob(request);
         });
+        it('process one job delegates to correct handler', function () {
+            var request1 = {
+                type: 'addition',
+                payload: {
+                    operands: [3, 2]
+                }
+            };
+            var request2 = {
+                type: 'multiplication',
+                payload: {
+                    operands: [3, 2]
+                }
+            };
+            var manager = new JobManager();
+            assert.equal(manager.processSingleJob(request1), 5, "addition");
+            assert.equal(manager.processSingleJob(request2), 6, "multiplication");
+        });
     });
 });

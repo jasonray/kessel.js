@@ -25,7 +25,7 @@ describe('asyncQueueAdapter', function () {
             var queueAdapter = new QueueAdapter();
             assert.equal(queueAdapter.isEmpty(), true);
         });
-        it('after enqueue, isEmpty is false', function () {
+        it('after enqueue, isEmpty is false', function (done) {
             var queueAdapter = new QueueAdapter();
             var request = createSampleJobRequest();
             queueAdapter.enqueue(request, function () {
@@ -57,6 +57,20 @@ describe('asyncQueueAdapter', function () {
             }
 
             var queueAdapter = new QueueAdapter();
+            var request = createSampleJobRequest('testjob');
+            queueAdapter.enqueue(request, afterEnqueueCallback)
+        });
+        it('enqueue then dequeue returns job request (with latency)', function (done) {
+            var dequeueCallback = function (jobRequest, jobRequestProcessingCallback) {
+                assert.equal(jobRequest.ref, 'testjob');
+                done();
+            }
+
+            var afterEnqueueCallback = function (err, jobRequest) {
+                queueAdapter.dequeue(dequeueCallback);
+            }
+
+            var queueAdapter = new QueueAdapter(100);
             var request = createSampleJobRequest('testjob');
             queueAdapter.enqueue(request, afterEnqueueCallback)
         });

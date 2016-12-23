@@ -47,7 +47,6 @@ enqueue(jobRequest, callback)
 - callback(err, jobRequest)
 
 dequeue(callback)
-where callback is a function that returns f(commit)
-where commit is a f(jobResult)
+- where callback is a function that returns f(commit), where commit is a f(jobResult)
 
 

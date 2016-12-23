@@ -47,6 +47,8 @@ enqueue(jobRequest, callback)
 - callback(err, jobRequest)
 
 dequeue(callback)
-- where callback is a function that returns f(commit), where commit is a f(jobResult)
-
+- where callback is a function(commit, rollback)
+- where commit is a function()
+- where rollback is a function()
+- TODO: consider error queue and rollback with delay
 

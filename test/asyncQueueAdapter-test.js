@@ -37,7 +37,6 @@ describe('asyncQueueAdapter', function () {
     describe('enqueue / dequeue', function () {
         it('dequeue on empty returns empty', function (done) {
             var dequeueCallback = function (reservedJobRequest, commitJobA, rollbackJobA) {
-                console.log('invoked dequeue callback');
                 assert.equal(reservedJobRequest, null);
                 done();
             }

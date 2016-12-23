@@ -36,7 +36,6 @@ describe('jobManager', function () {
         });
         it('when job is processed, if it contains a callback, callback fires', function (done) {
             var myCallback = function (result) {
-                console.log('callback fired');
                 assert.equal(result, 3);
                 done();
             }

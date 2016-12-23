@@ -33,7 +33,6 @@ id:
 result: success|failed|failed-transient
 
 
-
 Queue Adapter API
 -----------------
 enqueue(jobRequest)

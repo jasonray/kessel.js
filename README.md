@@ -18,20 +18,26 @@ run tests: `npm test`
 
 jobRequest Model
 ----------------
-id: filled in by the manager
-ref: filled in by producer
-type
-TTL / timeout
-delay
-priority
+id: identifier, filled in by the manager
+
+ref: identifier, filled in by producer
+
+type: used to map to the handler
+
+TTL / timeout: TBD
+
+delay: TBD
+
+priority: TBD
+
 callback: either JS f or http endpoint
-payload
+
+payload: payload is passed to the handler
 
 jobResult Model
 ---------------
 id: 
 result: success|failed|failed-transient
-
 
 
 Queue Adapter API

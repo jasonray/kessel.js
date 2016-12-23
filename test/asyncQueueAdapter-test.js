@@ -95,8 +95,6 @@ describe('asyncQueueAdapter', function () {
 
                 });
             }
-
-
         });
         // it('dequeue (with commit) makes item unavailable to another dequeue', function (done) {
         //     assert.fail('not implemented');

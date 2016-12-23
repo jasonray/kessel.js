@@ -31,11 +31,13 @@ describe('jobManager', function () {
                 }
             };
             var manager = new JobManager();
-            manager.processSingleJob(request);
+            var result = manager.processSingleJob(request);
+            assert.equal(result, 3);
         });
         it('when job is processed, if it contains a callback, callback fires', function (done) {
-            var myCallback = function () {
+            var myCallback = function (result) {
                 console.log('callback fired');
+                assert.equal(result, 3);
                 done();
             }
             var request = {
@@ -46,12 +48,13 @@ describe('jobManager', function () {
                 }
             };
             var manager = new JobManager();
-            manager.processSingleJob(request);
+            var result = manager.processSingleJob(request);
+            assert.equal(result, 3);
         });
         it('when job is processed, if it contains a callback but callback is not a function, callback does not fire', function () {
             var request = {
                 type: 'add',
-                callback: 'hello',
+                callback: 'invalid callback',
                 payload: {
                     operands: [1, 2]
                 }

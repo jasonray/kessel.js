@@ -17,3 +17,16 @@ var manager = new JobManager(context);
 logger.trace('starting job manager');
 manager.start();
 logger.trace('post start job manager');
+
+
+setInterval(function () {
+    var request = {
+        type: 'add',
+        payload: {
+            operands: [1, 2]
+        }
+    };
+
+    logger.debug('requesting job');
+    manager.request(request);
+}, 10);

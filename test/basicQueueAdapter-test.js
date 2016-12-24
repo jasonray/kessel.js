@@ -3,7 +3,7 @@
 
 var mocha = require('mocha');
 var assert = require('assert');
-var QueueAdapter = require('../lib/basicQueueAdapter');
+var QueueAdapter = require('../lib/queue/basicQueueAdapter');
 
 describe('basicQueueAdapter', function () {
     describe('size', function () {

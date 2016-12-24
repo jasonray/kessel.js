@@ -12,7 +12,7 @@ var logger = require('bunyan').createLogger({
 	name: "queue-http-binding"
 });
 
-var queueModule = require('./lib/queue');
+var queueModule = require('./lib/queue/queue');
 var queue = new queueModule.queue();
 queue.push('apple');
 queue.push('banana');

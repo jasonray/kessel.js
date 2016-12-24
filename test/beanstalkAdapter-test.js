@@ -19,7 +19,7 @@ describe.only('beanstalkAdapter', function () {
         var adapter = new QueueAdapter(config);
         adapter.initialize(function (err) {
             assert.equal(err, null);
-            adapter.truncate(function(err) {
+            adapter.truncate(function (err) {
                 assert.equal(err, null);
                 done();
             })
@@ -162,28 +162,31 @@ describe.only('beanstalkAdapter', function () {
         });
     });
     describe('enqueue / dequeue with transactions', function () {
-        // it('dequeue (without commit/rollback) makes item unavailable to another dequeue', function (done) {
-        //     var queueAdapter = new QueueAdapter();
-        //
-        //     var jobRequestA = createSampleJobRequest('a');
-        //     queueAdapter.enqueue(jobRequestA, afterEnqueueCallback);
-        //
-        //     function afterEnqueueCallback(err, jobRequest) {
-        //         //at this point jobRequestA is in queue
-        //         queueAdapter.dequeue(function (reservedJobA, commitJobA, rollbackJobA) {
-        //             //at this point, no item on queue and jobRequestA is in reserved state
-        //             assert.ok(reservedJobA, 'expected an item to be reserved from queue');
-        //             assert.equal(reservedJobA.ref, 'a');
-        //
-        //             //if we dequeue at this point, we should get empty item as there is nothing available on queue
-        //             queueAdapter.dequeue(function (reservedJobB, commitJobB, rollbackJobB) {
-        //                 assert.equal(reservedJobB, null, 'expected no item available from queue');
-        //                 done();
-        //             });
-        //
-        //         });
-        //     }
-        // });
+        it('dequeue (without commit/rollback) makes item unavailable to another dequeue', function (done) {
+            var queueAdapter = new QueueAdapter(config);
+            queueAdapter.initialize(function (err) {
+                assert.equal(err, null, "failed to initialize. Is beanstalk running?");
+
+                var jobRequestA = createSampleJobRequest('a');
+                queueAdapter.enqueue(jobRequestA, afterEnqueueCallback);
+
+                function afterEnqueueCallback(err, jobRequest) {
+                    //at this point jobRequestA is in queue
+                    queueAdapter.dequeue(function (reservedJobA, commitJobA, rollbackJobA) {
+                        //at this point, no item on queue and jobRequestA is in reserved state
+                        assert.ok(reservedJobA, 'expected an item to be reserved from queue');
+                        assert.equal(reservedJobA.ref, 'a');
+
+                        //if we dequeue at this point, we should get empty item as there is nothing available on queue
+                        queueAdapter.dequeue(function (reservedJobB, commitJobB, rollbackJobB) {
+                            assert.equal(reservedJobB, null, 'expected no item available from queue');
+                            done();
+                        });
+
+                    });
+                }
+            });
+        });
         // it('dequeue (with commit) makes item unavailable to another dequeue', function (done) {
         //     var queueAdapter = new QueueAdapter();
         //

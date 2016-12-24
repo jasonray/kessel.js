@@ -5,15 +5,35 @@ var mocha = require('mocha');
 var assert = require('assert');
 var QueueAdapter = require('../lib/queue/beanstalkAdapter');
 
+var config = {
+    beanstalk: {
+        host: '127.0.0.1',
+        port: '3000'
+    }
+}
+
+var config_invalidHost = {
+    beanstalk: {
+        host: '127.0.0.1',
+        port: '3000'
+    }
+}
+
 describe('beanstalkAdapter', function () {
-    describe.only('smoke tests', function () {
+    describe.only('initialization', function () {
         it('constructor', function () {
-            var adapter = new QueueAdapter();
+            var adapter = new QueueAdapter(config);
         });
-        it('init', function () {
-            var adapter = new QueueAdapter();
-            adapter.initialize();
+        it('init', function (done) {
+            var adapter = new QueueAdapter(config);
+            adapter.initialize(function(){
+                done();
+            });
         });
+        it('handle no config');
+        it('handle config with no host');
+        it('handle config with no port');
+        it('handle unable to connect to beanstalk');
     });
     describe('enqueue / dequeue', function () {
         it('dequeue on empty returns empty', function (done) {

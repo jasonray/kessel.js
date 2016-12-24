@@ -13,7 +13,18 @@ var config = {
 }
 
 //these tests assume that beanstalkd is running at 127.0.0.1:3000
-describe('beanstalkAdapter', function () {
+describe.only('beanstalkAdapter', function () {
+    beforeEach(function (done) {
+        console.log('running truncate..');
+        var adapter = new QueueAdapter(config);
+        adapter.initialize(function (err) {
+            assert.equal(err, null);
+            adapter.truncate(function(err) {
+                assert.equal(err, null);
+                done();
+            })
+        });
+    });
     describe('initialization', function () {
         it('constructor', function () {
             var adapter = new QueueAdapter(config);
@@ -101,7 +112,7 @@ describe('beanstalkAdapter', function () {
             });
         });
     });
-    describe.only('enqueue / dequeue', function () {
+    describe('enqueue / dequeue', function () {
         it('dequeue on empty returns empty', function (done) {
             var dequeueCallback = function (reservedJobRequest, commitJobA, rollbackJobA) {
                 assert.equal(reservedJobRequest, null);
@@ -131,7 +142,7 @@ describe('beanstalkAdapter', function () {
                 queueAdapter.enqueue(request, afterEnqueueCallback)
             });
         });
-        it.only('truncate', function (done) {
+        it('truncate', function (done) {
             var queueAdapter = new QueueAdapter(config);
             queueAdapter.initialize(function (err) {
                 assert.equal(err, null, "failed to initialize. Is beanstalk running?");
@@ -139,9 +150,7 @@ describe('beanstalkAdapter', function () {
                 queueAdapter.enqueue(requestA, function (err, jobRequest) {
                     var requestB = createSampleJobRequest('B');
                     queueAdapter.enqueue(requestB, function (err, jobRequest) {
-                        console.log('in last enqueue block');
-                        queueAdapter.truncate(function() {
-                            console.log('in truncate block');
+                        queueAdapter.truncate(function () {
                             queueAdapter.dequeue(function (jobRequest, commitJobA, rollbackJobA) {
                                 assert.equal(jobRequest, null);
                                 done();

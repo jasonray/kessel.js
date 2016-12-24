@@ -54,4 +54,3 @@ dequeue(callback)
 - where rollback is a function(rollbackComplete)
 -- where, of course, rollbackComplete is a function indicating that rollback is complete
 - TODO: consider error queue and rollback with delay
-

@@ -15,7 +15,6 @@ run tests: `npm test`
 
 
 
-
 jobRequest Model
 ----------------
 id: identifier, filled in by the manager

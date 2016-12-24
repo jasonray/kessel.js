@@ -101,8 +101,8 @@ describe('beanstalkAdapter', function () {
             });
         });
     });
-    describe('enqueue / dequeue', function () {
-        it.only('dequeue on empty returns empty', function (done) {
+    describe.only('enqueue / dequeue', function () {
+        it('dequeue on empty returns empty', function (done) {
             var dequeueCallback = function (reservedJobRequest, commitJobA, rollbackJobA) {
                 assert.equal(reservedJobRequest, null);
                 done();
@@ -114,20 +114,43 @@ describe('beanstalkAdapter', function () {
                 queueAdapter.dequeue(dequeueCallback);
             });
         });
-        // it('enqueue then dequeue returns job request', function (done) {
-        //     var dequeueCallback = function (jobRequest, commitJobA, rollbackJobA) {
-        //         assert.equal(jobRequest.ref, 'testjob');
-        //         done();
-        //     }
-        //
-        //     var afterEnqueueCallback = function (err, jobRequest) {
-        //         queueAdapter.dequeue(dequeueCallback);
-        //     }
-        //
-        //     var queueAdapter = new QueueAdapter();
-        //     var request = createSampleJobRequest('testjob');
-        //     queueAdapter.enqueue(request, afterEnqueueCallback)
-        // });
+        it('enqueue then dequeue returns job request', function (done) {
+            var dequeueCallback = function (jobRequest, commitJobA, rollbackJobA) {
+                assert.equal(jobRequest.ref, 'testjob');
+                done();
+            }
+
+            var afterEnqueueCallback = function (err, jobRequest) {
+                queueAdapter.dequeue(dequeueCallback);
+            }
+
+            var queueAdapter = new QueueAdapter(config);
+            queueAdapter.initialize(function (err) {
+                assert.equal(err, null, "failed to initialize. Is beanstalk running?");
+                var request = createSampleJobRequest('testjob');
+                queueAdapter.enqueue(request, afterEnqueueCallback)
+            });
+        });
+        it.only('truncate', function (done) {
+            var queueAdapter = new QueueAdapter(config);
+            queueAdapter.initialize(function (err) {
+                assert.equal(err, null, "failed to initialize. Is beanstalk running?");
+                var requestA = createSampleJobRequest('A');
+                queueAdapter.enqueue(requestA, function (err, jobRequest) {
+                    var requestB = createSampleJobRequest('B');
+                    queueAdapter.enqueue(requestB, function (err, jobRequest) {
+                        console.log('in last enqueue block');
+                        queueAdapter.truncate(function() {
+                            console.log('in truncate block');
+                            queueAdapter.dequeue(function (jobRequest, commitJobA, rollbackJobA) {
+                                assert.equal(jobRequest, null);
+                                done();
+                            });
+                        });
+                    });
+                });
+            });
+        });
         // it('enqueue then dequeue returns job request (with latency)', function (done) {
         //     var dequeueCallback = function (jobRequest, commitJobA, rollbackJobA) {
         //         assert.equal(jobRequest.ref, 'testjob');

@@ -148,7 +148,10 @@ describe('asyncQueueAdapter', function () {
             }
         });
         it('ensure support for two no-committed dequeue', function (done) {
-            //TODO: holy callbacks, batman.  Switch this to promises
+            //TODO: holy callbacks, batman.  Switch this to promises.
+            //Update: i tried out promises.  And it worked better, but it does have an odd play with
+            //how to handle the callbacks on commit() and rollback() that would need to be overcome
+            //would need to decide between explicitly switching to promises or using bluebird.promisfy
 
             var queueAdapter = new QueueAdapter();
 

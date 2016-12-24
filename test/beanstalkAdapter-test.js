@@ -21,14 +21,14 @@ describe('beanstalkAdapter', function () {
         it('init', function (done) {
             var adapter = new QueueAdapter(config);
             adapter.initialize(function (err) {
-                assert.equal(err,null);
+                assert.equal(err, null);
                 done();
             });
         });
         it('handle no config', function (done) {
             var adapter = new QueueAdapter();
             adapter.initialize(function (err) {
-                assert.equal(err,null);
+                assert.equal(err, null);
                 done();
             });
         });
@@ -41,7 +41,7 @@ describe('beanstalkAdapter', function () {
 
             var adapter = new QueueAdapter(noHostConfig);
             adapter.initialize(function (err) {
-                assert.equal(err,null);
+                assert.equal(err, null);
                 done();
             });
         });
@@ -82,7 +82,7 @@ describe('beanstalkAdapter', function () {
 
             var adapter = new QueueAdapter(noPortConfig);
             adapter.initialize(function (err) {
-                assert.equal(err,null);
+                assert.equal(err, null);
                 done();
             });
         });
@@ -102,15 +102,18 @@ describe('beanstalkAdapter', function () {
         });
     });
     describe('enqueue / dequeue', function () {
-        // it('dequeue on empty returns empty', function (done) {
-        //     var dequeueCallback = function (reservedJobRequest, commitJobA, rollbackJobA) {
-        //         assert.equal(reservedJobRequest, null);
-        //         done();
-        //     }
-        //
-        //     var queueAdapter = new QueueAdapter();
-        //     queueAdapter.dequeue(dequeueCallback);
-        // });
+        it.only('dequeue on empty returns empty', function (done) {
+            var dequeueCallback = function (reservedJobRequest, commitJobA, rollbackJobA) {
+                assert.equal(reservedJobRequest, null);
+                done();
+            }
+
+            var queueAdapter = new QueueAdapter(config);
+            queueAdapter.initialize(function (err) {
+                assert.equal(err, null, "failed to initialize. Is beanstalk running?");
+                queueAdapter.dequeue(dequeueCallback);
+            });
+        });
         // it('enqueue then dequeue returns job request', function (done) {
         //     var dequeueCallback = function (jobRequest, commitJobA, rollbackJobA) {
         //         assert.equal(jobRequest.ref, 'testjob');

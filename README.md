@@ -41,8 +41,15 @@ result: success|failed|failed-transient
 
 Queue Adapter API
 -----------------
-enqueue(jobRequest)
+enqueue(jobRequest, callback)
+- jobRequest: see job request model
+- callback(err, jobRequest)
 
 dequeue(callback)
-- where callback is a function that returns f(commit)
-- where commit is a f(jobResult)
+- where callback is a function(jobRequest, commit, rollback)
+- jobRequest represents the job dequeued.  Will be null/empty if there was no item on the queue
+- where commit is a function(commitComplete)
+-- where, of course, commitComplete is a function indicating that commit is complete
+- where rollback is a function(rollbackComplete)
+-- where, of course, rollbackComplete is a function indicating that rollback is complete
+- TODO: consider error queue and rollback with delay

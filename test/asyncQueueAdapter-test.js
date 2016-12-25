@@ -200,7 +200,7 @@ describe('asyncQueueAdapter', function () {
 
         });
     });
-    describe.only('expiration', function () {
+    describe('expiration', function () {
         it('if expiration is set to 1 sec in future and requested before then, it will be processed normally', function (done) {
             var queueAdapter = new QueueAdapter();
             var request = createSampleJobRequest('r');

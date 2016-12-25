@@ -212,18 +212,37 @@ describe('asyncQueueAdapter', function () {
                 });
             });
         });
-        it('if expiration is set to 1 sec in future and requested after then, it will be not be processed', function (done) {
+        it('if expiration is set to future and requested after then, it will be not be processed', function (done) {
+            const delay = 1000;
             var queueAdapter = new QueueAdapter();
             var request = createSampleJobRequest('r');
-            request.timeout = moment().add(1, "s").toDate();
+            request.timeout = moment().add(delay, "ms").toDate();
             setTimeout(function () {
                 queueAdapter.enqueue(request, function () {
                     queueAdapter.dequeue(function (reservedAttempt, commitJob1, rollbackJob1) {
-                        assert.equal(reservedAttempt, null, 'expected to NOT dequeue an item');
+                        // assert.equal(reservedAttempt, null, 'expected to NOT dequeue an item');
+                        assert.equal(reservedAttempt, null);
                         done();
                     });
                 });
-            }, 1000);
+            }, delay);
+        });
+        it('with two items, expired item will be skipped to get to non-expired item', function (done) {
+            var queueAdapter = new QueueAdapter();
+            var requestExpired = createSampleJobRequest('expired');
+            requestExpired.timeout = moment().subtract(1, "y").toDate();
+
+            var requestNotExpired = createSampleJobRequest('not expired');
+            requestNotExpired.timeout = moment().add(1, "y").toDate();
+
+            queueAdapter.enqueue(requestExpired, function () {
+                queueAdapter.enqueue(requestNotExpired, function () {
+                    queueAdapter.dequeue(function (reservedAttempt, commitJob1, rollbackJob1) {
+                        assert.equal(reservedAttempt.ref, 'not expired');
+                        done();
+                    });
+                });
+            });
         });
     });
     describe.skip('delay', function () {

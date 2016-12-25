@@ -213,7 +213,7 @@ describe('asyncQueueAdapter', function () {
             });
         });
         it('if expiration is set to future and requested after then, it will be not be processed', function (done) {
-            const delay = 1000;
+            var delay = 1000;
             var queueAdapter = new QueueAdapter();
             var request = createSampleJobRequest('r');
             request.timeout = moment().add(delay, "ms").toDate();

@@ -15,29 +15,35 @@ var BeanstalkQueueAdapter = require('./lib/queue/beanstalkAdapter');
 var config = {
     beanstalk: {
         host: '127.0.0.1',
-        port: '3000',
-        timeout: 5
+        port: '3000'
     }
 }
 context.queue = new BeanstalkQueueAdapter(config);
 
-
 logger.info('starting kessel app script');
 logger.trace('init job manager');
 var manager = new JobManager(context);
-logger.trace('starting job manager');
-manager.start();
-logger.trace('post start job manager');
+manager.connect(function (err) {
+    if (!err) {
+        setInterval(function () {
+            var x = getRandomInt(0,9);
+            var y = getRandomInt(0,9);
 
+            var request = {
+                type: 'add',
+                payload: {
+                    operands: [x, y]
+                }
+            };
 
-// setInterval(function () {
-//     var request = {
-//         type: 'add',
-//         payload: {
-//             operands: [1, 2]
-//         }
-//     };
-//
-//     logger.debug('requesting job');
-//     manager.request(request);
-// }, 1);
+            logger.debug('requesting job');
+            manager.request(request);
+        }, 10000);
+    }
+});
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
+}

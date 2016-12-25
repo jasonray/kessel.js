@@ -1,5 +1,5 @@
 {
-  "name": "kessel",
+  "name": "kessel-run",
   "version": "0.1.0",
   "description": "lightweight framework for handling distributed delay job processing",
   "main": "app.js",

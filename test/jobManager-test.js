@@ -32,7 +32,7 @@ describe('jobManager', function () {
             };
             var manager = new JobManager();
             var result = manager.processSingleJob(request);
-            assert.equal(result, 3);
+            assert.equal(result.value, 3);
         });
         it('when job is processed, if it contains a callback, callback fires', function (done) {
             var myCallback = function (result) {
@@ -75,8 +75,8 @@ describe('jobManager', function () {
                 }
             };
             var manager = new JobManager();
-            assert.equal(manager.processSingleJob(request1), 5, "addition");
-            assert.equal(manager.processSingleJob(request2), 6, "multiplication");
+            assert.equal(manager.processSingleJob(request1).value, 5, "addition");
+            assert.equal(manager.processSingleJob(request2).value, 6, "multiplication");
         });
     });
 });

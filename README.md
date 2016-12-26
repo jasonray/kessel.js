@@ -23,7 +23,7 @@ ref: identifier, filled in by producer
 
 type: used to map to the handler
 
-TTL / timeout: TBD
+timeout: can be used to specify an expiration time.  This is provided as absolute date/time format, such as: 2012-04-23T18:25:43.511Z
 
 delay: TBD
 

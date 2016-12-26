@@ -4,6 +4,7 @@
 var mocha = require('mocha');
 var assert = require('assert');
 var QueueAdapter = require('../lib/queue/asyncQueueAdapter');
+var moment = require('moment');
 
 describe('asyncQueueAdapter', function () {
     describe('size', function () {
@@ -199,7 +200,79 @@ describe('asyncQueueAdapter', function () {
 
         });
     });
-});
+    describe('expiration', function () {
+        it('if expiration is set to 1 sec in future and requested before then, it will be processed normally', function (done) {
+            var queueAdapter = new QueueAdapter();
+            var request = createSampleJobRequest('r');
+            request.timeout = moment().add(1, "y").toDate();
+            queueAdapter.enqueue(request, function () {
+                queueAdapter.dequeue(function (reservedAttempt, commitJob1, rollbackJob1) {
+                    assert.equal(reservedAttempt.ref, 'r');
+                    done();
+                });
+            });
+        });
+        it('if expiration is set to future and requested after then, it will be not be processed', function (done) {
+            var delay = 1000;
+            var queueAdapter = new QueueAdapter();
+            var request = createSampleJobRequest('r');
+            request.timeout = moment().add(delay, "ms").toDate();
+            setTimeout(function () {
+                queueAdapter.enqueue(request, function () {
+                    queueAdapter.dequeue(function (reservedAttempt, commitJob1, rollbackJob1) {
+                        // assert.equal(reservedAttempt, null, 'expected to NOT dequeue an item');
+                        assert.equal(reservedAttempt, null);
+                        done();
+                    });
+                });
+            }, delay);
+        });
+        it('with two items, expired item will be skipped to get to non-expired item', function (done) {
+            var queueAdapter = new QueueAdapter();
+            var requestExpired = createSampleJobRequest('expired');
+            requestExpired.timeout = moment().subtract(1, "y").toDate();
+
+            var requestNotExpired = createSampleJobRequest('not expired');
+            requestNotExpired.timeout = moment().add(1, "y").toDate();
+
+            queueAdapter.enqueue(requestExpired, function () {
+                queueAdapter.enqueue(requestNotExpired, function () {
+                    queueAdapter.dequeue(function (reservedAttempt, commitJob1, rollbackJob1) {
+                        assert.equal(reservedAttempt.ref, 'not expired');
+                        done();
+                    });
+                });
+            });
+        });
+    });
+    describe.skip('delay', function () {
+        it('if delay is set to 1 sec in future it cannot be dequeued until +1s', function (done) {
+            console.log('begin');
+            var queueAdapter = new QueueAdapter();
+            console.log('size: ', queueAdapter.size());
+            var request = createSampleJobRequest('delayed item');
+            request.timeout = moment().add(1, "y").toDate();
+            console.log('about to enqueue item with delay: ', request);
+            queueAdapter.enqueue(request, function () {
+                console.log('enqueued, size: ', queueAdapter.size());
+                console.log('about to dequeue');
+                queueAdapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
+                    console.log('dequeued1: ', reservedAttempt1);
+                    assert.equal(reservedAttempt1, null, 'expected to not get an item as it should be delayed at this point');
+                    setTimeout(function () {
+                        queueAdapter.dequeue(function (reservedAttempt2, commitJob2, rollbackJob2) {
+                            console.log('dequeued2: ', reservedAttempt2);
+                            assert.ok(reservedAttempt2);
+                            assert.equal(reservedAttempt2.ref, 'delayed item');
+                            done();
+                        });
+                    }, 1000);
+                });
+            });
+        });
+    });
+})
+;
 
 function createSampleJobRequest(ref) {
     var request = {

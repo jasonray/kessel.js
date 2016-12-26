@@ -4,6 +4,7 @@
 var mocha = require('mocha');
 var assert = require('assert');
 var QueueAdapter = require('../lib/queue/beanstalkAdapter');
+var moment = require('moment');
 
 var config = {
     beanstalk: {
@@ -59,7 +60,7 @@ describe.only('beanstalkAdapter', function () {
         it('handle config with invalid host', function (done) {
             var invalidHostConfig = {
                 beanstalk: {
-                    host: 'x',
+                    host: '0.0.0.1',
                     port: '3000'
                 }
             }
@@ -292,6 +293,57 @@ describe.only('beanstalkAdapter', function () {
                                     });
                                 });
                             });
+                        });
+                    });
+                });
+            });
+        });
+    });
+    describe('expiration', function () {
+        it('if expiration is set to 1 sec in future and requested before then, it will be processed normally', function (done) {
+            var adapter = new QueueAdapter();
+            adapter.initialize(function (err) {
+                var request = createSampleJobRequest('r');
+                request.timeout = moment().add(1, "y").toDate();
+                adapter.enqueue(request, function () {
+                    adapter.dequeue(function (reservedAttempt, commitJob1, rollbackJob1) {
+                        assert.equal(reservedAttempt.ref, 'r');
+                        done();
+                    });
+                });
+            });
+        });
+        it('if expiration is set to future and requested after then, it will be not be processed', function (done) {
+            var adapter = new QueueAdapter();
+            adapter.initialize(function (err) {
+                var request = createSampleJobRequest('r');
+                request.timeout = moment().add(1, "ms").toDate();
+
+                setTimeout(function () {
+                    adapter.enqueue(request, function () {
+                        adapter.dequeue(function (reservedAttempt, commitJob1, rollbackJob1) {
+                            // assert.equal(reservedAttempt, null, 'expected to NOT dequeue an item');
+                            assert.equal(reservedAttempt, null);
+                            done();
+                        });
+                    });
+                }, 10);
+            });
+        });
+        it('with two items, expired item will be skipped to get to non-expired item', function (done) {
+            var adapter = new QueueAdapter();
+            adapter.initialize(function (err) {
+                var requestExpired = createSampleJobRequest('expired');
+                requestExpired.timeout = moment().subtract(1, "y").toDate();
+
+                var requestNotExpired = createSampleJobRequest('not expired');
+                requestNotExpired.timeout = moment().add(1, "y").toDate();
+
+                adapter.enqueue(requestExpired, function () {
+                    adapter.enqueue(requestNotExpired, function () {
+                        adapter.dequeue(function (reservedAttempt, commitJob1, rollbackJob1) {
+                            assert.equal(reservedAttempt.ref, 'not expired');
+                            done();
                         });
                     });
                 });

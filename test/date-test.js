@@ -3,7 +3,7 @@ var assert = require('assert');
 var should = require('should');
 var QueueAdapter = require('../lib/queue/basicQueueAdapter');
 
-describe.only('date exploration', function () {
+describe('date exploration', function () {
     it('same dates equal', function () {
         var d1 = new Date(2012, 1, 1);
         var d2 = new Date(2012, 1, 1);

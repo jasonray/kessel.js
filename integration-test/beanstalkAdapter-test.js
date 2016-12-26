@@ -314,11 +314,11 @@ describe.only('beanstalkAdapter', function () {
             });
         });
         it('if expiration is set to future and requested after then, it will be not be processed', function (done) {
-            var delay = 1000;
             var adapter = new QueueAdapter();
             adapter.initialize(function (err) {
                 var request = createSampleJobRequest('r');
-                request.timeout = moment().add(delay, "ms").toDate();
+                request.timeout = moment().add(1, "ms").toDate();
+                console.log('timeout:' , request.timeout);
                 setTimeout(function () {
                     adapter.enqueue(request, function () {
                         adapter.dequeue(function (reservedAttempt, commitJob1, rollbackJob1) {
@@ -327,7 +327,7 @@ describe.only('beanstalkAdapter', function () {
                             done();
                         });
                     });
-                }, delay);
+                }, 1000);
             });
         });
         it('with two items, expired item will be skipped to get to non-expired item', function (done) {

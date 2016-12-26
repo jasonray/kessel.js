@@ -32,6 +32,6 @@ describe.only('date exploration', function () {
             var d2 = new Date();
             var check = d1 < d2;
             assert.equal(check, true);
-        }, 100);
+        }, 100  );
     });
 });

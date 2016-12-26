@@ -60,7 +60,7 @@ describe.only('beanstalkAdapter', function () {
         it('handle config with invalid host', function (done) {
             var invalidHostConfig = {
                 beanstalk: {
-                    host: 'x',
+                    host: '0.0.0.1',
                     port: '3000'
                 }
             }

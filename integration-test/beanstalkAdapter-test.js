@@ -313,7 +313,7 @@ describe.only('beanstalkAdapter', function () {
                 });
             });
         });
-        it.only('if expiration is set to future and requested after then, it will be not be processed', function (done) {
+        it('if expiration is set to future and requested after then, it will be not be processed', function (done) {
             var adapter = new QueueAdapter();
             adapter.initialize(function (err) {
                 var request = createSampleJobRequest('r');

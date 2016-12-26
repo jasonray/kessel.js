@@ -4,6 +4,7 @@
 var mocha = require('mocha');
 var assert = require('assert');
 var QueueAdapter = require('../lib/queue/asyncQueueAdapter');
+var moment = require('moment');
 
 describe('asyncQueueAdapter', function () {
     describe('size', function () {
@@ -197,6 +198,78 @@ describe('asyncQueueAdapter', function () {
                 });
             });
 
+        });
+    });
+    describe('expiration', function () {
+        it('if expiration is set to 1 sec in future and requested before then, it will be processed normally', function (done) {
+            var queueAdapter = new QueueAdapter();
+            var request = createSampleJobRequest('r');
+            request.timeout = moment().add(1, "y").toDate();
+            queueAdapter.enqueue(request, function () {
+                queueAdapter.dequeue(function (reservedAttempt, commitJob1, rollbackJob1) {
+                    assert.equal(reservedAttempt.ref, 'r');
+                    done();
+                });
+            });
+        });
+        it('if expiration is set to future and requested after then, it will be not be processed', function (done) {
+            var delay = 1000;
+            var queueAdapter = new QueueAdapter();
+            var request = createSampleJobRequest('r');
+            request.timeout = moment().add(delay, "ms").toDate();
+            setTimeout(function () {
+                queueAdapter.enqueue(request, function () {
+                    queueAdapter.dequeue(function (reservedAttempt, commitJob1, rollbackJob1) {
+                        // assert.equal(reservedAttempt, null, 'expected to NOT dequeue an item');
+                        assert.equal(reservedAttempt, null);
+                        done();
+                    });
+                });
+            }, delay);
+        });
+        it('with two items, expired item will be skipped to get to non-expired item', function (done) {
+            var queueAdapter = new QueueAdapter();
+            var requestExpired = createSampleJobRequest('expired');
+            requestExpired.timeout = moment().subtract(1, "y").toDate();
+
+            var requestNotExpired = createSampleJobRequest('not expired');
+            requestNotExpired.timeout = moment().add(1, "y").toDate();
+
+            queueAdapter.enqueue(requestExpired, function () {
+                queueAdapter.enqueue(requestNotExpired, function () {
+                    queueAdapter.dequeue(function (reservedAttempt, commitJob1, rollbackJob1) {
+                        assert.equal(reservedAttempt.ref, 'not expired');
+                        done();
+                    });
+                });
+            });
+        });
+    });
+    describe('delay', function () {
+        it('if delay is set to 1 year in future it cannot be dequeued now', function (done) {
+            var queueAdapter = new QueueAdapter();
+            var request = createSampleJobRequest('delayed item');
+            request.delay = moment().add(1, "y").toDate();
+            queueAdapter.enqueue(request, function () {
+                queueAdapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
+                    assert.equal(reservedAttempt1, null, 'expected to not get an item as it should be delayed at this point');
+                    done();
+                });
+            });
+        });
+
+        it('if delay is set to 1 sec in future it will be dequeued after 1s', function (done) {
+            var queueAdapter = new QueueAdapter();
+            var request = createSampleJobRequest('delayed item');
+            request.delay = moment().add(500, "ms").toDate();
+            queueAdapter.enqueue(request, function () {
+                setTimeout(function () {
+                    queueAdapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
+                        assert.equal(reservedAttempt1.ref, 'delayed item');
+                        done();
+                    });
+                }, 500);
+            });
         });
     });
 });

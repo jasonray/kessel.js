@@ -2,6 +2,7 @@ var mocha = require('mocha');
 var assert = require('assert');
 var should = require('should');
 var QueueAdapter = require('../lib/queue/basicQueueAdapter');
+var moment = require('moment');
 
 describe('date exploration', function () {
     it('same dates equal', function () {
@@ -32,6 +33,14 @@ describe('date exploration', function () {
             var d2 = new Date();
             var check = d1 < d2;
             assert.equal(check, true);
-        }, 100  );
+        }, 100);
+    });
+    it('date diff', function () {
+        var d1 = new Date(2012, 1, 21);
+        var d2 = new Date(2012, 1, 20);
+
+        var m1 = moment(d1);
+        var m2 = moment(d2);
+        should(m1.diff(m2)).equal(1 * 24 * 60 * 60 * 1000)
     });
 });

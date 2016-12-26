@@ -350,6 +350,37 @@ describe.only('beanstalkAdapter', function () {
             });
         });
     });
+    describe.only('delay', function () {
+        it('if delay is set to 1 year in future it cannot be dequeued now', function (done) {
+            var adapter = new QueueAdapter();
+            adapter.initialize(function (err) {
+                var request = createSampleJobRequest('delayed item');
+                request.delay = moment().add(1, "y").toDate();
+                adapter.enqueue(request, function () {
+                    adapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
+                        assert.equal(reservedAttempt1, null, 'expected to not get an item as it should be delayed at this point');
+                        done();
+                    });
+                });
+            });
+        });
+
+        it('if delay is set to 1 sec in future it will be dequeued after 1s', function (done) {
+            var adapter = new QueueAdapter();
+            adapter.initialize(function (err) {
+                var request = createSampleJobRequest('delayed item');
+                request.delay = moment().add(100, "ms").toDate();
+                adapter.enqueue(request, function () {
+                    setTimeout(function () {
+                        adapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
+                            assert.equal(reservedAttempt1.ref, 'delayed item');
+                            done();
+                        });
+                    }, 1000);
+                });
+            });
+        });
+    });
 });
 
 function createSampleJobRequest(ref) {

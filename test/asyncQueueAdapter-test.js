@@ -245,34 +245,34 @@ describe('asyncQueueAdapter', function () {
             });
         });
     });
-    describe.skip('delay', function () {
-        it('if delay is set to 1 sec in future it cannot be dequeued until +1s', function (done) {
-            console.log('begin');
+    describe('delay', function () {
+        it('if delay is set to 1 year in future it cannot be dequeued now', function (done) {
             var queueAdapter = new QueueAdapter();
-            console.log('size: ', queueAdapter.size());
             var request = createSampleJobRequest('delayed item');
-            request.timeout = moment().add(1, "y").toDate();
-            console.log('about to enqueue item with delay: ', request);
+            request.delay = moment().add(1, "y").toDate();
             queueAdapter.enqueue(request, function () {
-                console.log('enqueued, size: ', queueAdapter.size());
-                console.log('about to dequeue');
                 queueAdapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
-                    console.log('dequeued1: ', reservedAttempt1);
                     assert.equal(reservedAttempt1, null, 'expected to not get an item as it should be delayed at this point');
-                    setTimeout(function () {
-                        queueAdapter.dequeue(function (reservedAttempt2, commitJob2, rollbackJob2) {
-                            console.log('dequeued2: ', reservedAttempt2);
-                            assert.ok(reservedAttempt2);
-                            assert.equal(reservedAttempt2.ref, 'delayed item');
-                            done();
-                        });
-                    }, 1000);
+                    done();
                 });
             });
         });
+
+        it('if delay is set to 1 sec in future it will be dequeued after 1s', function (done) {
+            var queueAdapter = new QueueAdapter();
+            var request = createSampleJobRequest('delayed item');
+            request.delay = moment().add(500, "ms").toDate();
+            queueAdapter.enqueue(request, function () {
+                setTimeout(function () {
+                    queueAdapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
+                        assert.equal(reservedAttempt1.ref, 'delayed item');
+                        done();
+                    });
+                }, 500);
+            });
+        });
     });
-})
-;
+});
 
 function createSampleJobRequest(ref) {
     var request = {

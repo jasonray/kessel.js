@@ -350,7 +350,7 @@ describe.only('beanstalkAdapter', function () {
             });
         });
     });
-    describe.only('delay', function () {
+    describe('delay', function () {
         it('if delay is set to 1 year in future it cannot be dequeued now', function (done) {
             var adapter = new QueueAdapter();
             adapter.initialize(function (err) {

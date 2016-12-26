@@ -35,15 +35,12 @@ describe('date exploration', function () {
             assert.equal(check, true);
         }, 100);
     });
-    it.only('date diff', function () {
+    it('date diff', function () {
         var d1 = new Date(2012, 1, 21);
         var d2 = new Date(2012, 1, 20);
 
         var m1 = moment(d1);
         var m2 = moment(d2);
         should(m1.diff(m2)).equal(1 * 24 * 60 * 60 * 1000)
-
     });
-
-
 });

@@ -263,7 +263,7 @@ describe('asyncQueueAdapter', function () {
             var request = createSampleJobRequest('delayed item');
             request.delay = moment().add(500, "ms").toDate();
             queueAdapter.enqueue(request, function () {
-                setTimeout(function() {
+                setTimeout(function () {
                     queueAdapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
                         assert.equal(reservedAttempt1.ref, 'delayed item');
                         done();
@@ -272,8 +272,7 @@ describe('asyncQueueAdapter', function () {
             });
         });
     });
-})
-;
+});
 
 function createSampleJobRequest(ref) {
     var request = {

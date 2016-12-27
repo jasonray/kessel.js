@@ -27,7 +27,7 @@ expiration: can be used to specify an expiration time.  This is provided as abso
 
 delay: TBD
 
-priority: TBD
+priority: number, with 0 being the highest priority.  Negative numbers are treated as 0, numbers over 4M are capped.
 
 callback: either JS f or http endpoint
 

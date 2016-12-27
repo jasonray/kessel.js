@@ -310,7 +310,7 @@ describe('asyncQueueAdapter', function () {
                 });
             });
         });
-        it.skip('insert low priority, then high priorty, should pop high priority first', function () {
+        it('insert low priority, then high priorty, should pop high priority first', function () {
             var queueAdapter = new QueueAdapter();
             var request1 = createSampleJobRequest('apple', low_priority);
             var request2 = createSampleJobRequest('banana', high_priority);

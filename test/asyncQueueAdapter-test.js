@@ -272,9 +272,64 @@ describe('asyncQueueAdapter', function () {
             });
         });
     });
+    describe.only('priority', function () {
+        var low_priority = 10;
+        var high_priority = 1;
+
+        it('insert item without priority does not cause issue', function () {
+            var queueAdapter = new QueueAdapter();
+            var request1 = createSampleJobRequest('apple');
+            var request2 = createSampleJobRequest('banana');
+
+            queueAdapter.enqueue(request1, function () {
+                queueAdapter.enqueue(request2, function () {
+                    queueAdapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
+                        assert.equal(reservedAttempt1.ref, 'apple');
+                        queueAdapter.dequeue(function (reservedAttempt2, commitJob2, rollbackJob2) {
+                            assert.equal(reservedAttempt2.ref, 'banana');
+                            done();
+                        });
+                    });
+                });
+            });
+        });
+        it('insert two items with same priority, should pop in same order', function () {
+            var queueAdapter = new QueueAdapter();
+            var request1 = createSampleJobRequest('apple', low_priority);
+            var request2 = createSampleJobRequest('banana', low_priority);
+
+            queueAdapter.enqueue(request1, function () {
+                queueAdapter.enqueue(request2, function () {
+                    queueAdapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
+                        assert.equal(reservedAttempt1.ref, 'apple');
+                        queueAdapter.dequeue(function (reservedAttempt2, commitJob2, rollbackJob2) {
+                            assert.equal(reservedAttempt2.ref, 'banana');
+                            done();
+                        });
+                    });
+                });
+            });
+        });
+        it.skip('insert low priority, then high priorty, should pop high priority first', function () {
+            var queueAdapter = new QueueAdapter();
+            queue.push('apple', low_priority);
+            queue.push('banana', high_priority);
+            assert.equal('banana', queue.pop(), "expected first item to be banana");
+            assert.equal('apple', queue.pop(), "expected second item to be apple");
+            assert.equal(null, queue.pop());
+        });
+        it.skip('insert high priority, then low priorty, should pop high priority first', function () {
+            var queueAdapter = new QueueAdapter();
+            queue.push('apple', high_priority);
+            queue.push('banana', low_priority);
+            assert.equal('apple', queue.pop(), "expected first item to be apple");
+            assert.equal('banana', queue.pop(), "expected second item to be banana");
+            assert.equal(null, queue.pop());
+        });
+    });
 });
 
-function createSampleJobRequest(ref) {
+function createSampleJobRequest(ref, priority) {
     var request = {
         type: 'sample',
         payload: {
@@ -284,6 +339,9 @@ function createSampleJobRequest(ref) {
     };
     if (ref) {
         request.ref = ref;
+    }
+    if (priority) {
+        request.priority = priority;
     }
     return request;
 }

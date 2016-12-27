@@ -442,7 +442,7 @@ describe('beanstalkAdapter', function () {
                 });
             });
         });
-        it('insert high priority, then low priorty, should pop high priority first', function (done) {
+        it('insert high priority, then low priority, should pop high priority first', function (done) {
             var queueAdapter = new QueueAdapter();
             queueAdapter.initialize(function (err) {
                 var request1 = createSampleJobRequest('apple', high_priority);

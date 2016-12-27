@@ -7,6 +7,16 @@ var QueueAdapter = require('../lib/queue/asyncQueueAdapter');
 var moment = require('moment');
 
 describe('asyncQueueAdapter', function () {
+    describe('constructor', function () {
+        it('using new constructor', function () {
+            var queueAdapter = new QueueAdapter();
+            assert.ok(queueAdapter);
+        });
+        it('using implicit constructor', function () {
+            var queueAdapter = QueueAdapter();
+            assert.ok(queueAdapter);
+        });
+    });
     describe('size', function () {
         it('initial size is 0', function () {
             var queueAdapter = new QueueAdapter();

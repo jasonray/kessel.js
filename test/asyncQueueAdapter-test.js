@@ -204,7 +204,7 @@ describe('asyncQueueAdapter', function () {
         it('if expiration is set to 1 sec in future and requested before then, it will be processed normally', function (done) {
             var queueAdapter = new QueueAdapter();
             var request = createSampleJobRequest('r');
-            request.timeout = moment().add(1, "y").toDate();
+            request.expiration = moment().add(1, "y").toDate();
             queueAdapter.enqueue(request, function () {
                 queueAdapter.dequeue(function (reservedAttempt, commitJob1, rollbackJob1) {
                     assert.equal(reservedAttempt.ref, 'r');
@@ -216,7 +216,7 @@ describe('asyncQueueAdapter', function () {
             var delay = 1000;
             var queueAdapter = new QueueAdapter();
             var request = createSampleJobRequest('r');
-            request.timeout = moment().add(delay, "ms").toDate();
+            request.expiration = moment().add(delay, "ms").toDate();
             setTimeout(function () {
                 queueAdapter.enqueue(request, function () {
                     queueAdapter.dequeue(function (reservedAttempt, commitJob1, rollbackJob1) {
@@ -230,10 +230,10 @@ describe('asyncQueueAdapter', function () {
         it('with two items, expired item will be skipped to get to non-expired item', function (done) {
             var queueAdapter = new QueueAdapter();
             var requestExpired = createSampleJobRequest('expired');
-            requestExpired.timeout = moment().subtract(1, "y").toDate();
+            requestExpired.expiration = moment().subtract(1, "y").toDate();
 
             var requestNotExpired = createSampleJobRequest('not expired');
-            requestNotExpired.timeout = moment().add(1, "y").toDate();
+            requestNotExpired.expiration = moment().add(1, "y").toDate();
 
             queueAdapter.enqueue(requestExpired, function () {
                 queueAdapter.enqueue(requestNotExpired, function () {

@@ -312,11 +312,20 @@ describe('asyncQueueAdapter', function () {
         });
         it.skip('insert low priority, then high priorty, should pop high priority first', function () {
             var queueAdapter = new QueueAdapter();
-            queue.push('apple', low_priority);
-            queue.push('banana', high_priority);
-            assert.equal('banana', queue.pop(), "expected first item to be banana");
-            assert.equal('apple', queue.pop(), "expected second item to be apple");
-            assert.equal(null, queue.pop());
+            var request1 = createSampleJobRequest('apple', low_priority);
+            var request2 = createSampleJobRequest('banana', high_priority);
+
+            queueAdapter.enqueue(request1, function () {
+                queueAdapter.enqueue(request2, function () {
+                    queueAdapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
+                        assert.equal(reservedAttempt1.ref, 'banana');
+                        queueAdapter.dequeue(function (reservedAttempt2, commitJob2, rollbackJob2) {
+                            assert.equal(reservedAttempt2.ref, 'apple');
+                            done();
+                        });
+                    });
+                });
+            });
         });
         it.skip('insert high priority, then low priorty, should pop high priority first', function () {
             var queueAdapter = new QueueAdapter();

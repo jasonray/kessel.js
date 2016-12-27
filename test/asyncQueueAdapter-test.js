@@ -272,7 +272,7 @@ describe('asyncQueueAdapter', function () {
             });
         });
     });
-    describe.only('priority', function () {
+    describe('priority', function () {
         var low_priority = 10;
         var high_priority = 1;
 

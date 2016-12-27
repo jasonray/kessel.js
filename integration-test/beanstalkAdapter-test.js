@@ -304,7 +304,7 @@ describe.only('beanstalkAdapter', function () {
             var adapter = new QueueAdapter();
             adapter.initialize(function (err) {
                 var request = createSampleJobRequest('r');
-                request.timeout = moment().add(1, "y").toDate();
+                request.expiration = moment().add(1, "y").toDate();
                 adapter.enqueue(request, function () {
                     adapter.dequeue(function (reservedAttempt, commitJob1, rollbackJob1) {
                         assert.equal(reservedAttempt.ref, 'r');
@@ -317,7 +317,7 @@ describe.only('beanstalkAdapter', function () {
             var adapter = new QueueAdapter();
             adapter.initialize(function (err) {
                 var request = createSampleJobRequest('r');
-                request.timeout = moment().add(1, "ms").toDate();
+                request.expiration = moment().add(1, "ms").toDate();
 
                 setTimeout(function () {
                     adapter.enqueue(request, function () {
@@ -334,10 +334,10 @@ describe.only('beanstalkAdapter', function () {
             var adapter = new QueueAdapter();
             adapter.initialize(function (err) {
                 var requestExpired = createSampleJobRequest('expired');
-                requestExpired.timeout = moment().subtract(1, "y").toDate();
+                requestExpired.expiration = moment().subtract(1, "y").toDate();
 
                 var requestNotExpired = createSampleJobRequest('not expired');
-                requestNotExpired.timeout = moment().add(1, "y").toDate();
+                requestNotExpired.expiration = moment().add(1, "y").toDate();
 
                 adapter.enqueue(requestExpired, function () {
                     adapter.enqueue(requestNotExpired, function () {

@@ -25,7 +25,7 @@ type: used to map to the handler
 
 expiration: can be used to specify an expiration time.  This is provided as absolute date/time format, such as: 2012-04-23T18:25:43.511Z
 
-delay: TBD
+delay: can be used to specify the earliest time to process job.  This is provided as absolute date/time format, such as: 2012-04-23T18:25:43.511Z
 
 priority: number, with 0 being the highest priority.  Negative numbers are treated as 0, numbers over 4M are capped.
 

@@ -327,13 +327,22 @@ describe('asyncQueueAdapter', function () {
                 });
             });
         });
-        it.skip('insert high priority, then low priorty, should pop high priority first', function () {
+        it('insert high priority, then low priorty, should pop high priority first', function () {
             var queueAdapter = new QueueAdapter();
-            queue.push('apple', high_priority);
-            queue.push('banana', low_priority);
-            assert.equal('apple', queue.pop(), "expected first item to be apple");
-            assert.equal('banana', queue.pop(), "expected second item to be banana");
-            assert.equal(null, queue.pop());
+            var request1 = createSampleJobRequest('apple', high_priority);
+            var request2 = createSampleJobRequest('banana', low_priority);
+
+            queueAdapter.enqueue(request1, function () {
+                queueAdapter.enqueue(request2, function () {
+                    queueAdapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
+                        assert.equal(reservedAttempt1.ref, 'apple');
+                        queueAdapter.dequeue(function (reservedAttempt2, commitJob2, rollbackJob2) {
+                            assert.equal(reservedAttempt2.ref, 'banana');
+                            done();
+                        });
+                    });
+                });
+            });
         });
     });
 });

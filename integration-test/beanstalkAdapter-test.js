@@ -22,7 +22,6 @@ describe.skip('force fail section', function () {
 });
 describe('beanstalkAdapter', function () {
     beforeEach(function (done) {
-        console.log('running truncate..');
         var adapter = new QueueAdapter(config);
         adapter.initialize(function (err) {
             assert.equal(err, null);

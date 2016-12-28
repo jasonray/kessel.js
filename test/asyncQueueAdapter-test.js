@@ -234,7 +234,7 @@ describe('asyncQueueAdapter', function () {
                         done();
                     });
                 });
-            }, delay);
+            }, 1000);
         });
         it('with two items, expired item will be skipped to get to non-expired item', function (done) {
             var queueAdapter = new QueueAdapter();

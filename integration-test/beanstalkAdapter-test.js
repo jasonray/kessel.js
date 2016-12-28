@@ -14,9 +14,9 @@ var config = {
 }
 
 //these tests assume that beanstalkd is running at 127.0.0.1:3000
-describe('force fail section', function () {
-    it.skip('force fail test');
-    it('force fail', function() {
+describe.skip('force fail section', function () {
+    it('force fail test 1');
+    it('force fail test 2', function() {
         assert.fail();
     });
 });

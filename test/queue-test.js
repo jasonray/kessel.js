@@ -111,4 +111,42 @@ describe('basic queue', function () {
             assert.equal(null, queue2.pop());
         });
     });
+
+    describe('priority', function () {
+        var low_priority = 10;
+        var high_priority = 1;
+
+        it('insert item without priority does not cause issue', function () {
+            var queue = new Queue();
+            queue.push('apple');
+            queue.push('banana');
+            assert.equal('apple', queue.pop(), "expected first item to be apple");
+            assert.equal('banana', queue.pop(), "expected second item to be banana");
+            assert.equal(null, queue.pop());
+        });
+        it('insert two items with same priority, should pop in same order', function () {
+            var queue = new Queue();
+            queue.push('apple', high_priority);
+            queue.push('banana', high_priority);
+            assert.equal('apple', queue.pop(), "expected first item to be apple");
+            assert.equal('banana', queue.pop(), "expected second item to be banana");
+            assert.equal(null, queue.pop());
+        });
+        it('insert low priority, then high priorty, should pop high priority first', function () {
+            var queue = new Queue();
+            queue.push('apple', low_priority);
+            queue.push('banana', high_priority);
+            assert.equal('banana', queue.pop(), "expected first item to be banana");
+            assert.equal('apple', queue.pop(), "expected second item to be apple");
+            assert.equal(null, queue.pop());
+        });
+        it('insert high priority, then low priorty, should pop high priority first', function () {
+            var queue = new Queue();
+            queue.push('apple', high_priority);
+            queue.push('banana', low_priority);
+            assert.equal('apple', queue.pop(), "expected first item to be apple");
+            assert.equal('banana', queue.pop(), "expected second item to be banana");
+            assert.equal(null, queue.pop());
+        });
+    });
 });

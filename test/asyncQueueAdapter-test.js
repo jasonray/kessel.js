@@ -296,9 +296,82 @@ describe('asyncQueueAdapter', function () {
             });
         });
     });
+    describe('priority', function () {
+        var low_priority = 10;
+        var high_priority = 1;
+
+        it('insert item without priority does not cause issue', function (done) {
+            var queueAdapter = new QueueAdapter();
+            var request1 = createSampleJobRequest('apple');
+            var request2 = createSampleJobRequest('banana');
+
+            queueAdapter.enqueue(request1, function () {
+                queueAdapter.enqueue(request2, function () {
+                    queueAdapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
+                        assert.equal(reservedAttempt1.ref, 'apple');
+                        queueAdapter.dequeue(function (reservedAttempt2, commitJob2, rollbackJob2) {
+                            assert.equal(reservedAttempt2.ref, 'banana');
+                            done();
+                        });
+                    });
+                });
+            });
+        });
+        it('insert two items with same priority, should pop in same order', function (done) {
+            var queueAdapter = new QueueAdapter();
+            var request1 = createSampleJobRequest('apple', low_priority);
+            var request2 = createSampleJobRequest('banana', low_priority);
+
+            queueAdapter.enqueue(request1, function () {
+                queueAdapter.enqueue(request2, function () {
+                    queueAdapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
+                        assert.equal(reservedAttempt1.ref, 'apple');
+                        queueAdapter.dequeue(function (reservedAttempt2, commitJob2, rollbackJob2) {
+                            assert.equal(reservedAttempt2.ref, 'banana');
+                            done();
+                        });
+                    });
+                });
+            });
+        });
+        it('insert low priority, then high priorty, should pop high priority first', function (done) {
+            var queueAdapter = new QueueAdapter();
+            var request1 = createSampleJobRequest('apple', low_priority);
+            var request2 = createSampleJobRequest('banana', high_priority);
+
+            queueAdapter.enqueue(request1, function () {
+                queueAdapter.enqueue(request2, function () {
+                    queueAdapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
+                        assert.equal(reservedAttempt1.ref, 'banana');
+                        queueAdapter.dequeue(function (reservedAttempt2, commitJob2, rollbackJob2) {
+                            assert.equal(reservedAttempt2.ref, 'apple');
+                            done();
+                        });
+                    });
+                });
+            });
+        });
+        it('insert high priority, then low priorty, should pop high priority first', function (done) {
+            var queueAdapter = new QueueAdapter();
+            var request1 = createSampleJobRequest('apple', high_priority);
+            var request2 = createSampleJobRequest('banana', low_priority);
+
+            queueAdapter.enqueue(request1, function () {
+                queueAdapter.enqueue(request2, function () {
+                    queueAdapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
+                        assert.equal(reservedAttempt1.ref, 'apple');
+                        queueAdapter.dequeue(function (reservedAttempt2, commitJob2, rollbackJob2) {
+                            assert.equal(reservedAttempt2.ref, 'banana');
+                            done();
+                        });
+                    });
+                });
+            });
+        });
+    });
 });
 
-function createSampleJobRequest(ref) {
+function createSampleJobRequest(ref, priority) {
     var request = {
         type: 'sample',
         payload: {
@@ -308,6 +381,9 @@ function createSampleJobRequest(ref) {
     };
     if (ref) {
         request.ref = ref;
+    }
+    if (priority) {
+        request.priority = priority;
     }
     return request;
 }

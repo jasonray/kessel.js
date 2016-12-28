@@ -4,9 +4,8 @@
 var mocha = require('mocha');
 var assert = require('assert');
 
-describe('force fail unit test section', function () {
-    it('force fail test 1');
-    it('force fail test 2', function () {
+describe.skip('force fail unit test section', function () {
+    it('force fail test', function () {
         assert.fail();
     });
 });

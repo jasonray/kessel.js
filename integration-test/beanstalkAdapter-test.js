@@ -16,7 +16,6 @@ var config = {
 //these tests assume that beanstalkd is running at 127.0.0.1:3000
 describe('beanstalkAdapter', function () {
     beforeEach(function (done) {
-        console.log('running truncate..');
         var adapter = new QueueAdapter(config);
         adapter.initialize(function (err) {
             assert.equal(err, null);

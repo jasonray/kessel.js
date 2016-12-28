@@ -8,8 +8,15 @@ var JobManager = require('../lib/jobManager');
 //TODO: disable logger on unit tests
 
 describe('jobManager', function () {
-    it('init', function () {
-        var manager = new JobManager();
+    describe('constructor', function () {
+        it('using new constructor', function () {
+            var jobManager = new JobManager();
+            assert.ok(jobManager);
+        });
+        it('using implicit constructor', function () {
+            var jobManager = JobManager();
+            assert.ok(jobManager);
+        });
     });
     it('request job', function () {
         var request = {

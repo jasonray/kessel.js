@@ -7,6 +7,16 @@ var QueueAdapter = require('../lib/queue/asyncQueueAdapter');
 var moment = require('moment');
 
 describe('asyncQueueAdapter', function () {
+    describe('constructor', function () {
+        it('using new constructor', function () {
+            var queueAdapter = new QueueAdapter();
+            assert.ok(queueAdapter);
+        });
+        it('using implicit constructor', function () {
+            var queueAdapter = QueueAdapter();
+            assert.ok(queueAdapter);
+        });
+    });
     describe('size', function () {
         it('initial size is 0', function () {
             var queueAdapter = new QueueAdapter();
@@ -213,10 +223,9 @@ describe('asyncQueueAdapter', function () {
             });
         });
         it('if expiration is set to future and requested after then, it will be not be processed', function (done) {
-            var delay = 1000;
             var queueAdapter = new QueueAdapter();
             var request = createSampleJobRequest('r');
-            request.expiration = moment().add(delay, "ms").toDate();
+            request.expiration = moment().add(1000, "ms").toDate();
             setTimeout(function () {
                 queueAdapter.enqueue(request, function () {
                     queueAdapter.dequeue(function (reservedAttempt, commitJob1, rollbackJob1) {
@@ -225,7 +234,7 @@ describe('asyncQueueAdapter', function () {
                         done();
                     });
                 });
-            }, delay);
+            }, 1000);
         });
         it('with two items, expired item will be skipped to get to non-expired item', function (done) {
             var queueAdapter = new QueueAdapter();
@@ -257,7 +266,6 @@ describe('asyncQueueAdapter', function () {
                 });
             });
         });
-
         it('if delay is set to 1 sec in future it will be dequeued after 1s', function (done) {
             var queueAdapter = new QueueAdapter();
             var request = createSampleJobRequest('delayed item');
@@ -269,6 +277,22 @@ describe('asyncQueueAdapter', function () {
                         done();
                     });
                 }, 500);
+            });
+        });
+        it('if delay is set to future, the first attempt to dequeue will come up empty, but will be dequeued after delay', function (done) {
+            var queueAdapter = new QueueAdapter();
+            var request = createSampleJobRequest('delayed item');
+            request.delay = moment().add(500, "ms").toDate();
+            queueAdapter.enqueue(request, function () {
+                queueAdapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
+                    assert.equal(reservedAttempt1, null);
+                    setTimeout(function () {
+                        queueAdapter.dequeue(function (reservedAttempt2, commitJob2, rollbackJob2) {
+                            assert.equal(reservedAttempt2.ref, 'delayed item');
+                            done();
+                        });
+                    }, 500);
+                });
             });
         });
     });

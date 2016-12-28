@@ -6,6 +6,16 @@ var assert = require('assert');
 var Queue = require('../lib/queue/queue');
 
 describe('basic queue', function () {
+    describe('constructor', function () {
+        it('using new constructor', function () {
+            var queue = new Queue();
+            assert.ok(queue);
+        });
+        it('using implicit constructor', function () {
+            var queue = Queue();
+            assert.ok(queue);
+        });
+    });
     describe('isEmpty', function () {
         it('isEmpty on empty queue returns true', function () {
             var queue = new Queue();

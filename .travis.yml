@@ -12,7 +12,7 @@ addons:
 env:
   - TEST_DIR=test
   - TEST_DIR=integration-test
-script: npm test $TEST_CMD
+script: npm test $TEST_DIR
 
 before_install:
 - echo 'starting queue'

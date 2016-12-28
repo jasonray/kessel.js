@@ -12,7 +12,7 @@ addons:
 env:
   - TEST_CMD=test
   - TEST_CMD=run integration-test
-script: npm install && npm $TEST_CMD
+script: npm $TEST_CMD
 
 before_install:
 # https://docs.travis-ci.com/user/installing-dependencies/

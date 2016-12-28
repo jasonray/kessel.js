@@ -10,8 +10,8 @@ addons:
     - beanstalkd
 
 env:
-- TEST_DIR=test
-- TEST_DIR=integration-test
+#- TEST_DIR=test
+#- TEST_DIR=integration-test
 - TEST_CMD=test
 - TEST_CMD=run integration-test
 

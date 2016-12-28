@@ -14,6 +14,12 @@ var config = {
 }
 
 //these tests assume that beanstalkd is running at 127.0.0.1:3000
+describe('force fail section', function () {
+    it.skip('force fail test');
+    it('force fail', function() {
+        assert.fail();
+    });
+});
 describe('beanstalkAdapter', function () {
     beforeEach(function (done) {
         console.log('running truncate..');

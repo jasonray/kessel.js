@@ -266,7 +266,6 @@ describe('asyncQueueAdapter', function () {
                 });
             });
         });
-
         it('if delay is set to 1 sec in future it will be dequeued after 1s', function (done) {
             var queueAdapter = new QueueAdapter();
             var request = createSampleJobRequest('delayed item');
@@ -278,6 +277,22 @@ describe('asyncQueueAdapter', function () {
                         done();
                     });
                 }, 500);
+            });
+        });
+        it.skip('if delay is set to future, the first attempt to dequeue will come up empty, but will be dequeued after delay', function (done) {
+            var queueAdapter = new QueueAdapter();
+            var request = createSampleJobRequest('delayed item');
+            request.delay = moment().add(500, "ms").toDate();
+            queueAdapter.enqueue(request, function () {
+                queueAdapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
+                    assert.equal(reservedAttempt1, null);
+                    setTimeout(function () {
+                        queueAdapter.dequeue(function (reservedAttempt2, commitJob2, rollbackJob2) {
+                            assert.equal(reservedAttempt2.ref, 'delayed item');
+                            done();
+                        });
+                    }, 500);
+                });
             });
         });
     });

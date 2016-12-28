@@ -364,7 +364,6 @@ describe.only('beanstalkAdapter', function () {
                 });
             });
         });
-
         it('if delay is set to 1 sec in future it will be dequeued after 1s', function (done) {
             var adapter = new QueueAdapter();
             adapter.initialize(function (err) {

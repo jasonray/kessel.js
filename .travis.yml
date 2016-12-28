@@ -10,9 +10,13 @@ addons:
     - beanstalkd
 
 env:
-  - TEST_DIR=test
-  - TEST_DIR=integration-test
-script: npm test $TEST_DIR
+- TEST_DIR=test
+- TEST_DIR=integration-test
+- TEST_CMD=test
+- TEST_CMD=run integration-test
+
+#script: npm test $TEST_DIR
+script: npm $TEST_CMD
 
 before_install:
 - echo 'starting queue'

@@ -223,10 +223,9 @@ describe('asyncQueueAdapter', function () {
             });
         });
         it('if expiration is set to future and requested after then, it will be not be processed', function (done) {
-            var delay = 1000;
             var queueAdapter = new QueueAdapter();
             var request = createSampleJobRequest('r');
-            request.expiration = moment().add(delay, "ms").toDate();
+            request.expiration = moment().add(1000, "ms").toDate();
             setTimeout(function () {
                 queueAdapter.enqueue(request, function () {
                     queueAdapter.dequeue(function (reservedAttempt, commitJob1, rollbackJob1) {

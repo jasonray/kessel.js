@@ -25,7 +25,11 @@ Consider the following scenarios:
 - `handler`: the set of code to fulfil the `job request`.  This is where the extensibility of the system comes into play -> you create your own handlers with your logic and Kessel will delegate to your registered handlers.  Today, handlers are implemented in JavaScript
 - `queue`: Kessel uses an internal queue for holding the `job requests` that have not yet been implemented.  Currently there is support for a light weight in memory queue or beanstalkd [http://kr.github.io/beanstalkd/].
 
-# jobRequest Model
+# API
+
+## Model
+
+### jobRequest Model
 
 | Field | Optional/Request | Description |
 | --- | --- | --- |
@@ -38,10 +42,8 @@ Consider the following scenarios:
 | callback | optional | If a callback is provided it will be invoked when job is complete.  This is currently implemented with a JavaScript function callback ```function(err)```.  Pending: callbacks using HTTP endpoint |
 | payload | optional | The payload is the content to pass to the handler |
 
-# jobResult Model
+### jobResult Model
 
-jobResult Model
----------------
 | Field | Optional/Request | Description |
 | --- | --- | --- |
 | TODO: id | requred | unique identifier of result |
@@ -50,8 +52,18 @@ jobResult Model
 | status | required | The result of processing the message, valid values are `success`,`failed`,`failed-transient` |
 | message | optional | This can be populated with the error message or other human-readable informative information |
 
-Queue Adapter API
------------------
+## Job Manager API
+
+### Constructor
+### connect(callback)
+TODO: should this be private?
+### start
+### request(jobRequest, callback)
+### processSingleJob(jobRequest)
+TODO: should this have a callback
+
+## Queue Adapter API
+
 enqueue(jobRequest, callback)
 - jobRequest: see job request model
 - callback(err, jobRequest)

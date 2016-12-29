@@ -77,7 +77,9 @@ TODO: should this have a callback
 -- where, of course, rollbackComplete is a function indicating that rollback is complete
 - TODO: consider error queue and rollback with delay
 
-# Developer Set up
+# Developer Support
+
+##  Developer Set up
 First, make sure that you have `node`, `npm`, and `beanstalkd` installed.
 
 If you do not, and are on a mac, here I recommend to first install Homebrew [http://brew.sh/], then install using: `brew install node` and `brew install beanstalkd`
@@ -88,3 +90,14 @@ You will then need to setup dependencies: `npm install`
 
 To run the unit tests: `npm test`
 To run the integration tests, ensure that beanstalkd is running on port :3000 (which can be started with `bin/start-queue.sh`) then `npm run integration-test`
+
+## How to create a handler
+TODO
+
+## How to create a queue adapter
+TODO
+
+# Example
+
+## Create job request, enqueue, receive callback
+TODO

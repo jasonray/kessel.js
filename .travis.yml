@@ -18,7 +18,7 @@ before_install:
 - bin/start-queue.sh &
 - jobs -l
 
-before_script:
+after_script:
 - npm install -g npm-check
 - npm-check
 

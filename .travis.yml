@@ -1,2 +1,24 @@
 language: node_js
-node_js: "0.10"
+sudo: false
+node_js:
+  - "node"
+  - "6"
+
+addons:
+  apt:
+    packages:
+    - beanstalkd
+
+env:
+#- TEST_DIR=test
+#- TEST_DIR=integration-test
+- TEST_CMD=test
+- TEST_CMD="run integration-test"
+
+#script: npm test $TEST_DIR
+script: npm $TEST_CMD
+
+before_install:
+- echo 'starting queue'
+- bin/start-queue.sh &
+- jobs -l

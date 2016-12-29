@@ -64,11 +64,11 @@ TODO: should this have a callback
 
 ## Queue Adapter API
 
-enqueue(jobRequest, callback)
+### enqueue(jobRequest, callback)
 - jobRequest: see job request model
 - callback(err, jobRequest)
 
-dequeue(callback)
+### dequeue(callback)
 - where callback is a function(jobRequest, commit, rollback)
 - jobRequest represents the job dequeued.  Will be null/empty if there was no item on the queue
 - where commit is a function(commitComplete)
@@ -88,5 +88,3 @@ You will then need to setup dependencies: `npm install`
 
 To run the unit tests: `npm test`
 To run the integration tests, ensure that beanstalkd is running on port :3000 (which can be started with `bin/start-queue.sh`) then `npm run integration-test`
-
-

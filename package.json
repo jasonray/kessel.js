@@ -25,7 +25,7 @@
     "should": "^11.1.2",
     "underscore": "^1.8.3",
     "uuid": "^3.0.1",
-    "yargs": "^4.8.1"
+    "yargs": "^6.5.0"
   },
   "devDependencies": {
     "mocha": "^3.2.0"

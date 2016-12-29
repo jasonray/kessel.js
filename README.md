@@ -1,5 +1,4 @@
-# kessel [![Build Status](https://travis-ci.org/jasonray/kessel.svg?branch=master)](https://travis-ci.org/jasonray/kessel) [![on npm](http://img.shields.io/npm/v/kessel-run.svg?style=flat)](https://www.npmjs.org/package/kessel-run)
-[![Coverage Status](https://img.shields.io/coveralls/ceejbot/kessel-run.svg?style=flat)](https://coveralls.io/github/ceejbot/kessel-run?branch=master)
+# kessel [![Build Status](https://travis-ci.org/jasonray/kessel.svg?branch=master)](https://travis-ci.org/jasonray/kessel) [![on npm](http://img.shields.io/npm/v/kessel-run.svg?style=flat)](https://www.npmjs.org/package/kessel-run) [![Coverage Status](https://img.shields.io/coveralls/ceejbot/kessel-run.svg?style=flat)](https://coveralls.io/github/ceejbot/kessel-run?branch=master)
 
 
 

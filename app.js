@@ -21,7 +21,6 @@ var config = {
 };
 context.queue = new BeanstalkQueueAdapter(config);
 
-
 logger.info('starting kessel app script');
 logger.trace('init job manager');
 var manager = new JobManager(context);

@@ -107,3 +107,21 @@ TODO
 
 ## Create job request, enqueue, receive callback
 TODO
+
+# Development Guidelines
+
+## Logging
+In order to make the logs consistent, the following guidelines should be used:
+| Level | Guideline |
+| --- | --- | 
+| error | Critical system errors that would result in process restarting | 
+| warn  |  | 
+| info  | Major startup item; <br> No more than once per job | 
+| debug | Significant event while processing job |  
+| trace | Majority of job level logging |  
+
+
+
+
+
+

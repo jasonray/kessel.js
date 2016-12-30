@@ -66,10 +66,9 @@ TODO: should this have a callback
 
 ## Queue Adapter API
 
-### connect(callback)
+### initialize(callback)
 - callback(err)
 Description: if this queue adapter needs to do anything to initialize (such as connecting, do it here)
-TODO: perhaps this should have been called initialize rather than connect.  Which means that this should have been called initialize in job manager
 
 ### enqueue(jobRequest, callback)
 - jobRequest: see job request model

@@ -23,7 +23,7 @@ context.queue = new BeanstalkQueueAdapter(config);
 logger.info('starting kessel app script');
 logger.trace('init job manager');
 var manager = new JobManager(context);
-manager.connect(function (err) {
+manager.initialize(function (err) {
     if (!err) {
         setInterval(function () {
             var x = getRandomInt(0,9);

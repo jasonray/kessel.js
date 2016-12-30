@@ -96,7 +96,7 @@ describe('jobManager', function () {
                 callback: requestCallback
             };
             var manager = new JobManager();
-            manager.connect(function (err) {
+            manager.initialize(function (err) {
                 manager.request(request, function (err) {
                     manager.start();
                 })

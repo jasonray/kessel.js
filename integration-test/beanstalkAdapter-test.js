@@ -17,7 +17,7 @@ var config = {
 describe('beanstalkAdapter', function () {
     beforeEach(function (done) {
         var adapter = new QueueAdapter(config);
-        adapter.connect(function (err) {
+        adapter.initialize(function (err) {
             assert.equal(err, null);
             adapter.truncate(function (err) {
                 assert.equal(err, null);
@@ -31,14 +31,14 @@ describe('beanstalkAdapter', function () {
         });
         it('init', function (done) {
             var adapter = new QueueAdapter(config);
-            adapter.connect(function (err) {
+            adapter.initialize(function (err) {
                 assert.equal(err, null);
                 done();
             });
         });
         it('handle no config', function (done) {
             var adapter = new QueueAdapter();
-            adapter.connect(function (err) {
+            adapter.initialize(function (err) {
                 assert.equal(err, null);
                 done();
             });
@@ -51,7 +51,7 @@ describe('beanstalkAdapter', function () {
             }
 
             var adapter = new QueueAdapter(noHostConfig);
-            adapter.connect(function (err) {
+            adapter.initialize(function (err) {
                 assert.equal(err, null);
                 done();
             });
@@ -65,7 +65,7 @@ describe('beanstalkAdapter', function () {
             }
 
             var adapter = new QueueAdapter(invalidHostConfig);
-            adapter.connect(function (err) {
+            adapter.initialize(function (err) {
                 assert.ok(err);
                 done();
             });
@@ -79,7 +79,7 @@ describe('beanstalkAdapter', function () {
             }
 
             var adapter = new QueueAdapter(invalidPortConfig);
-            adapter.connect(function (err) {
+            adapter.initialize(function (err) {
                 assert.ok(err);
                 done();
             });
@@ -92,21 +92,21 @@ describe('beanstalkAdapter', function () {
             }
 
             var adapter = new QueueAdapter(noPortConfig);
-            adapter.connect(function (err) {
+            adapter.initialize(function (err) {
                 assert.equal(err, null);
                 done();
             });
         });
-        it('handle unable to connect to beanstalk', function (done) {
-            var unconnectableConfig = {
+        it('handle unable to initialize to beanstalk', function (done) {
+            var uninitializeableConfig = {
                 beanstalk: {
                     host: '127.0.0.1',
                     port: '9999'
                 }
             }
 
-            var adapter = new QueueAdapter(unconnectableConfig);
-            adapter.connect(function (err) {
+            var adapter = new QueueAdapter(uninitializeableConfig);
+            adapter.initialize(function (err) {
                 assert.ok(err);
                 done();
             });
@@ -120,8 +120,8 @@ describe('beanstalkAdapter', function () {
             }
 
             var queueAdapter = new QueueAdapter(config);
-            queueAdapter.connect(function (err) {
-                assert.equal(err, null, "failed to connect. Is beanstalk running?");
+            queueAdapter.initialize(function (err) {
+                assert.equal(err, null, "failed to initialize. Is beanstalk running?");
                 queueAdapter.dequeue(dequeueCallback);
             });
         });
@@ -136,16 +136,16 @@ describe('beanstalkAdapter', function () {
             }
 
             var queueAdapter = new QueueAdapter(config);
-            queueAdapter.connect(function (err) {
-                assert.equal(err, null, "failed to connect. Is beanstalk running?");
+            queueAdapter.initialize(function (err) {
+                assert.equal(err, null, "failed to initialize. Is beanstalk running?");
                 var request = createSampleJobRequest('testjob');
                 queueAdapter.enqueue(request, afterEnqueueCallback)
             });
         });
         it('truncate', function (done) {
             var queueAdapter = new QueueAdapter(config);
-            queueAdapter.connect(function (err) {
-                assert.equal(err, null, "failed to connect. Is beanstalk running?");
+            queueAdapter.initialize(function (err) {
+                assert.equal(err, null, "failed to initialize. Is beanstalk running?");
                 var requestA = createSampleJobRequest('A');
                 queueAdapter.enqueue(requestA, function (err, jobRequest) {
                     var requestB = createSampleJobRequest('B');
@@ -164,8 +164,8 @@ describe('beanstalkAdapter', function () {
     describe('enqueue / dequeue with transactions', function () {
         it('dequeue (without commit/rollback) makes item unavailable to another dequeue', function (done) {
             var queueAdapter = new QueueAdapter(config);
-            queueAdapter.connect(function (err) {
-                assert.equal(err, null, "failed to connect. Is beanstalk running?");
+            queueAdapter.initialize(function (err) {
+                assert.equal(err, null, "failed to initialize. Is beanstalk running?");
 
                 var jobRequestA = createSampleJobRequest('a');
                 queueAdapter.enqueue(jobRequestA, afterEnqueueCallback);
@@ -189,8 +189,8 @@ describe('beanstalkAdapter', function () {
         });
         it('dequeue (with commit) makes item unavailable to another dequeue', function (done) {
             var queueAdapter = new QueueAdapter(config);
-            queueAdapter.connect(function (err) {
-                assert.equal(err, null, "failed to connect. Is beanstalk running?");
+            queueAdapter.initialize(function (err) {
+                assert.equal(err, null, "failed to initialize. Is beanstalk running?");
 
                 var jobRequestA = createSampleJobRequest('a');
                 queueAdapter.enqueue(jobRequestA, afterEnqueueCallback);
@@ -217,8 +217,8 @@ describe('beanstalkAdapter', function () {
         });
         it('dequeue (with rollback) makes item available to another dequeue', function (done) {
             var queueAdapter = new QueueAdapter(config);
-            queueAdapter.connect(function (err) {
-                assert.equal(err, null, "failed to connect. Is beanstalk running?");
+            queueAdapter.initialize(function (err) {
+                assert.equal(err, null, "failed to initialize. Is beanstalk running?");
 
                 var jobRequestA = createSampleJobRequest('a');
                 queueAdapter.enqueue(jobRequestA, afterEnqueueCallback);
@@ -251,8 +251,8 @@ describe('beanstalkAdapter', function () {
             //would need to decide between explicitly switching to promises or using bluebird.promisfy
 
             var queueAdapter = new QueueAdapter(config);
-            queueAdapter.connect(function (err) {
-                assert.equal(err, null, "failed to connect. Is beanstalk running?");
+            queueAdapter.initialize(function (err) {
+                assert.equal(err, null, "failed to initialize. Is beanstalk running?");
 
                 var jobRequestA = createSampleJobRequest('a');
                 queueAdapter.enqueue(jobRequestA, function () {
@@ -301,7 +301,7 @@ describe('beanstalkAdapter', function () {
     describe('expiration', function () {
         it('if expiration is set to 1 sec in future and requested before then, it will be processed normally', function (done) {
             var adapter = new QueueAdapter();
-            adapter.connect(function (err) {
+            adapter.initialize(function (err) {
                 var request = createSampleJobRequest('r');
                 request.expiration = moment().add(1, "y").toDate();
                 adapter.enqueue(request, function () {
@@ -314,7 +314,7 @@ describe('beanstalkAdapter', function () {
         });
         it('if expiration is set to future and requested after then, it will be not be processed', function (done) {
             var adapter = new QueueAdapter();
-            adapter.connect(function (err) {
+            adapter.initialize(function (err) {
                 var request = createSampleJobRequest('r');
                 request.expiration = moment().add(1, "ms").toDate();
 
@@ -331,7 +331,7 @@ describe('beanstalkAdapter', function () {
         });
         it('with two items, expired item will be skipped to get to non-expired item', function (done) {
             var adapter = new QueueAdapter();
-            adapter.connect(function (err) {
+            adapter.initialize(function (err) {
                 var requestExpired = createSampleJobRequest('expired');
                 requestExpired.expiration = moment().subtract(1, "y").toDate();
 
@@ -352,7 +352,7 @@ describe('beanstalkAdapter', function () {
     describe('delay', function () {
         it('if delay is set to 1 year in future it cannot be dequeued now', function (done) {
             var adapter = new QueueAdapter();
-            adapter.connect(function (err) {
+            adapter.initialize(function (err) {
                 var request = createSampleJobRequest('delayed item');
                 request.delay = moment().add(1, "y").toDate();
                 adapter.enqueue(request, function () {
@@ -365,7 +365,7 @@ describe('beanstalkAdapter', function () {
         });
         it('if delay is set to 1 sec in future it will be dequeued after 1s', function (done) {
             var adapter = new QueueAdapter();
-            adapter.connect(function (err) {
+            adapter.initialize(function (err) {
                 var request = createSampleJobRequest('delayed item');
                 request.delay = moment().add(100, "ms").toDate();
                 adapter.enqueue(request, function () {
@@ -385,7 +385,7 @@ describe('beanstalkAdapter', function () {
 
         it('insert item without priority does not cause issue', function (done) {
             var queueAdapter = new QueueAdapter();
-            queueAdapter.connect(function (err) {
+            queueAdapter.initialize(function (err) {
                 var request1 = createSampleJobRequest('apple');
                 var request2 = createSampleJobRequest('banana');
 
@@ -404,7 +404,7 @@ describe('beanstalkAdapter', function () {
         });
         it('insert two items with same priority, should pop in same order', function (done) {
             var queueAdapter = new QueueAdapter();
-            queueAdapter.connect(function (err) {
+            queueAdapter.initialize(function (err) {
                 var request1 = createSampleJobRequest('apple', low_priority);
                 var request2 = createSampleJobRequest('banana', low_priority);
 
@@ -423,7 +423,7 @@ describe('beanstalkAdapter', function () {
         });
         it('insert low priority, then high priorty, should pop high priority first', function (done) {
             var queueAdapter = new QueueAdapter();
-            queueAdapter.connect(function (err) {
+            queueAdapter.initialize(function (err) {
                 var request1 = createSampleJobRequest('apple', low_priority);
                 var request2 = createSampleJobRequest('banana', high_priority);
 
@@ -442,7 +442,7 @@ describe('beanstalkAdapter', function () {
         });
         it('insert high priority, then low priority, should pop high priority first', function (done) {
             var queueAdapter = new QueueAdapter();
-            queueAdapter.connect(function (err) {
+            queueAdapter.initialize(function (err) {
                 var request1 = createSampleJobRequest('apple', high_priority);
                 var request2 = createSampleJobRequest('banana', low_priority);
 

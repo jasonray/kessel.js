@@ -26,4 +26,3 @@ logger.trace('init job manager');
 var manager = new JobManager(context);
 logger.trace('starting job manager');
 manager.start();
-logger.trace('post start job manager');

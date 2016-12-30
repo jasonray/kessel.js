@@ -81,19 +81,20 @@ describe('asyncQueueAdapter', function () {
                 queueAdapter.enqueue(request, afterEnqueueCallback)
             });
         });
-        it('enqueue then dequeue returns job request (with latency)', function (done) {
-            var dequeueCallback = function (jobRequest, commitJobA, rollbackJobA) {
-                assert.equal(jobRequest.ref, 'testjob');
-                done();
-            }
+        it.only('enqueue then dequeue returns job request (with latency)', function (done) {
+            getQueueAdapter(function (queueAdapter) {
+                var dequeueCallback = function (jobRequest, commitJobA, rollbackJobA) {
+                    assert.equal(jobRequest.ref, 'testjob');
+                    done();
+                }
 
-            var afterEnqueueCallback = function (err, jobRequest) {
-                queueAdapter.dequeue(dequeueCallback);
-            }
+                var afterEnqueueCallback = function (err, jobRequest) {
+                    queueAdapter.dequeue(dequeueCallback);
+                }
 
-            var queueAdapter = new QueueAdapter(100);
-            var request = createSampleJobRequest('testjob');
-            queueAdapter.enqueue(request, afterEnqueueCallback)
+                var request = createSampleJobRequest('testjob');
+                queueAdapter.enqueue(request, afterEnqueueCallback)
+            });
         });
     });
     describe('enqueue / dequeue with transactions', function () {

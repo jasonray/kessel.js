@@ -90,8 +90,12 @@ Next, clone the source code from this repository [https://github.com/jasonray/ke
 
 You will then need to setup dependencies: `npm install`
 
+### Run tests
 To run the unit tests: `npm test`
 To run the integration tests, ensure that beanstalkd is running on port :3000 (which can be started with `bin/start-queue.sh`) then `npm run integration-test`
+
+### Run checks
+To run dependency checks: `npm-check`
 
 ## How to create a handler
 TODO

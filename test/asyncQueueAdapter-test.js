@@ -6,10 +6,17 @@ var assert = require('assert');
 var QueueAdapter = require('../lib/queue/asyncQueueAdapter');
 var moment = require('moment');
 
+function getQueueAdapter(callback) {
+    var queueAdapter = new QueueAdapter();
+    queueAdapter.initialize(function () {
+        callback(queueAdapter);
+    });
+}
+
 describe('asyncQueueAdapter', function () {
     describe('constructor', function () {
         it('using new constructor', function () {
-            var queueAdapter = new QueueAdapter();
+            var queueAdapter = QueueAdapter();
             assert.ok(queueAdapter);
         });
         it('using implicit constructor', function () {
@@ -23,25 +30,28 @@ describe('asyncQueueAdapter', function () {
             assert.equal(queueAdapter.size(), 0);
         });
         it('after enqueue, size is 1', function (done) {
-            var queueAdapter = new QueueAdapter();
-            var request = createSampleJobRequest();
-            queueAdapter.enqueue(request, function () {
-                assert.equal(queueAdapter.size(), 1);
-                done();
+            getQueueAdapter(function (queueAdapter) {
+                var request = createSampleJobRequest();
+                queueAdapter.enqueue(request, function () {
+                    assert.equal(queueAdapter.size(), 1);
+                    done();
+                });
             });
         });
     });
     describe('isEmpty', function () {
         it('initial isEmpty returns true', function () {
-            var queueAdapter = new QueueAdapter();
-            assert.equal(queueAdapter.isEmpty(), true);
+            getQueueAdapter(function (queueAdapter) {
+                assert.equal(queueAdapter.isEmpty(), true);
+            });
         });
         it('after enqueue, isEmpty is false', function (done) {
-            var queueAdapter = new QueueAdapter();
-            var request = createSampleJobRequest();
-            queueAdapter.enqueue(request, function () {
-                assert.equal(queueAdapter.isEmpty(), false);
-                done();
+            getQueueAdapter(function (queueAdapter) {
+                var request = createSampleJobRequest();
+                queueAdapter.enqueue(request, function () {
+                    assert.equal(queueAdapter.isEmpty(), false);
+                    done();
+                });
             });
         });
     });
@@ -52,8 +62,9 @@ describe('asyncQueueAdapter', function () {
                 done();
             }
 
-            var queueAdapter = new QueueAdapter();
-            queueAdapter.dequeue(dequeueCallback);
+            getQueueAdapter(function (queueAdapter) {
+                queueAdapter.dequeue(dequeueCallback);
+            });
         });
         it('enqueue then dequeue returns job request', function (done) {
             var dequeueCallback = function (jobRequest, commitJobA, rollbackJobA) {
@@ -369,7 +380,8 @@ describe('asyncQueueAdapter', function () {
             });
         });
     });
-});
+})
+;
 
 function createSampleJobRequest(ref, priority) {
     var request = {

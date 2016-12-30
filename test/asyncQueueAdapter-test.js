@@ -6,8 +6,8 @@ var assert = require('assert');
 var QueueAdapter = require('../lib/queue/asyncQueueAdapter');
 var moment = require('moment');
 
-function getQueueAdapter(callback) {
-    var queueAdapter = new QueueAdapter();
+function getQueueAdapter(callback, latency) {
+    var queueAdapter = new QueueAdapter(latency);
     queueAdapter.initialize(function () {
         callback(queueAdapter);
     });
@@ -94,7 +94,7 @@ describe('asyncQueueAdapter', function () {
 
                 var request = createSampleJobRequest('testjob');
                 queueAdapter.enqueue(request, afterEnqueueCallback)
-            });
+            }, 500);
         });
     });
     describe('enqueue / dequeue with transactions', function () {

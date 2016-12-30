@@ -112,6 +112,7 @@ TODO
 
 ## Logging
 In order to make the logs consistent, the following guidelines should be used:
+
 | Level | Guideline |
 | --- | --- | 
 | error | Critical system errors that would result in process restarting | 

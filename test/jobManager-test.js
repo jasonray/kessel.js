@@ -26,7 +26,8 @@ describe('jobManager', function () {
             }
         };
         var manager = new JobManager();
-        manager.request(request, function() {
+        manager.request(request, function (err) {
+            assert.equal(err, null);
             done();
         });
     });

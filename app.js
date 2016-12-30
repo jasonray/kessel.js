@@ -18,7 +18,7 @@ var config = {
         port: '3000',
         timeout: 5
     }
-}
+};
 context.queue = new BeanstalkQueueAdapter(config);
 
 

@@ -18,7 +18,7 @@ describe('jobManager', function () {
             assert.ok(jobManager);
         });
     });
-    it('request job', function () {
+    it('request job', function (done) {
         var request = {
             type: 'add',
             payload: {
@@ -26,7 +26,9 @@ describe('jobManager', function () {
             }
         };
         var manager = new JobManager();
-        manager.request(request);
+        manager.request(request, function() {
+            done();
+        });
     });
 
     describe('process single job', function () {

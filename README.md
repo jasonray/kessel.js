@@ -121,7 +121,7 @@ In order to make the logs consistent, the following guidelines should be used:
 | debug | Significant event while processing job |  
 | trace | Majority of job level logging |  
 
-| Example | Guideline |
+| Example | Level |
 | --- | --- | 
 | Issue in framework that will cause system to halt | error |
 | Unable to access dependant system | warn |

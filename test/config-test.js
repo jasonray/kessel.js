@@ -2,7 +2,7 @@ var mocha = require('mocha');
 var assert = require('assert');
 var should = require('should');
 var QueueAdapter = require('../lib/queue/basicQueueAdapter');
-var config = require('../config');
+var config = require('../lib/config');
 
 var standardConfig = {
     setting1: 'a',

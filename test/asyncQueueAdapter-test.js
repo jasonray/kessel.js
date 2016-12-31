@@ -66,7 +66,7 @@ describe('asyncQueueAdapter', function () {
                 queueAdapter.dequeue(dequeueCallback);
             });
         });
-        it('enqueue then dequeue returns job request', function (done) {
+        it.only('enqueue then dequeue returns job request', function (done) {
             getQueueAdapter(function (queueAdapter) {
                 var dequeueCallback = function (jobRequest, commitJobA, rollbackJobA) {
                     assert.equal(jobRequest.ref, 'testjob');

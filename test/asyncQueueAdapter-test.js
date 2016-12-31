@@ -301,19 +301,19 @@ describe('asyncQueueAdapter', function () {
         });
         it('if delay is set to future, the first attempt to dequeue will come up empty, but will be dequeued after delay', function (done) {
             getQueueAdapter(function (queueAdapter) {
-            var request = createSampleJobRequest('delayed item');
-            request.delay = moment().add(500, "ms").toDate();
-            queueAdapter.enqueue(request, function () {
-                queueAdapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
-                    assert.equal(reservedAttempt1, null);
-                    setTimeout(function () {
-                        queueAdapter.dequeue(function (reservedAttempt2, commitJob2, rollbackJob2) {
-                            assert.equal(reservedAttempt2.ref, 'delayed item');
-                            done();
-                        });
-                    }, 500);
+                var request = createSampleJobRequest('delayed item');
+                request.delay = moment().add(500, "ms").toDate();
+                queueAdapter.enqueue(request, function () {
+                    queueAdapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
+                        assert.equal(reservedAttempt1, null);
+                        setTimeout(function () {
+                            queueAdapter.dequeue(function (reservedAttempt2, commitJob2, rollbackJob2) {
+                                assert.equal(reservedAttempt2.ref, 'delayed item');
+                                done();
+                            });
+                        }, 500);
+                    });
                 });
-            });
             });
         });
     });

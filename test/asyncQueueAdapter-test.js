@@ -253,8 +253,8 @@ describe('asyncQueueAdapter', function () {
                 }, 1000);
             });
         });
-        it('with two items, expired item will be skipped to get to non-expired item', function (done) {
-            var queueAdapter = new QueueAdapter();
+        it.only('with two items, expired item will be skipped to get to non-expired item', function (done) {
+            getQueueAdapter(function (queueAdapter) {
             var requestExpired = createSampleJobRequest('expired');
             requestExpired.expiration = moment().subtract(1, "y").toDate();
 
@@ -267,6 +267,7 @@ describe('asyncQueueAdapter', function () {
                         assert.equal(reservedAttempt.ref, 'not expired');
                         done();
                     });
+                });
                 });
             });
         });

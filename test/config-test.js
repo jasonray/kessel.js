@@ -13,7 +13,7 @@ var standardConfig = {
     }
 };
 
-describe.only('config', function () {
+describe('config', function () {
     beforeEach(function () {
         config.reset();
         config.nconf().defaults(standardConfig);

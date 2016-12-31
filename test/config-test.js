@@ -19,15 +19,15 @@ describe.only('config', function () {
     });
     describe('basic nconf', function () {
         it('read simple setting', function () {
-            var value =config.nconf().get('setting1');
-          value.should.equal('a');
+            var value = config.nconf().get('setting1');
+            value.should.equal('a');
         });
         it('read nested setting', function () {
-            var value =config.nconf().get('subSystem1:setting3');
+            var value = config.nconf().get('subSystem1:setting3');
             value.should.equal('c');
         });
         it('missing setting', function () {
-            var value =config.nconf().get('setting?');
+            var value = config.nconf().get('setting?');
             should.not.exist(value);
         });
     });

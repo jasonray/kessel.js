@@ -299,8 +299,8 @@ describe('asyncQueueAdapter', function () {
                 });
             });
         });
-        it('if delay is set to future, the first attempt to dequeue will come up empty, but will be dequeued after delay', function (done) {
-            var queueAdapter = new QueueAdapter();
+        it.only('if delay is set to future, the first attempt to dequeue will come up empty, but will be dequeued after delay', function (done) {
+            getQueueAdapter(function (queueAdapter) {
             var request = createSampleJobRequest('delayed item');
             request.delay = moment().add(500, "ms").toDate();
             queueAdapter.enqueue(request, function () {
@@ -313,6 +313,7 @@ describe('asyncQueueAdapter', function () {
                         });
                     }, 500);
                 });
+            });
             });
         });
     });

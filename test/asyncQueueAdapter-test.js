@@ -239,18 +239,19 @@ describe('asyncQueueAdapter', function () {
             });
         });
         it('if expiration is set to future and requested after then, it will be not be processed', function (done) {
-            var queueAdapter = new QueueAdapter();
-            var request = createSampleJobRequest('r');
-            request.expiration = moment().add(1000, "ms").toDate();
-            setTimeout(function () {
-                queueAdapter.enqueue(request, function () {
-                    queueAdapter.dequeue(function (reservedAttempt, commitJob1, rollbackJob1) {
-                        // assert.equal(reservedAttempt, null, 'expected to NOT dequeue an item');
-                        assert.equal(reservedAttempt, null);
-                        done();
+            getQueueAdapter(function (queueAdapter) {
+                var request = createSampleJobRequest('r');
+                request.expiration = moment().add(1000, "ms").toDate();
+                setTimeout(function () {
+                    queueAdapter.enqueue(request, function () {
+                        queueAdapter.dequeue(function (reservedAttempt, commitJob1, rollbackJob1) {
+                            // assert.equal(reservedAttempt, null, 'expected to NOT dequeue an item');
+                            assert.equal(reservedAttempt, null);
+                            done();
+                        });
                     });
-                });
-            }, 1000);
+                }, 1000);
+            });
         });
         it('with two items, expired item will be skipped to get to non-expired item', function (done) {
             var queueAdapter = new QueueAdapter();

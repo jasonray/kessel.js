@@ -273,7 +273,7 @@ describe('asyncQueueAdapter', function () {
         });
     });
     describe('delay', function () {
-        it.only('if delay is set to 1 year in future it cannot be dequeued now', function (done) {
+        it('if delay is set to 1 year in future it cannot be dequeued now', function (done) {
             getQueueAdapter(function (queueAdapter) {
             var request = createSampleJobRequest('delayed item');
             request.delay = moment().add(1, "y").toDate();

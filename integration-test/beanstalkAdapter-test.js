@@ -97,15 +97,15 @@ describe('beanstalkAdapter', function () {
                 done();
             });
         });
-        it('handle unable to connect to beanstalk', function (done) {
-            var unconnectableConfig = {
+        it('handle unable to initialize to beanstalk', function (done) {
+            var uninitializeableConfig = {
                 beanstalk: {
                     host: '127.0.0.1',
                     port: '9999'
                 }
             }
 
-            var adapter = new QueueAdapter(unconnectableConfig);
+            var adapter = new QueueAdapter(uninitializeableConfig);
             adapter.initialize(function (err) {
                 assert.ok(err);
                 done();
@@ -126,7 +126,7 @@ describe('beanstalkAdapter', function () {
             });
         });
         it('enqueue then dequeue returns job request', function (done) {
-            var dequeueCallback = function (jobRequest, commitJobA, rollbackJobA) {
+            var dequeueCallback = function (err, jobRequest, commitJobA, rollbackJobA) {
                 assert.equal(jobRequest.ref, 'testjob');
                 done();
             }
@@ -172,13 +172,13 @@ describe('beanstalkAdapter', function () {
 
                 function afterEnqueueCallback(err, jobRequest) {
                     //at this point jobRequestA is in queue
-                    queueAdapter.dequeue(function (reservedJobA, commitJobA, rollbackJobA) {
+                    queueAdapter.dequeue(function (err, reservedJobA, commitJobA, rollbackJobA) {
                         //at this point, no item on queue and jobRequestA is in reserved state
                         assert.ok(reservedJobA, 'expected an item to be reserved from queue');
                         assert.equal(reservedJobA.ref, 'a');
 
                         //if we dequeue at this point, we should get empty item as there is nothing available on queue
-                        queueAdapter.dequeue(function (reservedJobB, commitJobB, rollbackJobB) {
+                        queueAdapter.dequeue(function (err, reservedJobB, commitJobB, rollbackJobB) {
                             assert.equal(reservedJobB, null, 'expected no item available from queue');
                             done();
                         });
@@ -197,7 +197,7 @@ describe('beanstalkAdapter', function () {
 
                 function afterEnqueueCallback(err, jobRequest) {
                     //at this point jobRequestA is in queue
-                    queueAdapter.dequeue(function (reservedJobA, commitJobA, rollbackJobA) {
+                    queueAdapter.dequeue(function (err, reservedJobA, commitJobA, rollbackJobA) {
                         //at this point, no item on queue and jobRequestA is in reserved state
                         assert.ok(reservedJobA, 'expected an item to be reserved from queue');
                         assert.equal(reservedJobA.ref, 'a');
@@ -206,7 +206,7 @@ describe('beanstalkAdapter', function () {
                             //item commit off of queue
 
                             //if we dequeue at this point, we should get empty item as there is nothing available on queue
-                            queueAdapter.dequeue(function (reservedJobB, commitJobB, rollbackJobB) {
+                            queueAdapter.dequeue(function (err, reservedJobB, commitJobB, rollbackJobB) {
                                 assert.equal(reservedJobB, null, 'expected no item available from queue');
                                 done();
                             });
@@ -225,7 +225,7 @@ describe('beanstalkAdapter', function () {
 
                 function afterEnqueueCallback(err, jobRequest) {
                     //at this point jobRequestA is in queue
-                    queueAdapter.dequeue(function (reservedJobA, commitJobA, rollbackJobA) {
+                    queueAdapter.dequeue(function (err, reservedJobA, commitJobA, rollbackJobA) {
                         //at this point, no item on queue and jobRequestA is in reserved state
                         assert.ok(reservedJobA, 'expected an item to be reserved from queue');
                         assert.equal(reservedJobA.ref, 'a');
@@ -234,7 +234,7 @@ describe('beanstalkAdapter', function () {
                             //item rollbacked to queue
 
                             //if we dequeue at this point, we should get jobRequestA again
-                            queueAdapter.dequeue(function (reservedJobA2, commitJobA2, rollbackJobA2) {
+                            queueAdapter.dequeue(function (err, reservedJobA2, commitJobA2, rollbackJobA2) {
                                 assert.ok(reservedJobA2, 'expected an item to be reserved from queue');
                                 assert.equal(reservedJobA2.ref, 'a');
                                 done();
@@ -263,17 +263,17 @@ describe('beanstalkAdapter', function () {
 
                             //at this point there should be three items in the queue
 
-                            queueAdapter.dequeue(function (reservedJobA, commitJobA, rollbackJobA) {
+                            queueAdapter.dequeue(function (err, reservedJobA, commitJobA, rollbackJobA) {
                                 //expected state: jobA reserved, jobB and jobC on queue
                                 assert.ok(reservedJobA, 'expected an item to be reserved from queue');
                                 assert.equal(reservedJobA.ref, 'a');
 
-                                queueAdapter.dequeue(function (reservedJobB, commitJobB, rollbackJobB) {
+                                queueAdapter.dequeue(function (err, reservedJobB, commitJobB, rollbackJobB) {
                                     //expected state: jobA and jobB reserved, jobC on queue
                                     assert.ok(reservedJobB, 'expected an item to be reserved from queue');
                                     assert.equal(reservedJobB.ref, 'b');
 
-                                    queueAdapter.dequeue(function (reservedJobC, commitJobC, rollbackJobC) {
+                                    queueAdapter.dequeue(function (err, reservedJobC, commitJobC, rollbackJobC) {
                                         //expected state: jobA, jobB, and jobC reserved
                                         assert.ok(reservedJobC, 'expected an item to be reserved from queue');
                                         assert.equal(reservedJobC.ref, 'c');
@@ -283,7 +283,7 @@ describe('beanstalkAdapter', function () {
                                             //expected state: jobA and jobC reserved, jobB on queue
 
                                             //if we dequeue at this point, we should get jobB again
-                                            queueAdapter.dequeue(function (reservedJobB2, commitJobB2, rollbackJobB2) {
+                                            queueAdapter.dequeue(function (err, reservedJobB2, commitJobB2, rollbackJobB2) {
                                                 assert.ok(reservedJobB2, 'expected an item to be reserved from queue');
                                                 assert.equal(reservedJobB2.ref, 'b');
                                                 done();
@@ -305,7 +305,7 @@ describe('beanstalkAdapter', function () {
                 var request = createSampleJobRequest('r');
                 request.expiration = moment().add(1, "y").toDate();
                 adapter.enqueue(request, function () {
-                    adapter.dequeue(function (reservedAttempt, commitJob1, rollbackJob1) {
+                    adapter.dequeue(function (err, reservedAttempt, commitJob1, rollbackJob1) {
                         assert.equal(reservedAttempt.ref, 'r');
                         done();
                     });
@@ -320,7 +320,7 @@ describe('beanstalkAdapter', function () {
 
                 setTimeout(function () {
                     adapter.enqueue(request, function () {
-                        adapter.dequeue(function (reservedAttempt, commitJob1, rollbackJob1) {
+                        adapter.dequeue(function (err, reservedAttempt, commitJob1, rollbackJob1) {
                             // assert.equal(reservedAttempt, null, 'expected to NOT dequeue an item');
                             assert.equal(reservedAttempt, null);
                             done();
@@ -340,7 +340,7 @@ describe('beanstalkAdapter', function () {
 
                 adapter.enqueue(requestExpired, function () {
                     adapter.enqueue(requestNotExpired, function () {
-                        adapter.dequeue(function (reservedAttempt, commitJob1, rollbackJob1) {
+                        adapter.dequeue(function (err, reservedAttempt, commitJob1, rollbackJob1) {
                             assert.equal(reservedAttempt.ref, 'not expired');
                             done();
                         });
@@ -356,7 +356,7 @@ describe('beanstalkAdapter', function () {
                 var request = createSampleJobRequest('delayed item');
                 request.delay = moment().add(1, "y").toDate();
                 adapter.enqueue(request, function () {
-                    adapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
+                    adapter.dequeue(function (err, reservedAttempt1, commitJob1, rollbackJob1) {
                         assert.equal(reservedAttempt1, null, 'expected to not get an item as it should be delayed at this point');
                         done();
                     });
@@ -370,7 +370,7 @@ describe('beanstalkAdapter', function () {
                 request.delay = moment().add(100, "ms").toDate();
                 adapter.enqueue(request, function () {
                     setTimeout(function () {
-                        adapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
+                        adapter.dequeue(function (err, reservedAttempt1, commitJob1, rollbackJob1) {
                             assert.equal(reservedAttempt1.ref, 'delayed item');
                             done();
                         });
@@ -391,9 +391,9 @@ describe('beanstalkAdapter', function () {
 
                 queueAdapter.enqueue(request1, function () {
                     queueAdapter.enqueue(request2, function () {
-                        queueAdapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
+                        queueAdapter.dequeue(function (err, reservedAttempt1, commitJob1, rollbackJob1) {
                             assert.equal(reservedAttempt1.ref, 'apple');
-                            queueAdapter.dequeue(function (reservedAttempt2, commitJob2, rollbackJob2) {
+                            queueAdapter.dequeue(function (err, reservedAttempt2, commitJob2, rollbackJob2) {
                                 assert.equal(reservedAttempt2.ref, 'banana');
                                 done();
                             });
@@ -410,9 +410,9 @@ describe('beanstalkAdapter', function () {
 
                 queueAdapter.enqueue(request1, function () {
                     queueAdapter.enqueue(request2, function () {
-                        queueAdapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
+                        queueAdapter.dequeue(function (err, reservedAttempt1, commitJob1, rollbackJob1) {
                             assert.equal(reservedAttempt1.ref, 'apple');
-                            queueAdapter.dequeue(function (reservedAttempt2, commitJob2, rollbackJob2) {
+                            queueAdapter.dequeue(function (err, reservedAttempt2, commitJob2, rollbackJob2) {
                                 assert.equal(reservedAttempt2.ref, 'banana');
                                 done();
                             });
@@ -429,9 +429,9 @@ describe('beanstalkAdapter', function () {
 
                 queueAdapter.enqueue(request1, function () {
                     queueAdapter.enqueue(request2, function () {
-                        queueAdapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
+                        queueAdapter.dequeue(function (err, reservedAttempt1, commitJob1, rollbackJob1) {
                             assert.equal(reservedAttempt1.ref, 'banana');
-                            queueAdapter.dequeue(function (reservedAttempt2, commitJob2, rollbackJob2) {
+                            queueAdapter.dequeue(function (err, reservedAttempt2, commitJob2, rollbackJob2) {
                                 assert.equal(reservedAttempt2.ref, 'apple');
                                 done();
                             });
@@ -448,9 +448,9 @@ describe('beanstalkAdapter', function () {
 
                 queueAdapter.enqueue(request1, function () {
                     queueAdapter.enqueue(request2, function () {
-                        queueAdapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
+                        queueAdapter.dequeue(function (err, reservedAttempt1, commitJob1, rollbackJob1) {
                             assert.equal(reservedAttempt1.ref, 'apple');
-                            queueAdapter.dequeue(function (reservedAttempt2, commitJob2, rollbackJob2) {
+                            queueAdapter.dequeue(function (err, reservedAttempt2, commitJob2, rollbackJob2) {
                                 assert.equal(reservedAttempt2.ref, 'banana');
                                 done();
                             });

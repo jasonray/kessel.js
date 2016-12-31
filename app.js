@@ -18,26 +18,10 @@ var config = {
         port: '3000',
         timeout: 5
     }
-}
+};
 context.queue = new BeanstalkQueueAdapter(config);
 
-
 logger.info('starting kessel app script');
-logger.trace('init job manager');
 var manager = new JobManager(context);
 logger.trace('starting job manager');
 manager.start();
-logger.trace('post start job manager');
-
-
-// setInterval(function () {
-//     var request = {
-//         type: 'add',
-//         payload: {
-//             operands: [1, 2]
-//         }
-//     };
-//
-//     logger.debug('requesting job');
-//     manager.request(request);
-// }, 1);

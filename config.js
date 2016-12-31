@@ -1,7 +1,6 @@
-var nconf = require('nconf');
 
 console.log('loading config');
-
+var nconf = require('nconf');
 nconf
     .argv()
     .env()
@@ -9,7 +8,14 @@ nconf
         file: 'config/config.json'
     });
 
+module.exports.nconf = function () {
+    return nconf;
+};
 
-module.exports.getConfig = function(section, overrides) {
+module.exports.appConfig = function () {
+    return nconf.get('');
+};
 
-}
+module.exports.getConfig = function (section, overrides) {
+    return nconf.get(section);
+};

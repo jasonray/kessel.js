@@ -90,7 +90,7 @@ describe('jobManager', function () {
         });
     });
     describe('jobManager with async queue adapter', function () {
-        it.only('process one job', function (done) {
+        it('process one job', function (done) {
             var request = {
                 type: 'add',
                 payload: {

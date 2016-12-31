@@ -285,7 +285,7 @@ describe('asyncQueueAdapter', function () {
                 });
             });
         });
-        it.only('if delay is set to 1 sec in future it will be dequeued after 1s', function (done) {
+        it('if delay is set to 1 sec in future it will be dequeued after 1s', function (done) {
             getQueueAdapter(function (queueAdapter) {
             var request = createSampleJobRequest('delayed item');
             request.delay = moment().add(500, "ms").toDate();

@@ -147,7 +147,7 @@ describe('asyncQueueAdapter', function () {
                 }
             });
         });
-        it.only('dequeue (with rollback) makes item available to another dequeue', function (done) {
+        it('dequeue (with rollback) makes item available to another dequeue', function (done) {
             getQueueAdapter(function (queueAdapter) {
 
             var jobRequestA = createSampleJobRequest('a');

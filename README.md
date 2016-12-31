@@ -66,6 +66,10 @@ TODO: should this have a callback
 
 ## Queue Adapter API
 
+### initialize(callback)
+- callback(err)
+Description: if this queue adapter needs to do anything to initialize (such as connecting, do it here)
+
 ### enqueue(jobRequest, callback)
 - jobRequest: see job request model
 - callback(err, jobRequest)
@@ -90,8 +94,12 @@ Next, clone the source code from this repository [https://github.com/jasonray/ke
 
 You will then need to setup dependencies: `npm install`
 
+### Run tests
 To run the unit tests: `npm test`
 To run the integration tests, ensure that beanstalkd is running on port :3000 (which can be started with `bin/start-queue.sh`) then `npm run integration-test`
+
+### Run checks
+To run dependency checks: `npm-check`
 
 ## How to create a handler
 TODO
@@ -103,3 +111,30 @@ TODO
 
 ## Create job request, enqueue, receive callback
 TODO
+
+# Development Guidelines
+
+## Logging
+In order to make the logs consistent, the following guidelines should be used:
+
+| Level | Guideline |
+| --- | --- | 
+| error | Critical system errors that would result in process restarting | 
+| warn  | Subsystem failures | 
+| info  | Major startup item; <br> No more than once per job | 
+| debug | Significant event while processing job |  
+| trace | Majority of job level logging |  
+
+| Example | Level |
+| --- | --- | 
+| Issue in framework that will cause system to halt | error |
+| Unable to access dependant system | warn |
+| Framework logging enqeue, dequeue, and completion of job (one or two log messages per job) | info |
+| Handler logging | debug or trace |
+
+
+
+
+
+
+

@@ -1,6 +1,6 @@
 {
   "name": "kessel-run",
-  "version": "0.2.5",
+  "version": "0.2.8",
   "description": "lightweight framework for handling distributed delayed job processing",
   "main": "app.js",
   "scripts": {
@@ -32,5 +32,16 @@
     "mocha": "^3.2.0",
     "mocha-lcov-reporter": "^1.2.0"
   },
+  "keywords": [
+    "job",
+    "queue",
+    "task",
+    "beanstalk",
+    "beanstalkd",
+    "job processor",
+    "queue processor",
+    "delayed job processor",
+    "delayed task processor"
+  ],
   "homepage": "https://github.com/jasonray/kessel#readme"
 }

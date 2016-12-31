@@ -18,7 +18,7 @@ describe('jobManager', function () {
             assert.ok(jobManager);
         });
     });
-    it('request job', function () {
+    it('request job', function (done) {
         var request = {
             type: 'add',
             payload: {
@@ -26,7 +26,10 @@ describe('jobManager', function () {
             }
         };
         var manager = new JobManager();
-        manager.request(request);
+        manager.request(request, function (err) {
+            assert.equal(err, null);
+            done();
+        });
     });
 
     describe('process single job', function () {
@@ -87,7 +90,7 @@ describe('jobManager', function () {
         });
     });
     describe('jobManager with async queue adapter', function () {
-        it('process one job', function (done) {
+        it.only('process one job', function (done) {
             var request = {
                 type: 'add',
                 payload: {
@@ -96,7 +99,7 @@ describe('jobManager', function () {
                 callback: requestCallback
             };
             var manager = new JobManager();
-            manager.connect(function (err) {
+            manager.initialize(function (err) {
                 manager.request(request, function (err) {
                     manager.start();
                 })

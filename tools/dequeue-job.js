@@ -31,12 +31,12 @@ var Dequeuer = function() {
     }
 }
 
-Dequeuer.prototype.connect = function() {
+Dequeuer.prototype.initialize = function() {
     var self = this;
 
     self.client = new fivebeans.client(self.connection.host, self.connection.port);
 
-    self.client.on('connect', function() {
+    self.client.on('initialize', function() {
         console.log('connected');
         self.client.watch(self.connection.tube, function() {
             console.log('watched tube, emitting next');
@@ -45,8 +45,8 @@ Dequeuer.prototype.connect = function() {
     });
 
     console.log('connecting..');
-    self.client.connect();
+    self.client.initialize();
 }
 
 var dequeuer = new Dequeuer();
-dequeuer.connect();
+dequeuer.initialize();

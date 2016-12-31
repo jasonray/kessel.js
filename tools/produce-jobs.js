@@ -7,7 +7,7 @@ var FrequencyProducer = function(connection, frequency, max, content) {
     var fivebeans = require('fivebeans');
     self.client = new fivebeans.client(connection.host, connection.port);
 
-    self.client.on('connect', function() {
+    self.client.on('initialize', function() {
         periodicallyQueueJobs();
     });
 
@@ -50,9 +50,9 @@ var FrequencyProducer = function(connection, frequency, max, content) {
     }
 }
 
-FrequencyProducer.prototype.connect = function() {
+FrequencyProducer.prototype.initialize = function() {
     var self = this;
-    self.client.connect();
+    self.client.initialize();
 }
 
 
@@ -63,7 +63,7 @@ var ContinuousProducer = function(connection, max, content) {
     var fivebeans = require('fivebeans');
     self.client = new fivebeans.client(connection.host, connection.port);
 
-    self.client.on('connect', function() {
+    self.client.on('initialize', function() {
         queueJobs();
     });
 
@@ -94,9 +94,9 @@ var ContinuousProducer = function(connection, max, content) {
     }
 }
 
-ContinuousProducer.prototype.connect = function() {
+ContinuousProducer.prototype.initialize = function() {
     var self = this;
-    self.client.connect();
+    self.client.initialize();
 }
 
 
@@ -130,4 +130,4 @@ if (argv.c) {
     producer = new FrequencyProducer(connection, argv.frequency, argv.max, argv.payload);
 }
 
-producer.connect();
+producer.initialize();

@@ -12,7 +12,7 @@ var job = {
 };
 
 var client = new fivebeans.client(connection.host, connection.port);
-client.on('connect', function() {
+client.on('initialize', function() {
     periodicallyQueueJobs();
 });
 
@@ -26,4 +26,4 @@ function queueJob() {
     });
 }
 
-client.connect();
+client.initialize();

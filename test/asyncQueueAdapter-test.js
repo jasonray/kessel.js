@@ -227,7 +227,7 @@ describe('asyncQueueAdapter', function () {
     });
     describe('expiration', function () {
         it('if expiration is set to 1 sec in future and requested before then, it will be processed normally', function (done) {
-            var queueAdapter = new QueueAdapter();
+            getQueueAdapter(function (queueAdapter) {
             var request = createSampleJobRequest('r');
             request.expiration = moment().add(1, "y").toDate();
             queueAdapter.enqueue(request, function () {
@@ -235,6 +235,7 @@ describe('asyncQueueAdapter', function () {
                     assert.equal(reservedAttempt.ref, 'r');
                     done();
                 });
+            });
             });
         });
         it('if expiration is set to future and requested after then, it will be not be processed', function (done) {

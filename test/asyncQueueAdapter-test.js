@@ -147,8 +147,8 @@ describe('asyncQueueAdapter', function () {
                 }
             });
         });
-        it('dequeue (with rollback) makes item available to another dequeue', function (done) {
-            var queueAdapter = new QueueAdapter();
+        it.only('dequeue (with rollback) makes item available to another dequeue', function (done) {
+            getQueueAdapter(function (queueAdapter) {
 
             var jobRequestA = createSampleJobRequest('a');
             queueAdapter.enqueue(jobRequestA, afterEnqueueCallback);
@@ -172,6 +172,7 @@ describe('asyncQueueAdapter', function () {
                     });
                 });
             }
+            });
         });
         it('ensure support for two no-committed dequeue', function (done) {
             //TODO: holy callbacks, batman.  Switch this to promises.

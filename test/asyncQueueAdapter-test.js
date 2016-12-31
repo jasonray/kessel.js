@@ -180,41 +180,41 @@ describe('asyncQueueAdapter', function () {
             //how to handle the callbacks on commit() and rollback() that would need to be overcome
             //would need to decide between explicitly switching to promises or using bluebird.promisfy
 
-            var queueAdapter = new QueueAdapter();
+            getQueueAdapter(function (queueAdapter) {
+                var jobRequestA = createSampleJobRequest('a');
+                queueAdapter.enqueue(jobRequestA, function () {
+                    var jobRequestB = createSampleJobRequest('b');
+                    queueAdapter.enqueue(jobRequestB, function () {
+                        var jobRequestC = createSampleJobRequest('c');
+                        queueAdapter.enqueue(jobRequestC, function () {
 
-            var jobRequestA = createSampleJobRequest('a');
-            queueAdapter.enqueue(jobRequestA, function () {
-                var jobRequestB = createSampleJobRequest('b');
-                queueAdapter.enqueue(jobRequestB, function () {
-                    var jobRequestC = createSampleJobRequest('c');
-                    queueAdapter.enqueue(jobRequestC, function () {
+                            //at this point there should be three items in the queue
 
-                        //at this point there should be three items in the queue
+                            queueAdapter.dequeue(function (reservedJobA, commitJobA, rollbackJobA) {
+                                //expected state: jobA reserved, jobB and jobC on queue
+                                assert.ok(reservedJobA, 'expected an item to be reserved from queue');
+                                assert.equal(reservedJobA.ref, 'a');
 
-                        queueAdapter.dequeue(function (reservedJobA, commitJobA, rollbackJobA) {
-                            //expected state: jobA reserved, jobB and jobC on queue
-                            assert.ok(reservedJobA, 'expected an item to be reserved from queue');
-                            assert.equal(reservedJobA.ref, 'a');
+                                queueAdapter.dequeue(function (reservedJobB, commitJobB, rollbackJobB) {
+                                    //expected state: jobA and jobB reserved, jobC on queue
+                                    assert.ok(reservedJobB, 'expected an item to be reserved from queue');
+                                    assert.equal(reservedJobB.ref, 'b');
 
-                            queueAdapter.dequeue(function (reservedJobB, commitJobB, rollbackJobB) {
-                                //expected state: jobA and jobB reserved, jobC on queue
-                                assert.ok(reservedJobB, 'expected an item to be reserved from queue');
-                                assert.equal(reservedJobB.ref, 'b');
+                                    queueAdapter.dequeue(function (reservedJobC, commitJobC, rollbackJobC) {
+                                        //expected state: jobA, jobB, and jobC reserved
+                                        assert.ok(reservedJobC, 'expected an item to be reserved from queue');
+                                        assert.equal(reservedJobC.ref, 'c');
 
-                                queueAdapter.dequeue(function (reservedJobC, commitJobC, rollbackJobC) {
-                                    //expected state: jobA, jobB, and jobC reserved
-                                    assert.ok(reservedJobC, 'expected an item to be reserved from queue');
-                                    assert.equal(reservedJobC.ref, 'c');
+                                        rollbackJobB(function () {
+                                            //job B rollbacked to queue
+                                            //expected state: jobA and jobC reserved, jobB on queue
 
-                                    rollbackJobB(function () {
-                                        //job B rollbacked to queue
-                                        //expected state: jobA and jobC reserved, jobB on queue
-
-                                        //if we dequeue at this point, we should get jobB again
-                                        queueAdapter.dequeue(function (reservedJobB2, commitJobB2, rollbackJobB2) {
-                                            assert.ok(reservedJobB2, 'expected an item to be reserved from queue');
-                                            assert.equal(reservedJobB2.ref, 'b');
-                                            done();
+                                            //if we dequeue at this point, we should get jobB again
+                                            queueAdapter.dequeue(function (reservedJobB2, commitJobB2, rollbackJobB2) {
+                                                assert.ok(reservedJobB2, 'expected an item to be reserved from queue');
+                                                assert.equal(reservedJobB2.ref, 'b');
+                                                done();
+                                            });
                                         });
                                     });
                                 });
@@ -223,7 +223,6 @@ describe('asyncQueueAdapter', function () {
                     });
                 });
             });
-
         });
     });
     describe('expiration', function () {

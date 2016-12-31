@@ -253,7 +253,7 @@ describe('asyncQueueAdapter', function () {
                 }, 1000);
             });
         });
-        it.only('with two items, expired item will be skipped to get to non-expired item', function (done) {
+        it('with two items, expired item will be skipped to get to non-expired item', function (done) {
             getQueueAdapter(function (queueAdapter) {
             var requestExpired = createSampleJobRequest('expired');
             requestExpired.expiration = moment().subtract(1, "y").toDate();

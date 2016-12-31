@@ -322,7 +322,7 @@ describe('asyncQueueAdapter', function () {
         var high_priority = 1;
 
         it('insert item without priority does not cause issue', function (done) {
-            var queueAdapter = new QueueAdapter();
+            getQueueAdapter(function (queueAdapter) {
             var request1 = createSampleJobRequest('apple');
             var request2 = createSampleJobRequest('banana');
 
@@ -338,8 +338,9 @@ describe('asyncQueueAdapter', function () {
                 });
             });
         });
+        });
         it('insert two items with same priority, should pop in same order', function (done) {
-            var queueAdapter = new QueueAdapter();
+            getQueueAdapter(function (queueAdapter) {
             var request1 = createSampleJobRequest('apple', low_priority);
             var request2 = createSampleJobRequest('banana', low_priority);
 
@@ -352,11 +353,12 @@ describe('asyncQueueAdapter', function () {
                             done();
                         });
                     });
+                    });
                 });
             });
         });
         it('insert low priority, then high priorty, should pop high priority first', function (done) {
-            var queueAdapter = new QueueAdapter();
+            getQueueAdapter(function (queueAdapter) {
             var request1 = createSampleJobRequest('apple', low_priority);
             var request2 = createSampleJobRequest('banana', high_priority);
 
@@ -369,11 +371,12 @@ describe('asyncQueueAdapter', function () {
                             done();
                         });
                     });
+                    });
                 });
             });
         });
         it('insert high priority, then low priorty, should pop high priority first', function (done) {
-            var queueAdapter = new QueueAdapter();
+            getQueueAdapter(function (queueAdapter) {
             var request1 = createSampleJobRequest('apple', high_priority);
             var request2 = createSampleJobRequest('banana', low_priority);
 
@@ -388,10 +391,10 @@ describe('asyncQueueAdapter', function () {
                     });
                 });
             });
+            });
         });
     });
-})
-;
+        });
 
 function createSampleJobRequest(ref, priority) {
     var request = {

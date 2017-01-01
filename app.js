@@ -8,14 +8,14 @@ logger = context.logManager.getLogger('app');
 
 
 context.config = require('./lib/config');
-logger.trace('standardConfig:', context.config.get());
-logger.trace('config.beanstalk.timeout', context.config.get('beanstalk').timeout);
+logger.trace('standardConfig:', context.config.getConfig());
+logger.trace('config.beanstalk', context.config.getConfig('beanstalk'));
 
 var BeanstalkQueueAdapter = require('./lib/queue/beanstalkAdapter');
-context.queue = new BeanstalkQueueAdapter(context.config);
+context.queue = new BeanstalkQueueAdapter(context.config.getConfig('beanstalk'));
 
 logger.info('starting kessel app script');
 var manager = new JobManager(context);
 logger.trace('starting job manager');
-// manager.start();
+manager.start();
 

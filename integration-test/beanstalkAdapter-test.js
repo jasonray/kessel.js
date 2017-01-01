@@ -36,7 +36,7 @@ describe('beanstalkAdapter', function () {
         it('handle config with no host', function (done) {
             var noHostConfig = {
                     port: '3000'
-            }
+            };
 
             var adapter = new QueueAdapter(noHostConfig);
             adapter.initialize(function (err) {

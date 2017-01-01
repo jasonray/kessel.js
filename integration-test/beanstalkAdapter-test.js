@@ -7,14 +7,16 @@ var QueueAdapter = require('../lib/queue/beanstalkAdapter');
 var moment = require('moment');
 
 var standardConfig = {
-    beanstalk: {
-        host: '127.0.0.1',
-        port: '3000'
-    }
-}
+    host: '127.0.0.1',
+    port: '3000',
+    timeout: 0,
+};
 
 //these tests assume that beanstalkd is running at 127.0.0.1:3000
 describe('beanstalkAdapter', function () {
+    beforeEach(function () {
+        require('../lib/config').reset();
+    });
     describe('initialization', function () {
         it('constructor', function () {
             var adapter = new QueueAdapter(standardConfig);
@@ -94,21 +96,17 @@ describe('beanstalkAdapter', function () {
     });
     describe('tests which require truncating queue', function () {
         beforeEach(function (done) {
-            console.log('before each..');
-            require('../lib/config').reset();
-
             var adapter = new QueueAdapter(standardConfig);
             adapter.initialize(function (err) {
                 assert.equal(err, null);
                 adapter.truncate(function (err) {
                     assert.equal(err, null);
-                    console.log('end before each..');
                     done();
                 })
             });
         });
         describe('enqueue / dequeue', function () {
-            it.only('dequeue on empty returns empty', function (done) {
+            it('dequeue on empty returns empty', function (done) {
                 var dequeueCallback = function (reservedJobRequest, commitJobA, rollbackJobA) {
                     assert.equal(reservedJobRequest, null);
                     done();
@@ -120,7 +118,7 @@ describe('beanstalkAdapter', function () {
                     queueAdapter.dequeue(dequeueCallback);
                 });
             });
-            it.only('enqueue then dequeue returns job request', function (done) {
+            it('enqueue then dequeue returns job request', function (done) {
                 var dequeueCallback = function (err, jobRequest, commitJobA, rollbackJobA) {
                     assert.equal(err, null, 'error occurred: ' + err);
                     assert.equal(jobRequest.ref, 'testjob');

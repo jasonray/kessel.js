@@ -94,6 +94,7 @@ describe('beanstalkAdapter', function () {
     });
     describe('tests which require truncating queue', function () {
         beforeEach(function (done) {
+            console.log('before each..');
             require('../lib/config').reset();
 
             var adapter = new QueueAdapter(standardConfig);
@@ -101,6 +102,7 @@ describe('beanstalkAdapter', function () {
                 assert.equal(err, null);
                 adapter.truncate(function (err) {
                     assert.equal(err, null);
+                    console.log('end before each..');
                     done();
                 })
             });
@@ -118,7 +120,7 @@ describe('beanstalkAdapter', function () {
                     queueAdapter.dequeue(dequeueCallback);
                 });
             });
-            it('enqueue then dequeue returns job request', function (done) {
+            it.only('enqueue then dequeue returns job request', function (done) {
                 var dequeueCallback = function (err, jobRequest, commitJobA, rollbackJobA) {
                     assert.equal(err, null, 'error occurred: ' + err);
                     assert.equal(jobRequest.ref, 'testjob');

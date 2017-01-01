@@ -1,1 +1,1 @@
-node app.js | node_modules/.bin/bunyan
+node app.js $@ | node_modules/.bin/bunyan

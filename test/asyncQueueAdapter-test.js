@@ -60,7 +60,7 @@ describe('asyncQueueAdapter', function () {
             var dequeueCallback = function (reservedJobRequest, commitJobA, rollbackJobA) {
                 assert.equal(reservedJobRequest, null);
                 done();
-            }
+            };
 
             getQueueAdapter(function (queueAdapter) {
                 queueAdapter.dequeue(dequeueCallback);
@@ -68,14 +68,14 @@ describe('asyncQueueAdapter', function () {
         });
         it('enqueue then dequeue returns job request', function (done) {
             getQueueAdapter(function (queueAdapter) {
-                var dequeueCallback = function (jobRequest, commitJobA, rollbackJobA) {
+                var dequeueCallback = function (err, jobRequest, commitJobA, rollbackJobA) {
                     assert.equal(jobRequest.ref, 'testjob');
                     done();
-                }
+                };
 
                 var afterEnqueueCallback = function (err, jobRequest) {
                     queueAdapter.dequeue(dequeueCallback);
-                }
+                };
 
                 var request = createSampleJobRequest('testjob');
                 queueAdapter.enqueue(request, afterEnqueueCallback)
@@ -83,7 +83,7 @@ describe('asyncQueueAdapter', function () {
         });
         it('enqueue then dequeue returns job request (with latency)', function (done) {
             getQueueAdapter(function (queueAdapter) {
-                var dequeueCallback = function (jobRequest, commitJobA, rollbackJobA) {
+                var dequeueCallback = function (err, jobRequest, commitJobA, rollbackJobA) {
                     assert.equal(jobRequest.ref, 'testjob');
                     done();
                 }
@@ -106,13 +106,13 @@ describe('asyncQueueAdapter', function () {
 
                 function afterEnqueueCallback(err, jobRequest) {
                     //at this point jobRequestA is in queue
-                    queueAdapter.dequeue(function (reservedJobA, commitJobA, rollbackJobA) {
+                    queueAdapter.dequeue(function (err, reservedJobA, commitJobA, rollbackJobA) {
                         //at this point, no item on queue and jobRequestA is in reserved state
                         assert.ok(reservedJobA, 'expected an item to be reserved from queue');
                         assert.equal(reservedJobA.ref, 'a');
 
                         //if we dequeue at this point, we should get empty item as there is nothing available on queue
-                        queueAdapter.dequeue(function (reservedJobB, commitJobB, rollbackJobB) {
+                        queueAdapter.dequeue(function (err, reservedJobB, commitJobB, rollbackJobB) {
                             assert.equal(reservedJobB, null, 'expected no item available from queue');
                             done();
                         });
@@ -129,7 +129,7 @@ describe('asyncQueueAdapter', function () {
 
                 function afterEnqueueCallback(err, jobRequest) {
                     //at this point jobRequestA is in queue
-                    queueAdapter.dequeue(function (reservedJobA, commitJobA, rollbackJobA) {
+                    queueAdapter.dequeue(function (err, reservedJobA, commitJobA, rollbackJobA) {
                         //at this point, no item on queue and jobRequestA is in reserved state
                         assert.ok(reservedJobA, 'expected an item to be reserved from queue');
                         assert.equal(reservedJobA.ref, 'a');
@@ -138,7 +138,7 @@ describe('asyncQueueAdapter', function () {
                             //item commit off of queue
 
                             //if we dequeue at this point, we should get empty item as there is nothing available on queue
-                            queueAdapter.dequeue(function (reservedJobB, commitJobB, rollbackJobB) {
+                            queueAdapter.dequeue(function (err, reservedJobB, commitJobB, rollbackJobB) {
                                 assert.equal(reservedJobB, null, 'expected no item available from queue');
                                 done();
                             });
@@ -155,7 +155,7 @@ describe('asyncQueueAdapter', function () {
 
                 function afterEnqueueCallback(err, jobRequest) {
                     //at this point jobRequestA is in queue
-                    queueAdapter.dequeue(function (reservedJobA, commitJobA, rollbackJobA) {
+                    queueAdapter.dequeue(function (err, reservedJobA, commitJobA, rollbackJobA) {
                         //at this point, no item on queue and jobRequestA is in reserved state
                         assert.ok(reservedJobA, 'expected an item to be reserved from queue');
                         assert.equal(reservedJobA.ref, 'a');
@@ -164,7 +164,7 @@ describe('asyncQueueAdapter', function () {
                             //item rollbacked to queue
 
                             //if we dequeue at this point, we should get jobRequestA again
-                            queueAdapter.dequeue(function (reservedJobA2, commitJobA2, rollbackJobA2) {
+                            queueAdapter.dequeue(function (err, reservedJobA2, commitJobA2, rollbackJobA2) {
                                 assert.ok(reservedJobA2, 'expected an item to be reserved from queue');
                                 assert.equal(reservedJobA2.ref, 'a');
                                 done();
@@ -190,17 +190,17 @@ describe('asyncQueueAdapter', function () {
 
                             //at this point there should be three items in the queue
 
-                            queueAdapter.dequeue(function (reservedJobA, commitJobA, rollbackJobA) {
+                            queueAdapter.dequeue(function (err, reservedJobA, commitJobA, rollbackJobA) {
                                 //expected state: jobA reserved, jobB and jobC on queue
                                 assert.ok(reservedJobA, 'expected an item to be reserved from queue');
                                 assert.equal(reservedJobA.ref, 'a');
 
-                                queueAdapter.dequeue(function (reservedJobB, commitJobB, rollbackJobB) {
+                                queueAdapter.dequeue(function (err, reservedJobB, commitJobB, rollbackJobB) {
                                     //expected state: jobA and jobB reserved, jobC on queue
                                     assert.ok(reservedJobB, 'expected an item to be reserved from queue');
                                     assert.equal(reservedJobB.ref, 'b');
 
-                                    queueAdapter.dequeue(function (reservedJobC, commitJobC, rollbackJobC) {
+                                    queueAdapter.dequeue(function (err, reservedJobC, commitJobC, rollbackJobC) {
                                         //expected state: jobA, jobB, and jobC reserved
                                         assert.ok(reservedJobC, 'expected an item to be reserved from queue');
                                         assert.equal(reservedJobC.ref, 'c');
@@ -210,7 +210,7 @@ describe('asyncQueueAdapter', function () {
                                             //expected state: jobA and jobC reserved, jobB on queue
 
                                             //if we dequeue at this point, we should get jobB again
-                                            queueAdapter.dequeue(function (reservedJobB2, commitJobB2, rollbackJobB2) {
+                                            queueAdapter.dequeue(function (err, reservedJobB2, commitJobB2, rollbackJobB2) {
                                                 assert.ok(reservedJobB2, 'expected an item to be reserved from queue');
                                                 assert.equal(reservedJobB2.ref, 'b');
                                                 done();
@@ -231,7 +231,7 @@ describe('asyncQueueAdapter', function () {
                 var request = createSampleJobRequest('r');
                 request.expiration = moment().add(1, "y").toDate();
                 queueAdapter.enqueue(request, function () {
-                    queueAdapter.dequeue(function (reservedAttempt, commitJob1, rollbackJob1) {
+                    queueAdapter.dequeue(function (err, reservedAttempt, commitJob1, rollbackJob1) {
                         assert.equal(reservedAttempt.ref, 'r');
                         done();
                     });
@@ -244,7 +244,7 @@ describe('asyncQueueAdapter', function () {
                 request.expiration = moment().add(1000, "ms").toDate();
                 setTimeout(function () {
                     queueAdapter.enqueue(request, function () {
-                        queueAdapter.dequeue(function (reservedAttempt, commitJob1, rollbackJob1) {
+                        queueAdapter.dequeue(function (err, reservedAttempt, commitJob1, rollbackJob1) {
                             // assert.equal(reservedAttempt, null, 'expected to NOT dequeue an item');
                             assert.equal(reservedAttempt, null);
                             done();
@@ -263,7 +263,7 @@ describe('asyncQueueAdapter', function () {
 
                 queueAdapter.enqueue(requestExpired, function () {
                     queueAdapter.enqueue(requestNotExpired, function () {
-                        queueAdapter.dequeue(function (reservedAttempt, commitJob1, rollbackJob1) {
+                        queueAdapter.dequeue(function (err, reservedAttempt, commitJob1, rollbackJob1) {
                             assert.equal(reservedAttempt.ref, 'not expired');
                             done();
                         });
@@ -278,7 +278,7 @@ describe('asyncQueueAdapter', function () {
                 var request = createSampleJobRequest('delayed item');
                 request.delay = moment().add(1, "y").toDate();
                 queueAdapter.enqueue(request, function () {
-                    queueAdapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
+                    queueAdapter.dequeue(function (err, reservedAttempt1, commitJob1, rollbackJob1) {
                         assert.equal(reservedAttempt1, null, 'expected to not get an item as it should be delayed at this point');
                         done();
                     });
@@ -291,7 +291,7 @@ describe('asyncQueueAdapter', function () {
                 request.delay = moment().add(500, "ms").toDate();
                 queueAdapter.enqueue(request, function () {
                     setTimeout(function () {
-                        queueAdapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
+                        queueAdapter.dequeue(function (err, reservedAttempt1, commitJob1, rollbackJob1) {
                             assert.equal(reservedAttempt1.ref, 'delayed item');
                             done();
                         });
@@ -304,10 +304,10 @@ describe('asyncQueueAdapter', function () {
                 var request = createSampleJobRequest('delayed item');
                 request.delay = moment().add(500, "ms").toDate();
                 queueAdapter.enqueue(request, function () {
-                    queueAdapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
+                    queueAdapter.dequeue(function (err, reservedAttempt1, commitJob1, rollbackJob1) {
                         assert.equal(reservedAttempt1, null);
                         setTimeout(function () {
-                            queueAdapter.dequeue(function (reservedAttempt2, commitJob2, rollbackJob2) {
+                            queueAdapter.dequeue(function (err, reservedAttempt2, commitJob2, rollbackJob2) {
                                 assert.equal(reservedAttempt2.ref, 'delayed item');
                                 done();
                             });
@@ -323,78 +323,78 @@ describe('asyncQueueAdapter', function () {
 
         it('insert item without priority does not cause issue', function (done) {
             getQueueAdapter(function (queueAdapter) {
-            var request1 = createSampleJobRequest('apple');
-            var request2 = createSampleJobRequest('banana');
+                var request1 = createSampleJobRequest('apple');
+                var request2 = createSampleJobRequest('banana');
 
-            queueAdapter.enqueue(request1, function () {
-                queueAdapter.enqueue(request2, function () {
-                    queueAdapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
-                        assert.equal(reservedAttempt1.ref, 'apple');
-                        queueAdapter.dequeue(function (reservedAttempt2, commitJob2, rollbackJob2) {
-                            assert.equal(reservedAttempt2.ref, 'banana');
-                            done();
+                queueAdapter.enqueue(request1, function () {
+                    queueAdapter.enqueue(request2, function () {
+                        queueAdapter.dequeue(function (err, reservedAttempt1, commitJob1, rollbackJob1) {
+                            assert.equal(reservedAttempt1.ref, 'apple');
+                            queueAdapter.dequeue(function (err, reservedAttempt2, commitJob2, rollbackJob2) {
+                                assert.equal(reservedAttempt2.ref, 'banana');
+                                done();
+                            });
                         });
                     });
                 });
             });
         });
-        });
         it('insert two items with same priority, should pop in same order', function (done) {
             getQueueAdapter(function (queueAdapter) {
-            var request1 = createSampleJobRequest('apple', low_priority);
-            var request2 = createSampleJobRequest('banana', low_priority);
+                var request1 = createSampleJobRequest('apple', low_priority);
+                var request2 = createSampleJobRequest('banana', low_priority);
 
-            queueAdapter.enqueue(request1, function () {
-                queueAdapter.enqueue(request2, function () {
-                    queueAdapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
-                        assert.equal(reservedAttempt1.ref, 'apple');
-                        queueAdapter.dequeue(function (reservedAttempt2, commitJob2, rollbackJob2) {
-                            assert.equal(reservedAttempt2.ref, 'banana');
-                            done();
+                queueAdapter.enqueue(request1, function () {
+                    queueAdapter.enqueue(request2, function () {
+                        queueAdapter.dequeue(function (err, reservedAttempt1, commitJob1, rollbackJob1) {
+                            assert.equal(reservedAttempt1.ref, 'apple');
+                            queueAdapter.dequeue(function (err, reservedAttempt2, commitJob2, rollbackJob2) {
+                                assert.equal(reservedAttempt2.ref, 'banana');
+                                done();
+                            });
                         });
-                    });
                     });
                 });
             });
         });
         it('insert low priority, then high priorty, should pop high priority first', function (done) {
             getQueueAdapter(function (queueAdapter) {
-            var request1 = createSampleJobRequest('apple', low_priority);
-            var request2 = createSampleJobRequest('banana', high_priority);
+                var request1 = createSampleJobRequest('apple', low_priority);
+                var request2 = createSampleJobRequest('banana', high_priority);
 
-            queueAdapter.enqueue(request1, function () {
-                queueAdapter.enqueue(request2, function () {
-                    queueAdapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
-                        assert.equal(reservedAttempt1.ref, 'banana');
-                        queueAdapter.dequeue(function (reservedAttempt2, commitJob2, rollbackJob2) {
-                            assert.equal(reservedAttempt2.ref, 'apple');
-                            done();
+                queueAdapter.enqueue(request1, function () {
+                    queueAdapter.enqueue(request2, function () {
+                        queueAdapter.dequeue(function (err, reservedAttempt1, commitJob1, rollbackJob1) {
+                            assert.equal(reservedAttempt1.ref, 'banana');
+                            queueAdapter.dequeue(function (err, reservedAttempt2, commitJob2, rollbackJob2) {
+                                assert.equal(reservedAttempt2.ref, 'apple');
+                                done();
+                            });
                         });
-                    });
                     });
                 });
             });
         });
         it('insert high priority, then low priorty, should pop high priority first', function (done) {
             getQueueAdapter(function (queueAdapter) {
-            var request1 = createSampleJobRequest('apple', high_priority);
-            var request2 = createSampleJobRequest('banana', low_priority);
+                var request1 = createSampleJobRequest('apple', high_priority);
+                var request2 = createSampleJobRequest('banana', low_priority);
 
-            queueAdapter.enqueue(request1, function () {
-                queueAdapter.enqueue(request2, function () {
-                    queueAdapter.dequeue(function (reservedAttempt1, commitJob1, rollbackJob1) {
-                        assert.equal(reservedAttempt1.ref, 'apple');
-                        queueAdapter.dequeue(function (reservedAttempt2, commitJob2, rollbackJob2) {
-                            assert.equal(reservedAttempt2.ref, 'banana');
-                            done();
+                queueAdapter.enqueue(request1, function () {
+                    queueAdapter.enqueue(request2, function () {
+                        queueAdapter.dequeue(function (err, reservedAttempt1, commitJob1, rollbackJob1) {
+                            assert.equal(reservedAttempt1.ref, 'apple');
+                            queueAdapter.dequeue(function (err, reservedAttempt2, commitJob2, rollbackJob2) {
+                                assert.equal(reservedAttempt2.ref, 'banana');
+                                done();
+                            });
                         });
                     });
                 });
             });
-            });
         });
     });
-        });
+});
 
 function createSampleJobRequest(ref, priority) {
     var request = {

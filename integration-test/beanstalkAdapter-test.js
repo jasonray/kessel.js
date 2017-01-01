@@ -15,7 +15,7 @@ var config = {
 
 //these tests assume that beanstalkd is running at 127.0.0.1:3000
 describe('beanstalkAdapter', function () {
-    describe('initialization', function () {
+    describe.only('initialization', function () {
         it('constructor', function () {
             var adapter = new QueueAdapter(config);
         });
@@ -35,9 +35,7 @@ describe('beanstalkAdapter', function () {
         });
         it('handle config with no host', function (done) {
             var noHostConfig = {
-                beanstalk: {
                     port: '3000'
-                }
             }
 
             var adapter = new QueueAdapter(noHostConfig);
@@ -46,7 +44,7 @@ describe('beanstalkAdapter', function () {
                 done();
             });
         });
-        it.only('handle config with invalid host', function (done) {
+        it('handle config with invalid host', function (done) {
             var invalidHostConfig = {
                     host: '0.0.0.1',
                     port: '3000'

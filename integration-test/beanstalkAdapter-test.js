@@ -35,7 +35,7 @@ describe('beanstalkAdapter', function () {
         });
         it('handle config with no host', function (done) {
             var noHostConfig = {
-                    port: '3000'
+                port: '3000'
             };
 
             var adapter = new QueueAdapter(noHostConfig);
@@ -46,8 +46,8 @@ describe('beanstalkAdapter', function () {
         });
         it('handle config with invalid host', function (done) {
             var invalidHostConfig = {
-                    host: '0.0.0.1',
-                    port: '3000'
+                host: '0.0.0.1',
+                port: '3000'
             };
 
             var adapter = new QueueAdapter(invalidHostConfig);
@@ -58,8 +58,8 @@ describe('beanstalkAdapter', function () {
         });
         it('handle config with invalid port', function (done) {
             var invalidPortConfig = {
-                    host: '127.0.0.1',
-                    port: 'x'
+                host: '127.0.0.1',
+                port: 'x'
             };
 
             var adapter = new QueueAdapter(invalidPortConfig);
@@ -70,8 +70,8 @@ describe('beanstalkAdapter', function () {
         });
         it('handle config with no port', function (done) {
             var noPortConfig = {
-                    port: '3000'
-                };
+                port: '3000'
+            };
 
             var adapter = new QueueAdapter(noPortConfig);
             adapter.initialize(function (err) {
@@ -81,9 +81,9 @@ describe('beanstalkAdapter', function () {
         });
         it('handle unable to initialize to beanstalk', function (done) {
             var uninitializeableConfig = {
-                    host: '127.0.0.1',
-                    port: '9999'
-                };
+                host: '127.0.0.1',
+                port: '9999'
+            };
 
             var adapter = new QueueAdapter(uninitializeableConfig);
             adapter.initialize(function (err) {

@@ -105,8 +105,8 @@ describe('beanstalkAdapter', function () {
                 })
             });
         });
-        describe.only('enqueue / dequeue', function () {
-            it('dequeue on empty returns empty', function (done) {
+        describe('enqueue / dequeue', function () {
+            it.only('dequeue on empty returns empty', function (done) {
                 var dequeueCallback = function (reservedJobRequest, commitJobA, rollbackJobA) {
                     assert.equal(reservedJobRequest, null);
                     done();

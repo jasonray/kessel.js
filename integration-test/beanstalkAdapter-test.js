@@ -15,7 +15,7 @@ var config = {
 
 //these tests assume that beanstalkd is running at 127.0.0.1:3000
 describe('beanstalkAdapter', function () {
-    describe.only('initialization', function () {
+    describe('initialization', function () {
         it('constructor', function () {
             var adapter = new QueueAdapter(config);
         });
@@ -108,7 +108,7 @@ describe('beanstalkAdapter', function () {
                 var dequeueCallback = function (reservedJobRequest, commitJobA, rollbackJobA) {
                     assert.equal(reservedJobRequest, null);
                     done();
-                }
+                };
 
                 var queueAdapter = new QueueAdapter(config);
                 queueAdapter.initialize(function (err) {

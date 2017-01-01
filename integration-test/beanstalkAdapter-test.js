@@ -83,7 +83,7 @@ describe('beanstalkAdapter', function () {
             var uninitializeableConfig = {
                     host: '127.0.0.1',
                     port: '9999'
-                }
+                };
 
             var adapter = new QueueAdapter(uninitializeableConfig);
             adapter.initialize(function (err) {

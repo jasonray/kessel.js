@@ -71,7 +71,7 @@ describe('beanstalkAdapter', function () {
         it('handle config with no port', function (done) {
             var noPortConfig = {
                     port: '3000'
-                }
+                };
 
             var adapter = new QueueAdapter(noPortConfig);
             adapter.initialize(function (err) {

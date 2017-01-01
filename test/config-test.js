@@ -57,5 +57,18 @@ describe('config', function () {
             var value = subSystemConfig.setting4;
             should(value).equal('z');
         });
+        it('consumer overrides twice', function () {
+            var subSystemConfig = config.getConfig('subSystem1');
+            var value = subSystemConfig.setting4;
+            should(value).equal('d');
+
+            var subSystemConfig = config.getConfig('subSystem1', {setting4: 'z', setting5: 'e'});
+            var value = subSystemConfig.setting4;
+            should(value).equal('z');
+
+            var subSystemConfig = config.getConfig('subSystem1', {setting4: 'zz', setting5: 'e'});
+            var value = subSystemConfig.setting4;
+            should(value).equal('zz');
+        });
     });
 });

@@ -8,7 +8,7 @@ logger = context.logManager.getLogger('app');
 
 
 context.config = require('./lib/config');
-logger.trace('config:', context.config.get());
+logger.trace('standardConfig:', context.config.get());
 logger.trace('config.beanstalk.timeout', context.config.get('beanstalk').timeout);
 
 var BeanstalkQueueAdapter = require('./lib/queue/beanstalkAdapter');

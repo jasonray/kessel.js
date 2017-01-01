@@ -6,7 +6,7 @@ var assert = require('assert');
 var QueueAdapter = require('../lib/queue/beanstalkAdapter');
 var moment = require('moment');
 
-var config = {
+var standardConfig = {
     beanstalk: {
         host: '127.0.0.1',
         port: '3000'
@@ -17,23 +17,23 @@ var config = {
 describe('beanstalkAdapter', function () {
     describe('initialization', function () {
         it('constructor', function () {
-            var adapter = new QueueAdapter(config);
+            var adapter = new QueueAdapter(standardConfig);
         });
         it('init', function (done) {
-            var adapter = new QueueAdapter(config);
+            var adapter = new QueueAdapter(standardConfig);
             adapter.initialize(function (err) {
                 assert.equal(err, null);
                 done();
             });
         });
-        it('handle no config', function (done) {
+        it('handle no standardConfig', function (done) {
             var adapter = new QueueAdapter();
             adapter.initialize(function (err) {
                 assert.equal(err, null);
                 done();
             });
         });
-        it('handle config with no host', function (done) {
+        it('handle standardConfig with no host', function (done) {
             var noHostConfig = {
                 port: '3000'
             };
@@ -44,7 +44,7 @@ describe('beanstalkAdapter', function () {
                 done();
             });
         });
-        it('handle config with invalid host', function (done) {
+        it('handle standardConfig with invalid host', function (done) {
             var invalidHostConfig = {
                 host: '0.0.0.1',
                 port: '3000'
@@ -56,7 +56,7 @@ describe('beanstalkAdapter', function () {
                 done();
             });
         });
-        it('handle config with invalid port', function (done) {
+        it('handle standardConfig with invalid port', function (done) {
             var invalidPortConfig = {
                 host: '127.0.0.1',
                 port: 'x'
@@ -68,7 +68,7 @@ describe('beanstalkAdapter', function () {
                 done();
             });
         });
-        it('handle config with no port', function (done) {
+        it('handle standardConfig with no port', function (done) {
             var noPortConfig = {
                 port: '3000'
             };
@@ -96,7 +96,7 @@ describe('beanstalkAdapter', function () {
         beforeEach(function (done) {
             require('../lib/config').reset();
 
-            var adapter = new QueueAdapter(config);
+            var adapter = new QueueAdapter(standardConfig);
             adapter.initialize(function (err) {
                 assert.equal(err, null);
                 adapter.truncate(function (err) {
@@ -105,14 +105,14 @@ describe('beanstalkAdapter', function () {
                 })
             });
         });
-        describe('enqueue / dequeue', function () {
+        describe.only('enqueue / dequeue', function () {
             it('dequeue on empty returns empty', function (done) {
                 var dequeueCallback = function (reservedJobRequest, commitJobA, rollbackJobA) {
                     assert.equal(reservedJobRequest, null);
                     done();
                 };
 
-                var queueAdapter = new QueueAdapter(config);
+                var queueAdapter = new QueueAdapter(standardConfig);
                 queueAdapter.initialize(function (err) {
                     assert.equal(err, null, "failed to initialize. Is beanstalk running?");
                     queueAdapter.dequeue(dequeueCallback);
@@ -129,7 +129,7 @@ describe('beanstalkAdapter', function () {
                     queueAdapter.dequeue(dequeueCallback);
                 }
 
-                var queueAdapter = new QueueAdapter(config);
+                var queueAdapter = new QueueAdapter(standardConfig);
                 queueAdapter.initialize(function (err) {
                     assert.equal(err, null, "failed to initialize. Is beanstalk running?");
                     var request = createSampleJobRequest('testjob');
@@ -137,7 +137,7 @@ describe('beanstalkAdapter', function () {
                 });
             });
             it('truncate', function (done) {
-                var queueAdapter = new QueueAdapter(config);
+                var queueAdapter = new QueueAdapter(standardConfig);
                 queueAdapter.initialize(function (err) {
                     assert.equal(err, null, "failed to initialize. Is beanstalk running?");
                     var requestA = createSampleJobRequest('A');
@@ -157,7 +157,7 @@ describe('beanstalkAdapter', function () {
         });
         describe('enqueue / dequeue with transactions', function () {
             it('dequeue (without commit/rollback) makes item unavailable to another dequeue', function (done) {
-                var queueAdapter = new QueueAdapter(config);
+                var queueAdapter = new QueueAdapter(standardConfig);
                 queueAdapter.initialize(function (err) {
                     assert.equal(err, null, "failed to initialize. Is beanstalk running?");
 
@@ -182,7 +182,7 @@ describe('beanstalkAdapter', function () {
                 });
             });
             it('dequeue (with commit) makes item unavailable to another dequeue', function (done) {
-                var queueAdapter = new QueueAdapter(config);
+                var queueAdapter = new QueueAdapter(standardConfig);
                 queueAdapter.initialize(function (err) {
                     assert.equal(err, null, "failed to initialize. Is beanstalk running?");
 
@@ -210,7 +210,7 @@ describe('beanstalkAdapter', function () {
                 });
             });
             it('dequeue (with rollback) makes item available to another dequeue', function (done) {
-                var queueAdapter = new QueueAdapter(config);
+                var queueAdapter = new QueueAdapter(standardConfig);
                 queueAdapter.initialize(function (err) {
                     assert.equal(err, null, "failed to initialize. Is beanstalk running?");
 
@@ -244,7 +244,7 @@ describe('beanstalkAdapter', function () {
                 //how to handle the callbacks on commit() and rollback() that would need to be overcome
                 //would need to decide between explicitly switching to promises or using bluebird.promisfy
 
-                var queueAdapter = new QueueAdapter(config);
+                var queueAdapter = new QueueAdapter(standardConfig);
                 queueAdapter.initialize(function (err) {
                     assert.equal(err, null, "failed to initialize. Is beanstalk running?");
 

@@ -94,6 +94,8 @@ describe('beanstalkAdapter', function () {
     });
     describe('tests which require truncating queue', function () {
         beforeEach(function (done) {
+            require('../lib/config').reset();
+
             var adapter = new QueueAdapter(config);
             adapter.initialize(function (err) {
                 assert.equal(err, null);

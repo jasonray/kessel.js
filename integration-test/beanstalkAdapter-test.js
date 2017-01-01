@@ -60,7 +60,7 @@ describe('beanstalkAdapter', function () {
             var invalidPortConfig = {
                     host: '127.0.0.1',
                     port: 'x'
-            }
+            };
 
             var adapter = new QueueAdapter(invalidPortConfig);
             adapter.initialize(function (err) {

@@ -127,6 +127,13 @@ describe('jobManager', function () {
             var registeredHandler = jobManager._getHandler('+');
             registeredHandler.should.equal(additionHandler);
         });
+        it('get does not care about spaces', function () {
+            var jobManager = new JobManager();
+            var additionHandler = require('../lib/sample-handlers/addition-handler');
+            jobManager.registerHandler("+", additionHandler);
+            var registeredHandler = jobManager._getHandler(' + ');
+            registeredHandler.should.equal(additionHandler);
+        });
         it('register two handler, get returns it', function () {
             var jobManager = new JobManager();
 

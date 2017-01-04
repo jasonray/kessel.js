@@ -179,4 +179,14 @@ describe.only('handler registry', function () {
         });
     });
 
-});
+    describe('register group', function () {
+        it('register none', function () {
+            var registry = new HandlerRegistry();
+            registry.registerHandlers();
+            var handler = registry.getHandler('+');
+            should.not.exists(handler);
+        });
+    });
+
+
+    });

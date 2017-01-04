@@ -139,5 +139,16 @@ describe('jobManager', function () {
             jobManager._getHandler('+').should.equal(additionHandler);
             jobManager._getHandler('*').should.equal(multiplicationHandler);
         });
+        it('get on non handled type returns null', function () {
+            var jobManager = new JobManager();
+
+            var additionHandler = require('../lib/sample-handlers/addition-handler');
+            jobManager.registerHandler("+", additionHandler);
+
+            var multiplicationHandler = require('../lib/sample-handlers/multiplication-handler');
+            jobManager.registerHandler("*", multiplicationHandler);
+
+            should.not.exists(jobManager._getHandler('^'));
+        });
     });
 });

@@ -222,7 +222,6 @@ describe.only('handler registry', function () {
                     },
                     Error
                 );
-
             });
         });
         describe('key/value based config', function () {

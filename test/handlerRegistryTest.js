@@ -6,7 +6,7 @@ var assert = require('assert');
 var should = require('should');
 var HandlerRegistry = require('../lib/handlerRegistry');
 
-describe('handler config', function () {
+describe.only('handler config', function () {
     var additionModuleKey = '../lib/sample-handlers/addition-handler';
     var multiplicationModuleKey = '../lib/sample-handlers/multiplication-handler';
 
@@ -50,6 +50,22 @@ describe('handler config', function () {
 
         registry.getHandler('+').should.equal(additionHandler);
         registry.getHandler('add').should.equal(additionHandler);
+    });
+    it('do not allow two handlers for same type; ##note, I may change this in future', function () {
+        var registry = new HandlerRegistry();
+
+        var additionHandler = require(additionModuleKey);
+        registry.registerHandler("math", additionHandler);
+
+        var multiplicationHandler = require(multiplicationModuleKey);
+
+        assert.throws(
+            function () {
+                registry.registerHandler("math", multiplicationHandler);
+            },
+            Error
+        );
+
     });
     it('get on non handled type returns null', function () {
         var registry = new HandlerRegistry();

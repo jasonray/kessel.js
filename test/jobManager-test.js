@@ -150,5 +150,17 @@ describe('jobManager', function () {
 
             should.not.exists(jobManager._getHandler('^'));
         });
+        it('cannot register blank type', function () {
+            var jobManager = new JobManager();
+            var additionHandler = require('../lib/sample-handlers/addition-handler');
+
+            assert.throws(
+                function () {
+                    jobManager.registerHandler(null, additionHandler);
+                },
+                Error
+            );
+
+        });
     });
 });

@@ -63,6 +63,16 @@ describe('handler config', function () {
         var handler = registry.getHandler();
         should.not.exists(handler);
     });
+    it('getHandler on empty return no handler', function () {
+        var registry = new HandlerRegistry();
+
+        var additionHandler = require(additionModuleKey);
+        registry.registerHandler("+", additionHandler);
+        registry.registerHandler("add", additionHandler);
+
+        var handler = registry.getHandler('');
+        should.not.exists(handler);
+    });
     it('do not allow two handlers for same type; ##note, I may change this in future', function () {
         var registry = new HandlerRegistry();
 

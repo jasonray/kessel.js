@@ -197,8 +197,7 @@ describe.only('handler registry', function () {
         });
         it('register two', function () {
             var registry = new HandlerRegistry();
-            registry.registerHandlers([{type: '+', handler: additionHandler}]);
-            registry.registerHandlers([{type: '*', handler: multiplicationHandler}]);
+            registry.registerHandlers([{type: '+', handler: additionHandler}, {type: '*', handler: multiplicationHandler}]);
 
             registry.getHandler('+').should.equal(additionHandler.handle);
             registry.getHandler('*').should.equal(multiplicationHandler.handle);

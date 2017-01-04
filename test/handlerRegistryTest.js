@@ -155,6 +155,12 @@ describe.only('handler config', function () {
         var registeredHandler = registry.getHandler('+');
         assert.ok(_.isFunction(registeredHandler));
     });
+    it('can handle a module identifier of function based handler', function () {
+        var registry = new HandlerRegistry();
+        registry.registerHandler("+f", additionFunctionModuleKey);
+        var registeredHandler = registry.getHandler('+f');
+        assert.ok(_.isFunction(registeredHandler));
+    });
     it('function registered as function', function () {
         var registry = new HandlerRegistry();
         var additionFunctionHandler = require(additionFunctionModuleKey);

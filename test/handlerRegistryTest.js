@@ -132,11 +132,17 @@ describe.only('handler config', function () {
     it('function registered as function', function () {
         var registry = new HandlerRegistry();
         var additionFunctionHandler = require(additionFunctionModuleKey);
-        console.log(additionFunctionHandler);
         registry.registerHandler("+f", additionFunctionHandler);
         var registeredHandler = registry.getHandler('+f');
-        console.log(registeredHandler);
-        console.log(_.isFunction(registeredHandler));
+        assert.ok(_.isFunction(registeredHandler));
+    });
+    it('object registered as function', function () {
+        var registry = new HandlerRegistry();
+        var additionFunctionHandler = require(additionModuleKey);
+        console.log(additionFunctionHandler);
+        registry.registerHandler("+", additionFunctionHandler);
+        var registeredHandler = registry.getHandler('+');
+        assert.ok(_.isFunction(registeredHandler));
     });
 
 });

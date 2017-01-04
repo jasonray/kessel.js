@@ -8,6 +8,7 @@ var HandlerRegistry = require('../lib/handlerRegistry');
 
 describe.only('handler config', function () {
     var additionModuleKey = '../lib/sample-handlers/addition-handler';
+    var additionFunctionModuleKey = '../lib/sample-handlers/addition-function-handler';
     var multiplicationModuleKey = '../lib/sample-handlers/multiplication-handler';
 
     it('empty job manager returns null handler', function () {
@@ -119,5 +120,13 @@ describe.only('handler config', function () {
             },
             Error
         );
+    });
+    it('can handle a function based handler', function () {
+        var registry = new HandlerRegistry();
+        var additionFunctionHandler = require(additionFunctionModuleKey);
+        console.log(additionFunctionHandler);
+        registry.registerHandler("+f", additionFunctionHandler);
+        var registeredHandler = registry.getHandler('+f');
+        registeredHandler.should.equal(additionFunctionHandler);
     });
 });

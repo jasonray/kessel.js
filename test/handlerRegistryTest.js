@@ -181,6 +181,7 @@ describe.only('handler registry', function () {
 
     describe.only('register group', function () {
         var additionHandler = require(additionModuleKey);
+        var multiplicationHandler = require(multiplicationModuleKey);
 
         it('register none', function () {
             var registry = new HandlerRegistry();
@@ -193,6 +194,14 @@ describe.only('handler registry', function () {
             registry.registerHandlers([{type: '+', handler: additionHandler}]);
             var handler = registry.getHandler('+');
             handler.should.equal(additionHandler.handle);
+        });
+        it('register two', function () {
+            var registry = new HandlerRegistry();
+            registry.registerHandlers([{type: '+', handler: additionHandler}]);
+            registry.registerHandlers([{type: '*', handler: multiplicationHandler}]);
+
+            registry.getHandler('+').should.equal(additionHandler.handle);
+            registry.getHandler('*').should.equal(multiplicationHandler.handle);
         });
     });
 

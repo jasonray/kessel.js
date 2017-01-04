@@ -183,5 +183,14 @@ describe('jobManager', function () {
                 Error
             );
         });
+        it('cannot register missing handler', function () {
+            var jobManager = new JobManager();
+            assert.throws(
+                function () {
+                    jobManager.registerHandler("+");
+                },
+                Error
+            );
+        });
     });
 });

@@ -127,5 +127,17 @@ describe('jobManager', function () {
             var registeredHandler = jobManager._getHandler('+');
             registeredHandler.should.equal(additionHandler);
         });
+        it('register two handler, get returns it', function () {
+            var jobManager = new JobManager();
+
+            var additionHandler = require('../lib/sample-handlers/addition-handler');
+            jobManager.registerHandler("+", additionHandler);
+
+            var multiplicationHandler = require('../lib/sample-handlers/multiplication-handler');
+            jobManager.registerHandler("*", multiplicationHandler);
+
+            jobManager._getHandler('+').should.equal(additionHandler);
+            jobManager._getHandler('*').should.equal(multiplicationHandler);
+        });
     });
 });

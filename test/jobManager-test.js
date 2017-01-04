@@ -115,6 +115,8 @@ describe('jobManager', function () {
     });
 
     describe.only('handler config', function () {
+        var additionModuleKey = '../lib/sample-handlers/addition-handler';
+
         it('empty job manager returns null handler', function () {
             var jobManager = new JobManager();
             var handler = jobManager._getHandler('+');
@@ -122,14 +124,14 @@ describe('jobManager', function () {
         });
         it('register single handler, get returns it', function () {
             var jobManager = new JobManager();
-            var additionHandler = require('../lib/sample-handlers/addition-handler');
+            var additionHandler = require(additionModuleKey);
             jobManager.registerHandler("+", additionHandler);
             var registeredHandler = jobManager._getHandler('+');
             registeredHandler.should.equal(additionHandler);
         });
         it('get does not care about spaces', function () {
             var jobManager = new JobManager();
-            var additionHandler = require('../lib/sample-handlers/addition-handler');
+            var additionHandler = require(additionModuleKey);
             jobManager.registerHandler("+", additionHandler);
             var registeredHandler = jobManager._getHandler(' + ');
             registeredHandler.should.equal(additionHandler);
@@ -137,7 +139,7 @@ describe('jobManager', function () {
         it('register two handler, get returns it', function () {
             var jobManager = new JobManager();
 
-            var additionHandler = require('../lib/sample-handlers/addition-handler');
+            var additionHandler = require(additionModuleKey);
             jobManager.registerHandler("+", additionHandler);
 
             var multiplicationHandler = require('../lib/sample-handlers/multiplication-handler');
@@ -149,7 +151,7 @@ describe('jobManager', function () {
         it('get on non handled type returns null', function () {
             var jobManager = new JobManager();
 
-            var additionHandler = require('../lib/sample-handlers/addition-handler');
+            var additionHandler = require(additionModuleKey);
             jobManager.registerHandler("+", additionHandler);
 
             var multiplicationHandler = require('../lib/sample-handlers/multiplication-handler');
@@ -159,7 +161,7 @@ describe('jobManager', function () {
         });
         it('cannot register null type', function () {
             var jobManager = new JobManager();
-            var additionHandler = require('../lib/sample-handlers/addition-handler');
+            var additionHandler = require(additionModuleKey);
 
             assert.throws(
                 function () {
@@ -170,7 +172,7 @@ describe('jobManager', function () {
         });
         it('cannot register blank type', function () {
             var jobManager = new JobManager();
-            var additionHandler = require('../lib/sample-handlers/addition-handler');
+            var additionHandler = require(additionModuleKey);
 
             assert.throws(
                 function () {
@@ -181,7 +183,7 @@ describe('jobManager', function () {
         });
         it('cannot register spaced type', function () {
             var jobManager = new JobManager();
-            var additionHandler = require('../lib/sample-handlers/addition-handler');
+            var additionHandler = require(additionModuleKey);
 
             assert.throws(
                 function () {

@@ -3,6 +3,7 @@
 
 var mocha = require('mocha');
 var assert = require('assert');
+var should = require('should');
 var JobManager = require('../lib/jobManager');
 
 //TODO: disable logger on unit tests

@@ -4,6 +4,7 @@
 var mocha = require('mocha');
 var assert = require('assert');
 var should = require('should');
+var _ = require('underscore');
 var HandlerRegistry = require('../lib/handlerRegistry');
 
 describe.only('handler config', function () {
@@ -124,9 +125,18 @@ describe.only('handler config', function () {
     it('can handle a function based handler', function () {
         var registry = new HandlerRegistry();
         var additionFunctionHandler = require(additionFunctionModuleKey);
-        console.log(additionFunctionHandler);
         registry.registerHandler("+f", additionFunctionHandler);
         var registeredHandler = registry.getHandler('+f');
         registeredHandler.should.equal(additionFunctionHandler);
     });
+    it('function registered as function', function () {
+        var registry = new HandlerRegistry();
+        var additionFunctionHandler = require(additionFunctionModuleKey);
+        console.log(additionFunctionHandler);
+        registry.registerHandler("+f", additionFunctionHandler);
+        var registeredHandler = registry.getHandler('+f');
+        console.log(registeredHandler);
+        console.log(_.isFunction(registeredHandler));
+    });
+
 });

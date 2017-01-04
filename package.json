@@ -1,6 +1,6 @@
 {
   "name": "kessel-run",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "lightweight framework for handling distributed delayed job processing",
   "main": "app.js",
   "scripts": {

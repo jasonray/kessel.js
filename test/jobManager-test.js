@@ -3,6 +3,7 @@
 
 var mocha = require('mocha');
 var assert = require('assert');
+var should = require('should');
 var JobManager = require('../lib/jobManager');
 
 //TODO: disable logger on unit tests
@@ -110,6 +111,14 @@ describe('jobManager', function () {
                 done();
             }
 
+        });
+    });
+
+    describe.only('handler config', function () {
+        it('empty job manager returns null handler', function () {
+            var jobManager = new JobManager();
+            var handler =jobManager._getHandler();
+            should.not.exists(handler);
         });
     });
 });

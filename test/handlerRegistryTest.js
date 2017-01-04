@@ -22,14 +22,14 @@ describe.only('handler config', function () {
         var additionHandler = require(additionModuleKey);
         registry.registerHandler("+", additionHandler);
         var registeredHandler = registry.getHandler('+');
-        registeredHandler.should.equal(additionHandler);
+        registeredHandler.should.equal(additionHandler.handle);
     });
     it('get does not care about spaces', function () {
         var registry = new HandlerRegistry();
         var additionHandler = require(additionModuleKey);
         registry.registerHandler("+", additionHandler);
         var registeredHandler = registry.getHandler(' + ');
-        registeredHandler.should.equal(additionHandler);
+        registeredHandler.should.equal(additionHandler.handle);
     });
     it('register two handler, get returns it', function () {
         var registry = new HandlerRegistry();
@@ -40,8 +40,8 @@ describe.only('handler config', function () {
         var multiplicationHandler = require(multiplicationModuleKey);
         registry.registerHandler("*", multiplicationHandler);
 
-        registry.getHandler('+').should.equal(additionHandler);
-        registry.getHandler('*').should.equal(multiplicationHandler);
+        registry.getHandler('+').should.equal(additionHandler.handle);
+        registry.getHandler('*').should.equal(multiplicationHandler.handle);
     });
     it('register same handler twice', function () {
         var registry = new HandlerRegistry();
@@ -50,8 +50,8 @@ describe.only('handler config', function () {
         registry.registerHandler("+", additionHandler);
         registry.registerHandler("add", additionHandler);
 
-        registry.getHandler('+').should.equal(additionHandler);
-        registry.getHandler('add').should.equal(additionHandler);
+        registry.getHandler('+').should.equal(additionHandler.handle);
+        registry.getHandler('add').should.equal(additionHandler.handle);
     });
     it('do not allow two handlers for same type; ##note, I may change this in future', function () {
         var registry = new HandlerRegistry();

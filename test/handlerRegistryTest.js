@@ -7,7 +7,7 @@ var should = require('should');
 var _ = require('underscore');
 var HandlerRegistry = require('../lib/handlerRegistry');
 
-describe('handler config', function () {
+describe.only('handler config', function () {
     var additionModuleKey = '../lib/sample-handlers/addition-handler';
     var additionFunctionModuleKey = '../lib/sample-handlers/addition-function-handler';
     var multiplicationModuleKey = '../lib/sample-handlers/multiplication-handler';
@@ -148,6 +148,12 @@ describe('handler config', function () {
         registry.registerHandler("+f", additionFunctionHandler);
         var registeredHandler = registry.getHandler('+f');
         registeredHandler.should.equal(additionFunctionHandler);
+    });
+    it('can handle a module identifier based handler', function () {
+        var registry = new HandlerRegistry();
+        registry.registerHandler("+", additionModuleKey);
+        var registeredHandler = registry.getHandler('+');
+        assert.ok(_.isFunction(registeredHandler));
     });
     it('function registered as function', function () {
         var registry = new HandlerRegistry();

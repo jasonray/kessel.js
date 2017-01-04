@@ -7,7 +7,7 @@ var should = require('should');
 var _ = require('underscore');
 var HandlerRegistry = require('../lib/handlerRegistry');
 
-describe.only('handler registry', function () {
+describe('handler registry', function () {
     var additionModuleKey = '../lib/sample-handlers/addition-handler';
     var additionFunctionModuleKey = '../lib/sample-handlers/addition-function-handler';
     var multiplicationModuleKey = '../lib/sample-handlers/multiplication-handler';
@@ -179,7 +179,7 @@ describe.only('handler registry', function () {
         });
     });
 
-    describe.only('register group', function () {
+    describe('register group', function () {
         var additionHandler = require(additionModuleKey);
         var multiplicationHandler = require(multiplicationModuleKey);
 

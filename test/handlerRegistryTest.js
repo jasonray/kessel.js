@@ -207,6 +207,23 @@ describe.only('handler registry', function () {
                 registry.getHandler('+').should.equal(additionHandler.handle);
                 registry.getHandler('*').should.equal(multiplicationHandler.handle);
             });
+            it('duplicative', function () {
+                var config = [
+                    {type: '+', handler: additionHandler},
+                    {type: '+', handler: additionHandler},
+                    {type: '*', handler: multiplicationHandler}
+                ];
+
+                var registry = new HandlerRegistry();
+
+                assert.throws(
+                    function () {
+                        registry.registerHandlers(config);
+                    },
+                    Error
+                );
+
+            });
         });
         describe('key/value based config', function () {
             it('register one', function () {

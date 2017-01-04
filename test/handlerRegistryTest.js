@@ -189,31 +189,39 @@ describe.only('handler registry', function () {
             var handler = registry.getHandler('+');
             should.not.exists(handler);
         });
-        it('register one', function () {
-            var registry = new HandlerRegistry();
-            registry.registerHandlers([{type: '+', handler: additionHandler}]);
-            var handler = registry.getHandler('+');
-            handler.should.equal(additionHandler.handle);
-        });
-        it('register two', function () {
-            var registry = new HandlerRegistry();
-            registry.registerHandlers(
-                [
-                    {type: '+', handler: additionHandler},
-                    {type: '*', handler: multiplicationHandler}
-                ]);
+        describe('array based config', function () {
+            it('register one', function () {
+                var registry = new HandlerRegistry();
+                registry.registerHandlers([{type: '+', handler: additionHandler}]);
+                var handler = registry.getHandler('+');
+                handler.should.equal(additionHandler.handle);
+            });
+            it('register two', function () {
+                var registry = new HandlerRegistry();
+                registry.registerHandlers(
+                    [
+                        {type: '+', handler: additionHandler},
+                        {type: '*', handler: multiplicationHandler}
+                    ]);
 
-            registry.getHandler('+').should.equal(additionHandler.handle);
-            registry.getHandler('*').should.equal(multiplicationHandler.handle);
+                registry.getHandler('+').should.equal(additionHandler.handle);
+                registry.getHandler('*').should.equal(multiplicationHandler.handle);
+            });
         });
-        it('register two w/alternate config', function () {
-            var registry = new HandlerRegistry();
-            registry.registerHandlers({'+': additionHandler, '*': multiplicationHandler});
+        describe('key/value based config', function () {
+            it('register one', function () {
+                var registry = new HandlerRegistry();
+                registry.registerHandlers({'+': additionHandler});
+                var handler = registry.getHandler('+');
+                handler.should.equal(additionHandler.handle);
+            });
+            it('register two', function () {
+                var registry = new HandlerRegistry();
+                registry.registerHandlers({'+': additionHandler, '*': multiplicationHandler});
 
-            registry.getHandler('+').should.equal(additionHandler.handle);
-            registry.getHandler('*').should.equal(multiplicationHandler.handle);
+                registry.getHandler('+').should.equal(additionHandler.handle);
+                registry.getHandler('*').should.equal(multiplicationHandler.handle);
+            });
         });
     });
-
-
 });

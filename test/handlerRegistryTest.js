@@ -179,14 +179,22 @@ describe.only('handler registry', function () {
         });
     });
 
-    describe('register group', function () {
+    describe.only('register group', function () {
+        var additionHandler = require(additionModuleKey);
+
         it('register none', function () {
             var registry = new HandlerRegistry();
             registry.registerHandlers();
             var handler = registry.getHandler('+');
             should.not.exists(handler);
         });
+        it('register one', function () {
+            var registry = new HandlerRegistry();
+            registry.registerHandlers([{type: '+', handler: additionHandler}]);
+            var handler = registry.getHandler('+');
+            handler.should.equal(additionHandler.handle);
+        });
     });
 
 
-    });
+});

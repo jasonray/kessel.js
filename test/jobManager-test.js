@@ -150,7 +150,7 @@ describe('jobManager', function () {
 
             should.not.exists(jobManager._getHandler('^'));
         });
-        it('cannot register blank type', function () {
+        it('cannot register null type', function () {
             var jobManager = new JobManager();
             var additionHandler = require('../lib/sample-handlers/addition-handler');
 
@@ -168,6 +168,17 @@ describe('jobManager', function () {
             assert.throws(
                 function () {
                     jobManager.registerHandler("", additionHandler);
+                },
+                Error
+            );
+        });
+        it('cannot register spaced type', function () {
+            var jobManager = new JobManager();
+            var additionHandler = require('../lib/sample-handlers/addition-handler');
+
+            assert.throws(
+                function () {
+                    jobManager.registerHandler(" ", additionHandler);
                 },
                 Error
             );

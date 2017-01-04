@@ -117,8 +117,15 @@ describe('jobManager', function () {
     describe.only('handler config', function () {
         it('empty job manager returns null handler', function () {
             var jobManager = new JobManager();
-            var handler =jobManager._getHandler();
+            var handler = jobManager._getHandler('+');
             should.not.exists(handler);
+        });
+        it('register single handler, get returns it', function () {
+            var jobManager = new JobManager();
+            var additionHandler = require('../lib/sample-handlers/addition-handler');
+            jobManager.registerHandler("+", additionHandler);
+            var registeredHandler = jobManager._getHandler('+');
+            should.exist(registeredHandler);
         });
     });
 });

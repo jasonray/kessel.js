@@ -116,6 +116,7 @@ describe('jobManager', function () {
 
     describe.only('handler config', function () {
         var additionModuleKey = '../lib/sample-handlers/addition-handler';
+        var multiplicationModuleKey = '../lib/sample-handlers/multiplication-handler';
 
         it('empty job manager returns null handler', function () {
             var jobManager = new JobManager();
@@ -142,7 +143,7 @@ describe('jobManager', function () {
             var additionHandler = require(additionModuleKey);
             jobManager.registerHandler("+", additionHandler);
 
-            var multiplicationHandler = require('../lib/sample-handlers/multiplication-handler');
+            var multiplicationHandler = require(multiplicationModuleKey);
             jobManager.registerHandler("*", multiplicationHandler);
 
             jobManager._getHandler('+').should.equal(additionHandler);
@@ -154,7 +155,7 @@ describe('jobManager', function () {
             var additionHandler = require(additionModuleKey);
             jobManager.registerHandler("+", additionHandler);
 
-            var multiplicationHandler = require('../lib/sample-handlers/multiplication-handler');
+            var multiplicationHandler = require(multiplicationModuleKey);
             jobManager.registerHandler("*", multiplicationHandler);
 
             should.not.exists(jobManager._getHandler('^'));

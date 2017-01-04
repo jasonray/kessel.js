@@ -160,7 +160,6 @@ describe('jobManager', function () {
                 },
                 Error
             );
-
         });
         it('cannot register blank type', function () {
             var jobManager = new JobManager();
@@ -172,7 +171,6 @@ describe('jobManager', function () {
                 },
                 Error
             );
-
         });
     });
 });

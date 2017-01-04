@@ -149,6 +149,16 @@ describe('jobManager', function () {
             jobManager._getHandler('+').should.equal(additionHandler);
             jobManager._getHandler('*').should.equal(multiplicationHandler);
         });
+        it('register same handler twice', function () {
+            var jobManager = new JobManager();
+
+            var additionHandler = require(additionModuleKey);
+            jobManager.registerHandler("+", additionHandler);
+            jobManager.registerHandler("add", additionHandler);
+
+            jobManager._getHandler('+').should.equal(additionHandler);
+            jobManager._getHandler('add').should.equal(additionHandler);
+        });
         it('get on non handled type returns null', function () {
             var jobManager = new JobManager();
 

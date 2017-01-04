@@ -125,7 +125,7 @@ describe('jobManager', function () {
             var additionHandler = require('../lib/sample-handlers/addition-handler');
             jobManager.registerHandler("+", additionHandler);
             var registeredHandler = jobManager._getHandler('+');
-            should.exist(registeredHandler);
+            registeredHandler.should.equal(additionHandler);
         });
     });
 });

@@ -355,8 +355,8 @@ describe('asyncQueueAdapter', function () {
         });
         it('insert low priority, then high priorty, should pop high priority first', function (done) {
             getQueueAdapter(function (queueAdapter) {
-                var request1 = createSampleJobRequest('apple', low_priority);
-                var request2 = createSampleJobRequest('banana', high_priority);
+                const request1 = createSampleJobRequest('apple', low_priority);
+                const request2 = createSampleJobRequest('banana', high_priority);
 
                 queueAdapter.enqueue(request1, function () {
                     queueAdapter.enqueue(request2, function () {
@@ -373,8 +373,8 @@ describe('asyncQueueAdapter', function () {
         });
         it('insert high priority, then low priorty, should pop high priority first', function (done) {
             getQueueAdapter(function (queueAdapter) {
-                var request1 = createSampleJobRequest('apple', high_priority);
-                var request2 = createSampleJobRequest('banana', low_priority);
+                const request1 = createSampleJobRequest('apple', high_priority);
+                const request2 = createSampleJobRequest('banana', low_priority);
 
                 queueAdapter.enqueue(request1, function () {
                     queueAdapter.enqueue(request2, function () {
@@ -393,7 +393,7 @@ describe('asyncQueueAdapter', function () {
 });
 
 function createSampleJobRequest(ref, priority) {
-    var request = {
+    const request = {
         type: 'sample',
         payload: {
             x: 'x',

@@ -1,35 +1,31 @@
 /*jslint node: true */
 "use strict";
 
-var mocha = require('mocha');
-var assert = require('assert');
-var Queue = require('../lib/queue/queue');
+const mocha = require('mocha');
+const assert = require('assert');
+const Queue = require('../lib/queue/queue');
 
 describe('basic queue', function () {
     describe('constructor', function () {
         it('using new constructor', function () {
-            var queue = new Queue();
-            assert.ok(queue);
-        });
-        it('using implicit constructor', function () {
-            var queue = Queue();
+            const queue = new Queue();
             assert.ok(queue);
         });
     });
     describe('isEmpty', function () {
         it('isEmpty on empty queue returns true', function () {
-            var queue = new Queue();
+            const queue = new Queue();
             assert.equal(queue.isEmpty(), true);
         });
 
         it('isEmpty on a non-empty queue returns false', function () {
-            var queue = new Queue();
+            const queue = new Queue();
             queue.push('apple');
             assert.equal(queue.isEmpty(), false);
         });
 
         it('isEmpty after push / pop returns true', function () {
-            var queue = new Queue();
+            const queue = new Queue();
             queue.push('apple');
             assert.equal(queue.isEmpty(), false);
         });
@@ -37,17 +33,17 @@ describe('basic queue', function () {
 
     describe('peek', function () {
         it('peek empty queue returns null', function () {
-            var queue = new Queue();
+            const queue = new Queue();
             assert.equal(queue.peek(), null);
         });
 
         it('peek non-empty queue returns first items', function () {
-            var queue = new Queue();
+            const queue = new Queue();
             queue.push('apple');
             assert.equal(queue.peek(), 'apple');
         });
         it('peekNonEmptyQueueWithTwoItems', function () {
-            var queue = new Queue();
+            const queue = new Queue();
             queue.push('apple');
             queue.push('banana');
             assert.equal(queue.peek(), 'apple');
@@ -56,25 +52,25 @@ describe('basic queue', function () {
 
     describe('pop', function () {
         it('popEmpty', function () {
-            var queue = new Queue();
+            const queue = new Queue();
             assert.equal(queue.pop(), null);
         });
 
         it('pushPop', function () {
-            var queue = new Queue();
+            const queue = new Queue();
             queue.push('apple');
             assert.equal('apple', queue.pop());
         });
 
         it('overPop', function () {
-            var queue = new Queue();
+            const queue = new Queue();
             queue.push('apple');
             queue.pop();
             assert.equal(queue.pop(), null);
         });
 
         it('pushPop3', function () {
-            var queue = new Queue();
+            const queue = new Queue();
             queue.push('apple');
             queue.push('banana');
             queue.push('coconut');
@@ -85,7 +81,7 @@ describe('basic queue', function () {
         });
 
         it('mixPop', function () {
-            var queue = new Queue();
+            const queue = new Queue();
             queue.push('apple');
             queue.push('banana');
             assert.equal(queue.pop(), 'apple');
@@ -101,8 +97,8 @@ describe('basic queue', function () {
 
     describe('dual queue', function () {
         it('show that two queues are independent', function () {
-            var queue1 = new Queue();
-            var queue2 = new Queue();
+            const queue1 = new Queue();
+            const queue2 = new Queue();
             queue1.push('apple');
             queue2.push('banana');
             assert.equal('apple', queue1.pop());
@@ -113,11 +109,11 @@ describe('basic queue', function () {
     });
 
     describe('priority', function () {
-        var low_priority = 10;
-        var high_priority = 1;
+        const low_priority = 10;
+        const high_priority = 1;
 
         it('insert item without priority does not cause issue', function () {
-            var queue = new Queue();
+            const queue = new Queue();
             queue.push('apple');
             queue.push('banana');
             assert.equal('apple', queue.pop(), "expected first item to be apple");
@@ -125,7 +121,7 @@ describe('basic queue', function () {
             assert.equal(null, queue.pop());
         });
         it('insert two items with same priority, should pop in same order', function () {
-            var queue = new Queue();
+            const queue = new Queue();
             queue.push('apple', high_priority);
             queue.push('banana', high_priority);
             assert.equal('apple', queue.pop(), "expected first item to be apple");
@@ -133,7 +129,7 @@ describe('basic queue', function () {
             assert.equal(null, queue.pop());
         });
         it('insert low priority, then high priorty, should pop high priority first', function () {
-            var queue = new Queue();
+            const queue = new Queue();
             queue.push('apple', low_priority);
             queue.push('banana', high_priority);
             assert.equal('banana', queue.pop(), "expected first item to be banana");
@@ -141,7 +137,7 @@ describe('basic queue', function () {
             assert.equal(null, queue.pop());
         });
         it('insert high priority, then low priorty, should pop high priority first', function () {
-            var queue = new Queue();
+            const queue = new Queue();
             queue.push('apple', high_priority);
             queue.push('banana', low_priority);
             assert.equal('apple', queue.pop(), "expected first item to be apple");

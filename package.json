@@ -1,6 +1,6 @@
 {
   "name": "kessel-run",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "lightweight framework for handling distributed delayed job processing",
   "main": "app.js",
   "scripts": {
@@ -26,12 +26,10 @@
     "should": "11.1.2",
     "underscore": "1.8.3",
     "uuid": "3.0.1",
-    "yargs": "6.5.0"
+    "yargs": "^6.6.0"
   },
   "devDependencies": {
-    "coveralls": "^2.11.15",
-    "mocha": "^3.2.0",
-    "mocha-lcov-reporter": "^1.2.0"
+    "mocha": "^3.2.0"
   },
   "keywords": [
     "job",

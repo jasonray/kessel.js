@@ -1,31 +1,31 @@
 /*jslint node: true */
 "use strict";
 
-var mocha = require('mocha');
-var assert = require('assert');
-var QueueAdapter = require('../lib/queue/basicQueueAdapter');
+const mocha = require('mocha');
+const assert = require('assert');
+const QueueAdapter = require('../lib/queue/basicQueueAdapter');
 
 describe('basicQueueAdapter', function () {
     describe('size', function () {
         it('initial size is 0', function () {
-            var queueAdapter = new QueueAdapter();
+            const queueAdapter = new QueueAdapter();
             assert.equal(queueAdapter.size(), 0);
         });
         it('after enqueue, size is 1', function () {
-            var queueAdapter = new QueueAdapter();
-            var request = createSampleJobRequest();
+            const queueAdapter = new QueueAdapter();
+            const request = createSampleJobRequest();
             queueAdapter.enqueue(request)
             assert.equal(queueAdapter.size(), 1);
         });
     });
     describe('isEmpty', function () {
         it('initial isEmpty returns true', function () {
-            var queueAdapter = new QueueAdapter();
+            const queueAdapter = new QueueAdapter();
             assert.equal(queueAdapter.isEmpty(), true);
         });
         it('after enqueue, isEmpty is false', function () {
-            var queueAdapter = new QueueAdapter();
-            var request = createSampleJobRequest();
+            const queueAdapter = new QueueAdapter();
+            const request = createSampleJobRequest();
             queueAdapter.enqueue(request)
             assert.equal(queueAdapter.isEmpty(), false);
         });
@@ -34,22 +34,22 @@ describe('basicQueueAdapter', function () {
 
     describe('enqueue / dequeue', function () {
         it('dequeue on empty returns empty', function (done) {
-            var dequeueCallback = function (jobRequest, jobRequestProcessingCallback) {
+            const dequeueCallback = function (jobRequest, jobRequestProcessingCallback) {
                 assert.equal(jobRequest, null);
                 done();
             }
 
-            var queueAdapter = new QueueAdapter();
+            const queueAdapter = new QueueAdapter();
             queueAdapter.dequeue(dequeueCallback);
         });
         it('enqueue then dequeue returns job request', function (done) {
-            var dequeueCallback = function (jobRequest, jobRequestProcessingCallback) {
+            const dequeueCallback = function (jobRequest, jobRequestProcessingCallback) {
                 assert.equal(jobRequest.ref, 'testjob');
                 done();
             }
 
-            var queueAdapter = new QueueAdapter();
-            var request = createSampleJobRequest('testjob');
+            const queueAdapter = new QueueAdapter();
+            const request = createSampleJobRequest('testjob');
             queueAdapter.enqueue(request)
             queueAdapter.dequeue(dequeueCallback);
         });
@@ -57,7 +57,7 @@ describe('basicQueueAdapter', function () {
 });
 
 function createSampleJobRequest(ref) {
-    var request = {
+    const request = {
         type: 'sample',
         payload: {
             x: 'x',

@@ -16,7 +16,7 @@ function getQueueAdapter(callback, latency) {
 describe('asyncQueueAdapter', function () {
     describe('constructor', function () {
         it('using new constructor', function () {
-            var queueAdapter = new QueueAdapter();
+            const queueAdapter = new QueueAdapter();
             assert.ok(queueAdapter);
         });
     });

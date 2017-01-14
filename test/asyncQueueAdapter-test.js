@@ -319,8 +319,8 @@ describe('asyncQueueAdapter', function () {
 
         it('insert item without priority does not cause issue', function (done) {
             getQueueAdapter(function (queueAdapter) {
-                var request1 = createSampleJobRequest('apple');
-                var request2 = createSampleJobRequest('banana');
+                const request1 = createSampleJobRequest('apple');
+                const request2 = createSampleJobRequest('banana');
 
                 queueAdapter.enqueue(request1, function () {
                     queueAdapter.enqueue(request2, function () {

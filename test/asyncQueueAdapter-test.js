@@ -84,9 +84,9 @@ describe('asyncQueueAdapter', function () {
                     done();
                 };
 
-                var afterEnqueueCallback = function (err, jobRequest) {
+                const afterEnqueueCallback = function (err, jobRequest) {
                     queueAdapter.dequeue(dequeueCallback);
-                }
+                };
 
                 var request = createSampleJobRequest('testjob');
                 queueAdapter.enqueue(request, afterEnqueueCallback)

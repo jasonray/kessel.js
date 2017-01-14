@@ -29,9 +29,7 @@
     "yargs": "^6.6.0"
   },
   "devDependencies": {
-    "coveralls": "^2.11.15",
-    "mocha": "^3.2.0",
-    "mocha-lcov-reporter": "^1.2.0"
+    "mocha": "^3.2.0"
   },
   "keywords": [
     "job",

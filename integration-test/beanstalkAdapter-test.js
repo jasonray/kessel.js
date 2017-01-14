@@ -126,6 +126,7 @@ describe('beanstalkAdapter', function () {
                 }
 
                 var afterEnqueueCallback = function (err, jobRequest) {
+                    assert.equal(err, null, 'error occurred: ' + err);
                     queueAdapter.dequeue(dequeueCallback);
                 }
 

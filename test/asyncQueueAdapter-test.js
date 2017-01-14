@@ -146,7 +146,7 @@ describe('asyncQueueAdapter', function () {
         it('dequeue (with rollback) makes item available to another dequeue', function (done) {
             getQueueAdapter(function (queueAdapter) {
 
-                var jobRequestA = createSampleJobRequest('a');
+                const jobRequestA = createSampleJobRequest('a');
                 queueAdapter.enqueue(jobRequestA, afterEnqueueCallback);
 
                 function afterEnqueueCallback(err, jobRequest) {

@@ -7,7 +7,7 @@ const QueueAdapter = require('../lib/queue/asyncQueueAdapter');
 const moment = require('moment');
 
 function getQueueAdapter(callback, latency) {
-    var queueAdapter = new QueueAdapter(latency);
+    const queueAdapter = new QueueAdapter(latency);
     queueAdapter.initialize(function () {
         callback(queueAdapter);
     });

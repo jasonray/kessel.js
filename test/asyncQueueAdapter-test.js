@@ -4,7 +4,7 @@
 const mocha = require('mocha');
 const assert = require('assert');
 const QueueAdapter = require('../lib/queue/asyncQueueAdapter');
-var moment = require('moment');
+const moment = require('moment');
 
 function getQueueAdapter(callback, latency) {
     var queueAdapter = new QueueAdapter(latency);

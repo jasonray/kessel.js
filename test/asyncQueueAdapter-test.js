@@ -16,11 +16,7 @@ function getQueueAdapter(callback, latency) {
 describe('asyncQueueAdapter', function () {
     describe('constructor', function () {
         it('using new constructor', function () {
-            var queueAdapter = QueueAdapter();
-            assert.ok(queueAdapter);
-        });
-        it('using implicit constructor', function () {
-            var queueAdapter = QueueAdapter();
+            var queueAdapter = new QueueAdapter();
             assert.ok(queueAdapter);
         });
     });

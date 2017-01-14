@@ -224,7 +224,7 @@ describe('asyncQueueAdapter', function () {
     describe('expiration', function () {
         it('if expiration is set to 1 sec in future and requested before then, it will be processed normally', function (done) {
             getQueueAdapter(function (queueAdapter) {
-                var request = createSampleJobRequest('r');
+                const request = createSampleJobRequest('r');
                 request.expiration = moment().add(1, "y").toDate();
                 queueAdapter.enqueue(request, function () {
                     queueAdapter.dequeue(function (err, reservedAttempt, commitJob1, rollbackJob1) {

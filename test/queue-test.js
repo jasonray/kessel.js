@@ -11,10 +11,6 @@ describe('basic queue', function () {
             var queue = new Queue();
             assert.ok(queue);
         });
-        it('using implicit constructor', function () {
-            var queue = Queue();
-            assert.ok(queue);
-        });
     });
     describe('isEmpty', function () {
         it('isEmpty on empty queue returns true', function () {

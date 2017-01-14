@@ -177,11 +177,11 @@ describe('asyncQueueAdapter', function () {
             //would need to decide between explicitly switching to promises or using bluebird.promisfy
 
             getQueueAdapter(function (queueAdapter) {
-                var jobRequestA = createSampleJobRequest('a');
+                const jobRequestA = createSampleJobRequest('a');
                 queueAdapter.enqueue(jobRequestA, function () {
-                    var jobRequestB = createSampleJobRequest('b');
+                    const jobRequestB = createSampleJobRequest('b');
                     queueAdapter.enqueue(jobRequestB, function () {
-                        var jobRequestC = createSampleJobRequest('c');
+                        const jobRequestC = createSampleJobRequest('c');
                         queueAdapter.enqueue(jobRequestC, function () {
 
                             //at this point there should be three items in the queue

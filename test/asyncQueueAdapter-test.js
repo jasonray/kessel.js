@@ -79,10 +79,10 @@ describe('asyncQueueAdapter', function () {
         });
         it('enqueue then dequeue returns job request (with latency)', function (done) {
             getQueueAdapter(function (queueAdapter) {
-                var dequeueCallback = function (err, jobRequest, commitJobA, rollbackJobA) {
+                const dequeueCallback = function (err, jobRequest, commitJobA, rollbackJobA) {
                     assert.equal(jobRequest.ref, 'testjob');
                     done();
-                }
+                };
 
                 var afterEnqueueCallback = function (err, jobRequest) {
                     queueAdapter.dequeue(dequeueCallback);

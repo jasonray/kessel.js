@@ -88,7 +88,7 @@ describe('asyncQueueAdapter', function () {
                     queueAdapter.dequeue(dequeueCallback);
                 };
 
-                var request = createSampleJobRequest('testjob');
+                const request = createSampleJobRequest('testjob');
                 queueAdapter.enqueue(request, afterEnqueueCallback)
             }, 500);
         });

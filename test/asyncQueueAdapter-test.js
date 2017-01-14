@@ -120,7 +120,7 @@ describe('asyncQueueAdapter', function () {
         it('dequeue (with commit) makes item unavailable to another dequeue', function (done) {
             getQueueAdapter(function (queueAdapter) {
 
-                var jobRequestA = createSampleJobRequest('a');
+                const jobRequestA = createSampleJobRequest('a');
                 queueAdapter.enqueue(jobRequestA, afterEnqueueCallback);
 
                 function afterEnqueueCallback(err, jobRequest) {

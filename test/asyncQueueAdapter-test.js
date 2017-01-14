@@ -297,7 +297,7 @@ describe('asyncQueueAdapter', function () {
         });
         it('if delay is set to future, the first attempt to dequeue will come up empty, but will be dequeued after delay', function (done) {
             getQueueAdapter(function (queueAdapter) {
-                var request = createSampleJobRequest('delayed item');
+                const request = createSampleJobRequest('delayed item');
                 request.delay = moment().add(500, "ms").toDate();
                 queueAdapter.enqueue(request, function () {
                     queueAdapter.dequeue(function (err, reservedAttempt1, commitJob1, rollbackJob1) {

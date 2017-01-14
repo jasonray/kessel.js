@@ -337,8 +337,8 @@ describe('asyncQueueAdapter', function () {
         });
         it('insert two items with same priority, should pop in same order', function (done) {
             getQueueAdapter(function (queueAdapter) {
-                var request1 = createSampleJobRequest('apple', low_priority);
-                var request2 = createSampleJobRequest('banana', low_priority);
+                const request1 = createSampleJobRequest('apple', low_priority);
+                const request2 = createSampleJobRequest('banana', low_priority);
 
                 queueAdapter.enqueue(request1, function () {
                     queueAdapter.enqueue(request2, function () {

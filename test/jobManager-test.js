@@ -14,10 +14,6 @@ describe('jobManager', function () {
             var jobManager = new JobManager();
             assert.ok(jobManager);
         });
-        it('using implicit constructor', function () {
-            var jobManager = JobManager();
-            assert.ok(jobManager);
-        });
     });
     it('request job', function (done) {
         var request = {

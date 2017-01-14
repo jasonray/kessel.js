@@ -9,7 +9,7 @@ var moment = require('moment');
 var standardConfig = {
     host: '127.0.0.1',
     port: '3000',
-    timeout: 0,
+    timeout: 0
 };
 
 //these tests assume that beanstalkd is running at 127.0.0.1:3000

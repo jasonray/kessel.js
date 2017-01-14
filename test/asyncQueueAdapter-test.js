@@ -64,16 +64,16 @@ describe('asyncQueueAdapter', function () {
         });
         it('enqueue then dequeue returns job request', function (done) {
             getQueueAdapter(function (queueAdapter) {
-                var dequeueCallback = function (err, jobRequest, commitJobA, rollbackJobA) {
+                const dequeueCallback = function (err, jobRequest, commitJobA, rollbackJobA) {
                     assert.equal(jobRequest.ref, 'testjob');
                     done();
                 };
 
-                var afterEnqueueCallback = function (err, jobRequest) {
+                const afterEnqueueCallback = function (err, jobRequest) {
                     queueAdapter.dequeue(dequeueCallback);
                 };
 
-                var request = createSampleJobRequest('testjob');
+                const request = createSampleJobRequest('testjob');
                 queueAdapter.enqueue(request, afterEnqueueCallback)
             });
         });

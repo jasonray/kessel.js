@@ -314,8 +314,8 @@ describe('asyncQueueAdapter', function () {
         });
     });
     describe('priority', function () {
-        var low_priority = 10;
-        var high_priority = 1;
+        const low_priority = 10;
+        const high_priority = 1;
 
         it('insert item without priority does not cause issue', function (done) {
             getQueueAdapter(function (queueAdapter) {

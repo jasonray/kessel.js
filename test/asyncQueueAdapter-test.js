@@ -27,7 +27,7 @@ describe('asyncQueueAdapter', function () {
         });
         it('after enqueue, size is 1', function (done) {
             getQueueAdapter(function (queueAdapter) {
-                var request = createSampleJobRequest();
+                const request = createSampleJobRequest();
                 queueAdapter.enqueue(request, function () {
                     assert.equal(queueAdapter.size(), 1);
                     done();

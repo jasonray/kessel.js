@@ -43,7 +43,7 @@ describe('asyncQueueAdapter', function () {
         });
         it('after enqueue, isEmpty is false', function (done) {
             getQueueAdapter(function (queueAdapter) {
-                var request = createSampleJobRequest();
+                const request = createSampleJobRequest();
                 queueAdapter.enqueue(request, function () {
                     assert.equal(queueAdapter.isEmpty(), false);
                     done();
@@ -53,7 +53,7 @@ describe('asyncQueueAdapter', function () {
     });
     describe('enqueue / dequeue', function () {
         it('dequeue on empty returns empty', function (done) {
-            var dequeueCallback = function (reservedJobRequest, commitJobA, rollbackJobA) {
+            const dequeueCallback = function (reservedJobRequest, commitJobA, rollbackJobA) {
                 assert.equal(reservedJobRequest, null);
                 done();
             };

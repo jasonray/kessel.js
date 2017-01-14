@@ -236,7 +236,7 @@ describe('asyncQueueAdapter', function () {
         });
         it('if expiration is set to future and requested after then, it will be not be processed', function (done) {
             getQueueAdapter(function (queueAdapter) {
-                var request = createSampleJobRequest('r');
+                const request = createSampleJobRequest('r');
                 request.expiration = moment().add(1000, "ms").toDate();
                 setTimeout(function () {
                     queueAdapter.enqueue(request, function () {

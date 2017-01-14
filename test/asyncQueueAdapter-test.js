@@ -22,7 +22,7 @@ describe('asyncQueueAdapter', function () {
     });
     describe('size', function () {
         it('initial size is 0', function () {
-            var queueAdapter = new QueueAdapter();
+            const queueAdapter = new QueueAdapter();
             assert.equal(queueAdapter.size(), 0);
         });
         it('after enqueue, size is 1', function (done) {

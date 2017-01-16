@@ -6,7 +6,6 @@ var context = {};
 context.logManager = new LogManager();
 logger = context.logManager.getLogger('app');
 
-
 context.config = require('./lib/config');
 logger.trace('standardConfig:', context.config.getConfig());
 logger.trace('config.beanstalk', context.config.getConfig('beanstalk'));

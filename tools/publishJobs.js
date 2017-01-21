@@ -18,19 +18,38 @@ var manager = new JobManager(context);
 manager.initialize(function (err) {
     if (!err) {
         setInterval(function () {
-            var x = getRandomInt(0,9);
-            var y = getRandomInt(0,9);
+            var x = getRandomInt(0, 9);
+            var y = getRandomInt(0, 9);
+            var priority = getRandomInt(10,1000);
 
             var request = {
                 type: 'add',
+                priority: priority,
                 payload: {
                     operands: [x, y]
                 }
             };
 
-            logger.debug('requesting job');
+            logger.debug('requesting job ' + request.type);
             manager.request(request);
-        }, 1000);
+        }, 1);
+
+        setInterval(function () {
+            var x = getRandomInt(0, 9);
+            var y = getRandomInt(0, 9);
+            var priority = getRandomInt(10,1000);
+
+            var request = {
+                type: 'multiplication',
+                priority: priority,
+                payload: {
+                    operands: [x, y]
+                }
+            };
+
+            logger.debug('requesting job ' + request.type);
+            manager.request(request);
+        }, 1);
     }
 });
 

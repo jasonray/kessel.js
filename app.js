@@ -23,3 +23,6 @@ var manager = new JobManager(context);
 logger.trace('starting job manager');
 manager.start();
 
+const httpBinding = require('./lib/jobManagerHttpBinding');
+httpBinding.start(manager);
+

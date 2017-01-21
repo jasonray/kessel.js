@@ -5,6 +5,9 @@
     "timeout": 5
   },
   "jobManager": {
-    "queueStrategy":"beanstalk"
+    "queueStrategy": "beanstalk",
+    "httpBinding": {
+      "port": "8000"
+    }
   }
 }

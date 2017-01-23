@@ -49,7 +49,7 @@ Consider the following scenarios:
 | Field | Optional/Request | Description |
 | --- | --- | --- |
 | TODO: id | requred | unique identifier of result |
-| TODO: requet | requred | original request |
+| TODO: request | requred | original request |
 | value | optional | if the handler reported a single value, this will be populated here |
 | status | required | The result of processing the message, valid values are `success`,`failed`,`failed-transient` |
 | message | optional | This can be populated with the error message or other human-readable informative information |

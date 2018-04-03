@@ -5,17 +5,18 @@ var mocha = require('mocha');
 var assert = require('assert');
 var QueueAdapter = require('../lib/queue/beanstalkAdapter');
 var moment = require('moment');
+const config = require('../lib/config')
 
 var standardConfig = {
     host: '127.0.0.1',
     port: '3000',
-    timeout: 0,
+    timeout: 0
 };
 
 //these tests assume that beanstalkd is running at 127.0.0.1:3000
 describe('beanstalkAdapter', function () {
     beforeEach(function () {
-        require('../lib/config').reset();
+        config.reset();
     });
     describe('initialization', function () {
         it('constructor', function () {
@@ -126,6 +127,7 @@ describe('beanstalkAdapter', function () {
                 }
 
                 var afterEnqueueCallback = function (err, jobRequest) {
+                    assert.equal(err, null, 'error occurred: ' + err);
                     queueAdapter.dequeue(dequeueCallback);
                 }
 

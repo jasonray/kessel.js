@@ -4,14 +4,14 @@
 // https://github.com/substack/minimist
 var pargv = require('minimist')(process.argv.splice(2));
 var _ = require('underscore');
-var JobManager = require('./lib/jobManager');
-var LogManager = require('./lib/logManager');
+var JobManager = require('../lib/jobManager');
+var LogManager = require('../lib/logManager');
 
 var context = {};
 context.logManager = new LogManager();
 logger = context.logManager.getLogger('app');
 
-var BeanstalkQueueAdapter = require('./lib/queue/beanstalkAdapter');
+var BeanstalkQueueAdapter = require('../lib/queue/beanstalkAdapter');
 var config = {
     beanstalk: {
         host: '127.0.0.1',

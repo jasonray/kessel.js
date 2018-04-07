@@ -21,7 +21,7 @@
     "bunyan": "^1.8.12",
     "fivebeans": "1.5.0",
     "minimist": "1.2.0",
-    "moment": "2.22.0",
+    "moment": "^2.22.0",
     "nconf": "^0.10.0",
     "should": "11.1.2",
     "underscore": "1.8.3",

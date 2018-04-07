@@ -25,8 +25,7 @@
     "nconf": "^0.10.0",
     "should": "11.1.2",
     "underscore": "1.8.3",
-    "uuid": "^3.2.1",
-    "yargs": "^11.0.0"
+    "uuid": "^3.2.1"
   },
   "devDependencies": {
     "mocha": "^3.2.0"

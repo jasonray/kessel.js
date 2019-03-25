@@ -23,7 +23,7 @@
     "minimist": "1.2.0",
     "moment": "^2.24.0",
     "nconf": "^0.10.0",
-    "should": "11.1.2",
+    "should": "^13.2.3",
     "underscore": "^1.9.1",
     "uuid": "^3.3.2",
     "yargs": "^13.2.2"

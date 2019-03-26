@@ -28,7 +28,7 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "mocha": "^6.0.2"
+    "mocha": "^3.2.0"
   },
   "keywords": [
     "job",

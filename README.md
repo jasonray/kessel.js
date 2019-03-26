@@ -1,7 +1,6 @@
 # kessel [![Build Status](https://travis-ci.org/jasonray/kessel.svg?branch=master)](https://travis-ci.org/jasonray/kessel) [![on npm](http://img.shields.io/npm/v/kessel-run.svg?style=flat)](https://www.npmjs.org/package/kessel-run) [![Coverage Status](https://img.shields.io/coveralls/ceejbot/kessel-run.svg?style=flat)](https://coveralls.io/github/ceejbot/kessel-run?branch=master) [![Greenkeeper badge](https://badges.greenkeeper.io/jasonray/kessel.svg)](https://greenkeeper.io/)
 
 
-
 "You've never heard of the Millennium Falcon?…It's the ship that made the Kessel Run in less than twelve parsecs."
 
 # Background

@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "mocha test/",
-    "integration-test": "mocha integration-test/"
+    "test": "mocha test/ --exit",
+    "integration-test": "mocha integration-test/ -exit"
   },
   "repository": {
     "type": "git",

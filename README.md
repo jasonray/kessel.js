@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/543b3bb11cf54b9e8ce1920b35846764)](https://app.codacy.com/app/jasonray/kessel?utm_source=github.com&utm_medium=referral&utm_content=jasonray/kessel&utm_campaign=Badge_Grade_Settings)
 # kessel [![Build Status](https://travis-ci.org/jasonray/kessel.svg?branch=master)](https://travis-ci.org/jasonray/kessel) [![on npm](http://img.shields.io/npm/v/kessel-run.svg?style=flat)](https://www.npmjs.org/package/kessel-run) [![Coverage Status](https://img.shields.io/coveralls/ceejbot/kessel-run.svg?style=flat)](https://coveralls.io/github/ceejbot/kessel-run?branch=master) [![Greenkeeper badge](https://badges.greenkeeper.io/jasonray/kessel.svg)](https://greenkeeper.io/)
 
 

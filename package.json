@@ -18,17 +18,19 @@
     "url": "https://github.com/jasonray/kessel/issues"
   },
   "dependencies": {
-    "bunyan": "^1.8.12",
+    "bunyan": "1.8.12",
     "fivebeans": "1.5.0",
     "minimist": "1.2.0",
-    "moment": "^2.24.0",
+    "moment": "2.24.0",
     "nconf": "^0.10.0",
-    "should": "^13.2.3",
-    "underscore": "^1.9.1",
-    "uuid": "^3.3.2"
+    "should": "13.2.3",
+    "underscore": "1.9.1",
+    "uuid": "3.3.2"
   },
   "devDependencies": {
-    "mocha": "^6.0.2"
+    "coveralls": "^3.0.3",
+    "mocha": "^6.0.2",
+    "mocha-lcov-reporter": "^1.3.0"
   },
   "keywords": [
     "job",

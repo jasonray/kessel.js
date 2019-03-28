@@ -135,7 +135,7 @@ describe('beanstalkAdapter', function () {
                 queueAdapter.initialize(function (err) {
                     assert.equal(err, null, "failed to initialize. Is beanstalk running?");
                     var request = createSampleJobRequest('testjob');
-                    queueAdapter.enqueue(request, afterEnqueueCallback)
+                    queueAdapter.enqueue(request, afterEnqueueCallback);
                 });
             });
             it('truncate', function (done) {

@@ -4,7 +4,7 @@ var LogManager = require('./lib/logManager');
 
 var context = {};
 context.logManager = new LogManager();
-logger = context.logManager.getLogger('app');
+const logger = context.logManager.getLogger('app');
 
 
 context.config = require('./lib/config');

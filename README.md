@@ -21,10 +21,10 @@ Consider the following scenarios:
 -   System will process requests based on **priority order**
 
 # Concepts
-- `job`: single delay processing tasks
-- `job request`: request to Kessel to perform a single job in the future
-- `handler`: the set of code to fulfil the `job request`.  This is where the extensibility of the system comes into play -> you create your own handlers with your logic and Kessel will delegate to your registered handlers.  Today, handlers are implemented in JavaScript
-- `queue`: Kessel uses an internal queue for holding the `job requests` that have not yet been implemented.  Currently there is support for a light weight in memory queue or beanstalkd [http://kr.github.io/beanstalkd/].
+-   `job`: single delay processing tasks
+-   `job request`: request to Kessel to perform a single job in the future
+-   `handler`: the set of code to fulfil the `job request`.  This is where the extensibility of the system comes into play -> you create your own handlers with your logic and Kessel will delegate to your registered handlers.  Today, handlers are implemented in JavaScript
+-   `queue`: Kessel uses an internal queue for holding the `job requests` that have not yet been implemented.  Currently there is support for a light weight in memory queue or beanstalkd [http://kr.github.io/beanstalkd/].
 
 # API
 

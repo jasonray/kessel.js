@@ -137,6 +137,8 @@ describe('beanstalkAdapter', function () {
                 });
             });
             it('enqueue then dequeue returns job request', function (done) {
+                var queueAdapter = new QueueAdapter(standardConfig);
+
                 var dequeueCallback = function (err, jobRequest, commitJobA, rollbackJobA) {
                     assert.equal(err, null, 'error occurred: ' + err);
                     assert.equal(jobRequest.ref, 'testjob');
@@ -148,7 +150,6 @@ describe('beanstalkAdapter', function () {
                     queueAdapter.dequeue(dequeueCallback);
                 }
 
-                var queueAdapter = new QueueAdapter(standardConfig);
                 queueAdapter.initialize(function (err) {
                     assert.equal(err, null, "failed to initialize. Is beanstalk running?");
                     var request = createSampleJobRequest('testjob');

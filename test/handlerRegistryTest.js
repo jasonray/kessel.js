@@ -138,7 +138,7 @@ describe('handler registry', function () {
             const registry = new HandlerRegistry();
             assert.throws(
                 function () {
-                    registry.registerHandler("+");
+                    registry.registerHandler('+');
                 },
                 Error
             );

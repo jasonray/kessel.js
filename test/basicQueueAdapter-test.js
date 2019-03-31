@@ -46,7 +46,7 @@ describe('basicQueueAdapter', function () {
             const dequeueCallback = function (jobRequest, jobRequestProcessingCallback) {
                 assert.equal(jobRequest.ref, 'testjob');
                 done();
-            }
+            };
 
             const queueAdapter = new QueueAdapter();
             const request = createSampleJobRequest('testjob');

@@ -1,5 +1,5 @@
 /*jslint node: true */
-"use strict";
+'use strict';
 
 const mocha = require('mocha');
 const assert = require('assert');
@@ -21,14 +21,14 @@ describe('handler registry', function () {
         it('register single handler, get returns it', function () {
             const registry = new HandlerRegistry();
             const additionHandler = require(additionModuleKey);
-            registry.registerHandler("+", additionHandler);
+            registry.registerHandler('+', additionHandler);
             const registeredHandler = registry.getHandler('+');
             registeredHandler.should.equal(additionHandler.handle);
         });
         it('get does not care about spaces', function () {
             const registry = new HandlerRegistry();
             const additionHandler = require(additionModuleKey);
-            registry.registerHandler("+", additionHandler);
+            registry.registerHandler('+', additionHandler);
             const registeredHandler = registry.getHandler(' + ');
             registeredHandler.should.equal(additionHandler.handle);
         });
@@ -36,10 +36,10 @@ describe('handler registry', function () {
             const registry = new HandlerRegistry();
 
             const additionHandler = require(additionModuleKey);
-            registry.registerHandler("+", additionHandler);
+            registry.registerHandler('+', additionHandler);
 
             const multiplicationHandler = require(multiplicationModuleKey);
-            registry.registerHandler("*", multiplicationHandler);
+            registry.registerHandler('*', multiplicationHandler);
 
             registry.getHandler('+').should.equal(additionHandler.handle);
             registry.getHandler('*').should.equal(multiplicationHandler.handle);
@@ -48,8 +48,8 @@ describe('handler registry', function () {
             const registry = new HandlerRegistry();
 
             const additionHandler = require(additionModuleKey);
-            registry.registerHandler("+", additionHandler);
-            registry.registerHandler("add", additionHandler);
+            registry.registerHandler('+', additionHandler);
+            registry.registerHandler('add', additionHandler);
 
             registry.getHandler('+').should.equal(additionHandler.handle);
             registry.getHandler('add').should.equal(additionHandler.handle);
@@ -58,8 +58,8 @@ describe('handler registry', function () {
             const registry = new HandlerRegistry();
 
             const additionHandler = require(additionModuleKey);
-            registry.registerHandler("+", additionHandler);
-            registry.registerHandler("add", additionHandler);
+            registry.registerHandler('+', additionHandler);
+            registry.registerHandler('add', additionHandler);
 
             const handler = registry.getHandler();
             should.not.exists(handler);
@@ -68,8 +68,8 @@ describe('handler registry', function () {
             const registry = new HandlerRegistry();
 
             const additionHandler = require(additionModuleKey);
-            registry.registerHandler("+", additionHandler);
-            registry.registerHandler("add", additionHandler);
+            registry.registerHandler('+', additionHandler);
+            registry.registerHandler('add', additionHandler);
 
             const handler = registry.getHandler('');
             should.not.exists(handler);
@@ -78,13 +78,13 @@ describe('handler registry', function () {
             const registry = new HandlerRegistry();
 
             const additionHandler = require(additionModuleKey);
-            registry.registerHandler("math", additionHandler);
+            registry.registerHandler('math', additionHandler);
 
             const multiplicationHandler = require(multiplicationModuleKey);
 
             assert.throws(
                 function () {
-                    registry.registerHandler("math", multiplicationHandler);
+                    registry.registerHandler('math', multiplicationHandler);
                 },
                 Error
             );
@@ -94,10 +94,10 @@ describe('handler registry', function () {
             const registry = new HandlerRegistry();
 
             const additionHandler = require(additionModuleKey);
-            registry.registerHandler("+", additionHandler);
+            registry.registerHandler('+', additionHandler);
 
             const multiplicationHandler = require(multiplicationModuleKey);
-            registry.registerHandler("*", multiplicationHandler);
+            registry.registerHandler('*', multiplicationHandler);
 
             should.not.exists(registry.getHandler('^'));
         });
@@ -118,7 +118,7 @@ describe('handler registry', function () {
 
             assert.throws(
                 function () {
-                    registry.registerHandler("", additionHandler);
+                    registry.registerHandler('', additionHandler);
                 },
                 Error
             );
@@ -146,26 +146,26 @@ describe('handler registry', function () {
         it('can handle a function based handler', function () {
             const registry = new HandlerRegistry();
             const additionFunctionHandler = require(additionFunctionModuleKey);
-            registry.registerHandler("+f", additionFunctionHandler);
+            registry.registerHandler('+f', additionFunctionHandler);
             const registeredHandler = registry.getHandler('+f');
             registeredHandler.should.equal(additionFunctionHandler);
         });
         it('can handle a module identifier based handler', function () {
             const registry = new HandlerRegistry();
-            registry.registerHandler("+", additionModuleKey);
+            registry.registerHandler('+', additionModuleKey);
             const registeredHandler = registry.getHandler('+');
             assert.ok(_.isFunction(registeredHandler));
         });
         it('can handle a module identifier of function based handler', function () {
             const registry = new HandlerRegistry();
-            registry.registerHandler("+f", additionFunctionModuleKey);
+            registry.registerHandler('+f', additionFunctionModuleKey);
             const registeredHandler = registry.getHandler('+f');
             assert.ok(_.isFunction(registeredHandler));
         });
         it('function registered as function', function () {
             const registry = new HandlerRegistry();
             const additionFunctionHandler = require(additionFunctionModuleKey);
-            registry.registerHandler("+f", additionFunctionHandler);
+            registry.registerHandler('+f', additionFunctionHandler);
             const registeredHandler = registry.getHandler('+f');
             assert.ok(_.isFunction(registeredHandler));
         });
@@ -173,7 +173,7 @@ describe('handler registry', function () {
             const registry = new HandlerRegistry();
             const additionFunctionHandler = require(additionModuleKey);
             console.log(additionFunctionHandler);
-            registry.registerHandler("+", additionFunctionHandler);
+            registry.registerHandler('+', additionFunctionHandler);
             const registeredHandler = registry.getHandler('+');
             assert.ok(_.isFunction(registeredHandler));
         });

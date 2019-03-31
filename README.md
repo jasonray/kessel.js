@@ -7,9 +7,9 @@
 Kessel is a lightweight framework for handling distributed delayed job processing.  This can be useful for any background jobs that you need within your application.
 
 Consider the following scenarios:
-- After a customer purchases items from your site, your system needs to process the order as a background job
-- When a patient has a pending medication order, your system needs to perform medication/allergy checks
-- As new metric data becomes available, periodically create derived data reports from raw data
+-   After a customer purchases items from your site, your system needs to process the order as a background job
+-   When a patient has a pending medication order, your system needs to perform medication/allergy checks
+-   As new metric data becomes available, periodically create derived data reports from raw data
 
 # Features
 - Architect can map **job type to handlers**

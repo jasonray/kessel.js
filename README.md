@@ -66,21 +66,21 @@ TODO: should this have a callback
 ## Queue Adapter API
 
 ### initialize(callback)
-- callback(err)
+-   callback(err)
 Description: if this queue adapter needs to do anything to initialize (such as connecting, do it here)
 
 ### enqueue(jobRequest, callback)
-- jobRequest: see job request model
-- callback(err, jobRequest)
+-   jobRequest: see job request model
+-   callback(err, jobRequest)
 
 ### dequeue(callback)
-- where callback is a function(jobRequest, commit, rollback)
-- jobRequest represents the job dequeued.  Will be null/empty if there was no item on the queue
-- where commit is a function(commitComplete)
+-   where callback is a function(jobRequest, commit, rollback)
+-   jobRequest represents the job dequeued.  Will be null/empty if there was no item on the queue
+-   where commit is a function(commitComplete)
 -- where, of course, commitComplete is a function indicating that commit is complete
-- where rollback is a function(rollbackComplete)
+-   where rollback is a function(rollbackComplete)
 -- where, of course, rollbackComplete is a function indicating that rollback is complete
-- TODO: consider error queue and rollback with delay
+-   TODO: consider error queue and rollback with delay
 
 # Developer Support
 

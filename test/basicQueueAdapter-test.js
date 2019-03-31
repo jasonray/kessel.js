@@ -5,6 +5,20 @@ const mocha = require('mocha');
 const assert = require('assert');
 const QueueAdapter = require('../lib/queue/basicQueueAdapter');
 
+function createSampleJobRequest(ref) {
+    const request = {
+        type: 'sample',
+        payload: {
+            x: 'x',
+            y: 'y'
+        }
+    };
+    if (ref) {
+        request.ref = ref;
+    }
+    return request;
+}
+
 describe('basicQueueAdapter', function () {
     describe('size', function () {
         it('initial size is 0', function () {
@@ -55,17 +69,3 @@ describe('basicQueueAdapter', function () {
         });
     });
 });
-
-function createSampleJobRequest(ref) {
-    const request = {
-        type: 'sample',
-        payload: {
-            x: 'x',
-            y: 'y'
-        }
-    };
-    if (ref) {
-        request.ref = ref;
-    }
-    return request;
-}

@@ -13,6 +13,23 @@ var standardConfig = {
     timeout: 0
 };
 
+function createSampleJobRequest(ref, priority) {
+    var request = {
+        type: 'sample',
+        payload: {
+            x: 'x',
+            y: 'y'
+        }
+    };
+    if (ref) {
+        request.ref = ref;
+    }
+    if (priority) {
+        request.priority = priority;
+    }
+    return request;
+}
+
 //these tests assume that beanstalkd is running at 127.0.0.1:3000
 describe('beanstalkAdapter', function () {
     beforeEach(function () {
@@ -458,20 +475,3 @@ describe('beanstalkAdapter', function () {
         });
     });
 });
-
-function createSampleJobRequest(ref, priority) {
-    var request = {
-        type: 'sample',
-        payload: {
-            x: 'x',
-            y: 'y'
-        }
-    };
-    if (ref) {
-        request.ref = ref;
-    }
-    if (priority) {
-        request.priority = priority;
-    }
-    return request;
-}

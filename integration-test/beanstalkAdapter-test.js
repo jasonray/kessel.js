@@ -137,6 +137,8 @@ describe('beanstalkAdapter', function () {
                 });
             });
             it('enqueue then dequeue returns job request', function (done) {
+                var queueAdapter = new QueueAdapter(standardConfig);
+
                 var dequeueCallback = function (err, jobRequest, commitJobA, rollbackJobA) {
                     assert.equal(err, null, 'error occurred: ' + err);
                     assert.equal(jobRequest.ref, 'testjob');
@@ -148,7 +150,6 @@ describe('beanstalkAdapter', function () {
                     queueAdapter.dequeue(dequeueCallback);
                 }
 
-                var queueAdapter = new QueueAdapter(standardConfig);
                 queueAdapter.initialize(function (err) {
                     assert.equal(err, null, "failed to initialize. Is beanstalk running?");
                     var request = createSampleJobRequest('testjob');
@@ -367,7 +368,7 @@ describe('beanstalkAdapter', function () {
                 var adapter = new QueueAdapter();
                 adapter.initialize(function (err) {
                     var request = createSampleJobRequest('delayed item');
-                    request.delay = moment().add(1, "y").toDate();
+                    request.delay = moment().add(1, 'y').toDate();
                     adapter.enqueue(request, function () {
                         adapter.dequeue(function (err, reservedAttempt1, commitJob1, rollbackJob1) {
                             assert.equal(reservedAttempt1, null, 'expected to not get an item as it should be delayed at this point');

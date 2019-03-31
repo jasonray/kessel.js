@@ -13,6 +13,23 @@ function getQueueAdapter(callback, latency) {
     });
 }
 
+function createSampleJobRequest(ref, priority) {
+    const request = {
+        type: 'sample',
+        payload: {
+            x: 'x',
+            y: 'y'
+        }
+    };
+    if (ref) {
+        request.ref = ref;
+    }
+    if (priority) {
+        request.priority = priority;
+    }
+    return request;
+}
+
 describe('asyncQueueAdapter', function () {
     describe('constructor', function () {
         it('using new constructor', function () {
@@ -391,20 +408,3 @@ describe('asyncQueueAdapter', function () {
         });
     });
 });
-
-function createSampleJobRequest(ref, priority) {
-    const request = {
-        type: 'sample',
-        payload: {
-            x: 'x',
-            y: 'y'
-        }
-    };
-    if (ref) {
-        request.ref = ref;
-    }
-    if (priority) {
-        request.priority = priority;
-    }
-    return request;
-}

@@ -129,7 +129,7 @@ describe('handler registry', function () {
 
             assert.throws(
                 function () {
-                    registry.registerHandler(" ", additionHandler);
+                    registry.registerHandler(' ', additionHandler);
                 },
                 Error
             );

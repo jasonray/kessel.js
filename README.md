@@ -12,13 +12,13 @@ Consider the following scenarios:
 -   As new metric data becomes available, periodically create derived data reports from raw data
 
 # Features
-- Architect can map **job type to handlers**
-- Developers can **implement new handlers**
-- Producers can **request jobs** to be processed
-- Producers can specify **expiration** of job requests
-- Producers can specify **delay** (earliest date/time to execute job) of `job requests`
-- System automatically **retries on transient exceptions**, and **buries jobs** on fatal exceptions
-- System will process requests based on **priority order**
+-   Architect can map **job type to handlers**
+-   Developers can **implement new handlers**
+-   Producers can **request jobs** to be processed
+-   Producers can specify **expiration** of job requests
+-   Producers can specify **delay** (earliest date/time to execute job) of `job requests`
+-   System automatically **retries on transient exceptions**, and **buries jobs** on fatal exceptions
+-   System will process requests based on **priority order**
 
 # Concepts
 - `job`: single delay processing tasks

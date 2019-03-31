@@ -368,7 +368,7 @@ describe('beanstalkAdapter', function () {
                 var adapter = new QueueAdapter();
                 adapter.initialize(function (err) {
                     var request = createSampleJobRequest('delayed item');
-                    request.delay = moment().add(1, "y").toDate();
+                    request.delay = moment().add(1, 'y').toDate();
                     adapter.enqueue(request, function () {
                         adapter.dequeue(function (err, reservedAttempt1, commitJob1, rollbackJob1) {
                             assert.equal(reservedAttempt1, null, 'expected to not get an item as it should be delayed at this point');

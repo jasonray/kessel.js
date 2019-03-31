@@ -1,6 +1,6 @@
 const _ = require('underscore');
-var JobManager = require('./lib/jobManager');
-var LogManager = require('./lib/logManager');
+const JobManager = require('./lib/jobManager');
+const LogManager = require('./lib/logManager');
 
 var context = {};
 context.logManager = new LogManager();

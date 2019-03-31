@@ -1,4 +1,4 @@
-var _ = require('underscore');
+const _ = require('underscore');
 var JobManager = require('./lib/jobManager');
 var LogManager = require('./lib/logManager');
 

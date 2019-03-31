@@ -3,7 +3,7 @@
 
 "You've never heard of the Millennium Falcon?…It's the ship that made the Kessel Run in less than twelve parsecs."
 
-# Background
+## Background
 Kessel is a lightweight framework for handling distributed delayed job processing.  This can be useful for any background jobs that you need within your application.
 
 Consider the following scenarios:
@@ -11,7 +11,7 @@ Consider the following scenarios:
 -   When a patient has a pending medication order, your system needs to perform medication/allergy checks
 -   As new metric data becomes available, periodically create derived data reports from raw data
 
-# Features
+## Features
 -   Architect can map **job type to handlers**
 -   Developers can **implement new handlers**
 -   Producers can **request jobs** to be processed
@@ -20,17 +20,17 @@ Consider the following scenarios:
 -   System automatically **retries on transient exceptions**, and **buries jobs** on fatal exceptions
 -   System will process requests based on **priority order**
 
-# Concepts
+## Concepts
 -   `job`: single delay processing tasks
 -   `job request`: request to Kessel to perform a single job in the future
 -   `handler`: the set of code to fulfil the `job request`.  This is where the extensibility of the system comes into play -> you create your own handlers with your logic and Kessel will delegate to your registered handlers.  Today, handlers are implemented in JavaScript
 -   `queue`: Kessel uses an internal queue for holding the `job requests` that have not yet been implemented.  Currently there is support for a light weight in memory queue or beanstalkd [http://kr.github.io/beanstalkd/].
 
-# API
+## API
 
-## Model
+### Model
 
-### jobRequest Model
+#### jobRequest Model
 
 | Field | Optional/Request | Description |
 | --- | --- | --- |
@@ -43,7 +43,7 @@ Consider the following scenarios:
 | callback | optional | If a callback is provided it will be invoked when job is complete.  This is currently implemented with a JavaScript function callback ```function(err)```.  Pending: callbacks using HTTP endpoint |
 | payload | optional | The payload is the content to pass to the handler |
 
-### jobResult Model
+#### jobResult Model
 
 | Field | Optional/Request | Description |
 | --- | --- | --- |
@@ -53,27 +53,27 @@ Consider the following scenarios:
 | status | required | The result of processing the message, valid values are `success`,`failed`,`failed-transient` |
 | message | optional | This can be populated with the error message or other human-readable informative information |
 
-## Job Manager API
+### Job Manager API
 
-### Constructor
-### connect(callback)
+#### Constructor
+#### connect(callback)
 TODO: should this be private?
-### start
-### request(jobRequest, callback)
-### processSingleJob(jobRequest)
+#### start
+#### request(jobRequest, callback)
+#### processSingleJob(jobRequest)
 TODO: should this have a callback
 
-## Queue Adapter API
+### Queue Adapter API
 
-### initialize(callback)
+#### initialize(callback)
 -   callback(err)
 Description: if this queue adapter needs to do anything to initialize (such as connecting, do it here)
 
-### enqueue(jobRequest, callback)
+#### enqueue(jobRequest, callback)
 -   jobRequest: see job request model
 -   callback(err, jobRequest)
 
-### dequeue(callback)
+#### dequeue(callback)
 -   where callback is a function(jobRequest, commit, rollback)
 -   jobRequest represents the job dequeued.  Will be null/empty if there was no item on the queue
 -   where commit is a function(commitComplete)
@@ -82,9 +82,9 @@ Description: if this queue adapter needs to do anything to initialize (such as c
 -- where, of course, rollbackComplete is a function indicating that rollback is complete
 -   TODO: consider error queue and rollback with delay
 
-# Developer Support
+## Developer Support
 
-##  Developer Set up
+###  Developer Set up
 First, make sure that you have `node`, `npm`, and `beanstalkd` installed.
 
 If you do not, and are on a mac, here I recommend to first install Homebrew [http://brew.sh/], then install using: `brew install node` and `brew install beanstalkd`
@@ -93,27 +93,27 @@ Next, clone the source code from this repository [https://github.com/jasonray/ke
 
 You will then need to setup dependencies: `npm install`
 
-### Run tests
+#### Run tests
 To run the unit tests: `npm test`
 To run the integration tests, ensure that beanstalkd is running on port :3000 (which can be started with `bin/start-queue.sh`) then `npm run integration-test`
 
-### Run checks
+#### Run checks
 To run dependency checks: `npm-check`
 
-## How to create a handler
+### How to create a handler
 TODO
 
-## How to create a queue adapter
+### How to create a queue adapter
 TODO
 
-# Example
+## Example
 
-## Create job request, enqueue, receive callback
+### Create job request, enqueue, receive callback
 TODO
 
-# Development Guidelines
+## Development Guidelines
 
-## Logging
+### Logging
 In order to make the logs consistent, the following guidelines should be used:
 
 | Level | Guideline |

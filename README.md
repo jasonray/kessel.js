@@ -80,7 +80,7 @@ Description: if this queue adapter needs to do anything to initialize (such as c
 -   TODO: consider error queue and rollback with delay
 
 ## Developer Support
-###  Developer Setup
+### Developer Setup
 First, make sure that you have `node`, `npm`, and `beanstalkd` installed.
 
 If you do not, and are on a mac, here I recommend to first install [Homebrew](http://brew.sh/), then install using: `brew install node` and `brew install beanstalkd`
@@ -108,7 +108,6 @@ TODO
 TODO
 
 ## Development Guidelines
-
 ### Logging
 In order to make the logs consistent, the following guidelines should be used:
 

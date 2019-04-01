@@ -81,7 +81,7 @@ Description: if this queue adapter needs to do anything to initialize (such as c
 
 ## Developer Support
 
-###  Developer Set up
+###  Developer Setup
 First, make sure that you have `node`, `npm`, and `beanstalkd` installed.
 
 If you do not, and are on a mac, here I recommend to first install Homebrew [http://brew.sh/], then install using: `brew install node` and `brew install beanstalkd`

@@ -89,11 +89,11 @@ describe('beanstalkAdapter', function () {
             });
         });
         it('handle standardConfig with no port', function (done) {
-            var noPortConfig = {
+            const noPortConfig = {
                 port: '3000'
             };
 
-            var adapter = new QueueAdapter(noPortConfig);
+            const adapter = new QueueAdapter(noPortConfig);
             adapter.initialize(function (err) {
                 assert.equal(err, null);
                 done();

@@ -77,12 +77,12 @@ describe('beanstalkAdapter', function () {
             });
         });
         it('handle standardConfig with invalid port', function (done) {
-            var invalidPortConfig = {
+            const invalidPortConfig = {
                 host: '127.0.0.1',
                 port: 'x'
             };
 
-            var adapter = new QueueAdapter(invalidPortConfig);
+            const adapter = new QueueAdapter(invalidPortConfig);
             adapter.initialize(function (err) {
                 assert.ok(err);
                 done();

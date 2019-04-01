@@ -40,7 +40,7 @@ describe('beanstalkAdapter', function () {
             const adapter = new QueueAdapter(standardConfig);
         });
         it('init', function (done) {
-            var adapter = new QueueAdapter(standardConfig);
+            const adapter = new QueueAdapter(standardConfig);
             adapter.initialize(function (err) {
                 assert.equal(err, null);
                 done();

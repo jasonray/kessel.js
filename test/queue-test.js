@@ -1,5 +1,5 @@
 /*jslint node: true */
-"use strict";
+'use strict';
 
 const mocha = require('mocha');
 const assert = require('assert');

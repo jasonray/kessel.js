@@ -7,14 +7,14 @@ const QueueAdapter = require('../lib/queue/beanstalkAdapter');
 const moment = require('moment');
 const config = require('../lib/config')
 
-var standardConfig = {
+const standardConfig = {
     host: '127.0.0.1',
     port: '3000',
     timeout: 0
 };
 
 function createSampleJobRequest(ref, priority) {
-    var request = {
+    const request = {
         type: 'sample',
         payload: {
             x: 'x',

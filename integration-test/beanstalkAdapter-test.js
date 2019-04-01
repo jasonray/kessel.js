@@ -37,7 +37,7 @@ describe('beanstalkAdapter', function () {
     });
     describe('initialization', function () {
         it('constructor', function () {
-            var adapter = new QueueAdapter(standardConfig);
+            const adapter = new QueueAdapter(standardConfig);
         });
         it('init', function (done) {
             var adapter = new QueueAdapter(standardConfig);

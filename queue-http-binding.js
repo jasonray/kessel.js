@@ -21,7 +21,7 @@ var fetchQueue = function(req, res, next) {
 	data = queue.toString();
 	console.log('raw data:' + data);
 	res.format({
-		html: function() {
+		html() {
 			data = data.split(',');
 			console.log('split data:' + data);
 			var html = '<html><body>';
@@ -35,11 +35,11 @@ var fetchQueue = function(req, res, next) {
 			res.send(html);
 		},
 
-		text: function() {
+		text() {
 			res.send(data);
 		},
 
-		json: function() {
+		json() {
 			data = data.split(',');
 			res.send(data);
 		}

@@ -125,10 +125,3 @@ In order to make the logs consistent, the following guidelines should be used:
 | Unable to access dependant system | warn |
 | Framework logging enqeue, dequeue, and completion of job (one or two log messages per job) | info |
 | Handler logging | debug or trace |
-
-
-
-
-
-
-

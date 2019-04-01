@@ -2,17 +2,17 @@
 // this is used in this project for setting the port
 // for info on minimist, see docs:
 // https://github.com/substack/minimist
-var pargv = require('minimist')(process.argv.splice(2));
-var _ = require('underscore');
-var JobManager = require('../lib/jobManager');
-var LogManager = require('../lib/logManager');
+const pargv = require('minimist')(process.argv.splice(2));
+const _ = require('underscore');
+const JobManager = require('../lib/jobManager');
+const LogManager = require('../lib/logManager');
 
-var context = {};
+const context = {};
 context.logManager = new LogManager();
 const logger = context.logManager.getLogger('app');
 
-var BeanstalkQueueAdapter = require('../lib/queue/beanstalkAdapter');
-var config = {
+const BeanstalkQueueAdapter = require('../lib/queue/beanstalkAdapter');
+const config = {
     beanstalk: {
         host: '127.0.0.1',
         port: '3000'
@@ -22,14 +22,14 @@ context.queue = new BeanstalkQueueAdapter(config);
 
 logger.info('starting kessel app script');
 logger.trace('init job manager');
-var manager = new JobManager(context);
+const manager = new JobManager(context);
 manager.initialize(function (err) {
     if (!err) {
         setInterval(function () {
-            var x = getRandomInt(0,9);
-            var y = getRandomInt(0,9);
+            const x = getRandomInt(0,9);
+            const y = getRandomInt(0,9);
 
-            var request = {
+            const request = {
                 type: 'add',
                 payload: {
                     operands: [x, y]

@@ -65,12 +65,12 @@ describe('beanstalkAdapter', function () {
             });
         });
         it('handle standardConfig with invalid host', function (done) {
-            var invalidHostConfig = {
+            const invalidHostConfig = {
                 host: '0.0.0.1',
                 port: '3000'
             };
 
-            var adapter = new QueueAdapter(invalidHostConfig);
+            const adapter = new QueueAdapter(invalidHostConfig);
             adapter.initialize(function (err) {
                 assert.ok(err);
                 done();

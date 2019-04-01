@@ -132,7 +132,7 @@ describe('beanstalkAdapter', function () {
 
                 const queueAdapter = new QueueAdapter(standardConfig);
                 queueAdapter.initialize(function (err) {
-                    assert.equal(err, null, "failed to initialize. Is beanstalk running?");
+                    assert.equal(err, null, 'failed to initialize. Is beanstalk running?');
                     queueAdapter.dequeue(dequeueCallback);
                 });
             });
@@ -151,7 +151,7 @@ describe('beanstalkAdapter', function () {
                 }
 
                 queueAdapter.initialize(function (err) {
-                    assert.equal(err, null, "failed to initialize. Is beanstalk running?");
+                    assert.equal(err, null, 'failed to initialize. Is beanstalk running?');
                     const request = createSampleJobRequest('testjob');
                     queueAdapter.enqueue(request, afterEnqueueCallback);
                 });
@@ -159,7 +159,7 @@ describe('beanstalkAdapter', function () {
             it('truncate', function (done) {
                 const queueAdapter = new QueueAdapter(standardConfig);
                 queueAdapter.initialize(function (err) {
-                    assert.equal(err, null, "failed to initialize. Is beanstalk running?");
+                    assert.equal(err, null, 'failed to initialize. Is beanstalk running?');
                     const requestA = createSampleJobRequest('A');
                     queueAdapter.enqueue(requestA, function (err, jobRequest) {
                         const requestB = createSampleJobRequest('B');
@@ -179,7 +179,7 @@ describe('beanstalkAdapter', function () {
             it('dequeue (without commit/rollback) makes item unavailable to another dequeue', function (done) {
                 const queueAdapter = new QueueAdapter(standardConfig);
                 queueAdapter.initialize(function (err) {
-                    assert.equal(err, null, "failed to initialize. Is beanstalk running?");
+                    assert.equal(err, null, 'failed to initialize. Is beanstalk running?');
 
                     const jobRequestA = createSampleJobRequest('a');
                     queueAdapter.enqueue(jobRequestA, afterEnqueueCallback);
@@ -204,7 +204,7 @@ describe('beanstalkAdapter', function () {
             it('dequeue (with commit) makes item unavailable to another dequeue', function (done) {
                 const queueAdapter = new QueueAdapter(standardConfig);
                 queueAdapter.initialize(function (err) {
-                    assert.equal(err, null, "failed to initialize. Is beanstalk running?");
+                    assert.equal(err, null, 'failed to initialize. Is beanstalk running?');
 
                     const jobRequestA = createSampleJobRequest('a');
                     queueAdapter.enqueue(jobRequestA, afterEnqueueCallback);
@@ -232,7 +232,7 @@ describe('beanstalkAdapter', function () {
             it('dequeue (with rollback) makes item available to another dequeue', function (done) {
                 const queueAdapter = new QueueAdapter(standardConfig);
                 queueAdapter.initialize(function (err) {
-                    assert.equal(err, null, "failed to initialize. Is beanstalk running?");
+                    assert.equal(err, null, 'failed to initialize. Is beanstalk running?');
 
                     const jobRequestA = createSampleJobRequest('a');
                     queueAdapter.enqueue(jobRequestA, afterEnqueueCallback);
@@ -266,7 +266,7 @@ describe('beanstalkAdapter', function () {
 
                 const queueAdapter = new QueueAdapter(standardConfig);
                 queueAdapter.initialize(function (err) {
-                    assert.equal(err, null, "failed to initialize. Is beanstalk running?");
+                    assert.equal(err, null, 'failed to initialize. Is beanstalk running?');
 
                     const jobRequestA = createSampleJobRequest('a');
                     queueAdapter.enqueue(jobRequestA, function () {
@@ -317,7 +317,7 @@ describe('beanstalkAdapter', function () {
                 const adapter = new QueueAdapter();
                 adapter.initialize(function (err) {
                     const request = createSampleJobRequest('r');
-                    request.expiration = moment().add(1, "y").toDate();
+                    request.expiration = moment().add(1, 'y').toDate();
                     adapter.enqueue(request, function () {
                         adapter.dequeue(function (err, reservedAttempt, commitJob1, rollbackJob1) {
                             assert.equal(reservedAttempt.ref, 'r');
@@ -330,7 +330,7 @@ describe('beanstalkAdapter', function () {
                 const adapter = new QueueAdapter();
                 adapter.initialize(function (err) {
                     const request = createSampleJobRequest('r');
-                    request.expiration = moment().add(1, "ms").toDate();
+                    request.expiration = moment().add(1, 'ms').toDate();
 
                     setTimeout(function () {
                         adapter.enqueue(request, function () {
@@ -347,10 +347,10 @@ describe('beanstalkAdapter', function () {
                 const adapter = new QueueAdapter();
                 adapter.initialize(function (err) {
                     const requestExpired = createSampleJobRequest('expired');
-                    requestExpired.expiration = moment().subtract(1, "y").toDate();
+                    requestExpired.expiration = moment().subtract(1, 'y').toDate();
 
                     const requestNotExpired = createSampleJobRequest('not expired');
-                    requestNotExpired.expiration = moment().add(1, "y").toDate();
+                    requestNotExpired.expiration = moment().add(1, 'y').toDate();
 
                     adapter.enqueue(requestExpired, function () {
                         adapter.enqueue(requestNotExpired, function () {
@@ -381,7 +381,7 @@ describe('beanstalkAdapter', function () {
                 const adapter = new QueueAdapter();
                 adapter.initialize(function (err) {
                     const request = createSampleJobRequest('delayed item');
-                    request.delay = moment().add(100, "ms").toDate();
+                    request.delay = moment().add(100, 'ms').toDate();
                     adapter.enqueue(request, function () {
                         setTimeout(function () {
                             adapter.dequeue(function (err, reservedAttempt1, commitJob1, rollbackJob1) {

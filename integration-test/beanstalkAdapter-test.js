@@ -47,7 +47,7 @@ describe('beanstalkAdapter', function () {
             });
         });
         it('handle no standardConfig', function (done) {
-            var adapter = new QueueAdapter();
+            const adapter = new QueueAdapter();
             adapter.initialize(function (err) {
                 assert.equal(err, null);
                 done();

@@ -9,7 +9,7 @@ var LogManager = require('../lib/logManager');
 
 var context = {};
 context.logManager = new LogManager();
-logger = context.logManager.getLogger('app');
+const logger = context.logManager.getLogger('app');
 
 var BeanstalkQueueAdapter = require('../lib/queue/beanstalkAdapter');
 var config = {

@@ -112,16 +112,16 @@ TODO
 In order to make the logs consistent, the following guidelines should be used:
 
 | Level | Guideline |
-| --- | --- | 
+| ----- | --------- | 
 | error | Critical system errors that would result in process restarting | 
 | warn  | Subsystem failures | 
 | info  | Major startup item; <br> No more than once per job | 
 | debug | Significant event while processing job |  
 | trace | Majority of job level logging |  
 
-| Example | Level |
-| --- | --- | 
-| Issue in framework that will cause system to halt | error |
-| Unable to access dependant system | warn |
-| Framework logging enqeue, dequeue, and completion of job (one or two log messages per job) | info |
-| Handler logging | debug or trace |
+| Example                                                                                    | Level           |
+| ------------------------------------------------------------------------------------------ | -----           | 
+| Issue in framework that will cause system to halt                                          | error           |
+| Unable to access dependant system                                                          | warn            |
+| Framework logging enqeue, dequeue, and completion of job (one or two log messages per job) | info            |
+| Handler logging                                                                            | debug or trace  |

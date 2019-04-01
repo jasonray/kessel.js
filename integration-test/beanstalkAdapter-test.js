@@ -54,11 +54,11 @@ describe('beanstalkAdapter', function () {
             });
         });
         it('handle standardConfig with no host', function (done) {
-            var noHostConfig = {
+            const noHostConfig = {
                 port: '3000'
             };
 
-            var adapter = new QueueAdapter(noHostConfig);
+            const adapter = new QueueAdapter(noHostConfig);
             adapter.initialize(function (err) {
                 assert.equal(err, null);
                 done();

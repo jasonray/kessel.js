@@ -85,7 +85,7 @@ First, make sure that you have `node`, `npm`, and `beanstalkd` installed.
 
 If you do not, and are on a mac, here I recommend to first install [Homebrew](http://brew.sh/), then install using: `brew install node` and `brew install beanstalkd`
 
-Next, clone the source code from this repository [https://github.com/jasonray/kessel].
+Next, clone the source code from [this repository](https://github.com/jasonray/kessel).
 
 You will then need to setup dependencies: `npm install`
 

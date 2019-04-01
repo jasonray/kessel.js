@@ -116,32 +116,32 @@ describe('basic queue', function () {
             const queue = new Queue();
             queue.push('apple');
             queue.push('banana');
-            assert.equal('apple', queue.pop(), "expected first item to be apple");
-            assert.equal('banana', queue.pop(), "expected second item to be banana");
+            assert.equal('apple', queue.pop(), 'expected first item to be apple');
+            assert.equal('banana', queue.pop(), 'expected second item to be banana');
             assert.equal(null, queue.pop());
         });
         it('insert two items with same priority, should pop in same order', function () {
             const queue = new Queue();
             queue.push('apple', high_priority);
             queue.push('banana', high_priority);
-            assert.equal('apple', queue.pop(), "expected first item to be apple");
-            assert.equal('banana', queue.pop(), "expected second item to be banana");
+            assert.equal('apple', queue.pop(), 'expected first item to be apple');
+            assert.equal('banana', queue.pop(), 'expected second item to be banana');
             assert.equal(null, queue.pop());
         });
         it('insert low priority, then high priorty, should pop high priority first', function () {
             const queue = new Queue();
             queue.push('apple', low_priority);
             queue.push('banana', high_priority);
-            assert.equal('banana', queue.pop(), "expected first item to be banana");
-            assert.equal('apple', queue.pop(), "expected second item to be apple");
+            assert.equal('banana', queue.pop(), 'expected first item to be banana');
+            assert.equal('apple', queue.pop(), 'expected second item to be apple');
             assert.equal(null, queue.pop());
         });
         it('insert high priority, then low priorty, should pop high priority first', function () {
             const queue = new Queue();
             queue.push('apple', high_priority);
             queue.push('banana', low_priority);
-            assert.equal('apple', queue.pop(), "expected first item to be apple");
-            assert.equal('banana', queue.pop(), "expected second item to be banana");
+            assert.equal('apple', queue.pop(), 'expected first item to be apple');
+            assert.equal('banana', queue.pop(), 'expected second item to be banana');
             assert.equal(null, queue.pop());
         });
     });

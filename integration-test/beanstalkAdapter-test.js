@@ -2,7 +2,7 @@
 'use strict';
 
 const mocha = require('mocha');
-var assert = require('assert');
+const assert = require('assert');
 var QueueAdapter = require('../lib/queue/beanstalkAdapter');
 var moment = require('moment');
 const config = require('../lib/config')

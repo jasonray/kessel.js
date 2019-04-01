@@ -80,7 +80,6 @@ Description: if this queue adapter needs to do anything to initialize (such as c
 -   TODO: consider error queue and rollback with delay
 
 ## Developer Support
-
 ###  Developer Setup
 First, make sure that you have `node`, `npm`, and `beanstalkd` installed.
 

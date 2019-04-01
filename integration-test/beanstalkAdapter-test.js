@@ -100,12 +100,12 @@ describe('beanstalkAdapter', function () {
             });
         });
         it('handle unable to initialize to beanstalk', function (done) {
-            var uninitializeableConfig = {
+            const uninitializeableConfig = {
                 host: '127.0.0.1',
                 port: '9999'
             };
 
-            var adapter = new QueueAdapter(uninitializeableConfig);
+            const adapter = new QueueAdapter(uninitializeableConfig);
             adapter.initialize(function (err) {
                 assert.ok(err);
                 done();

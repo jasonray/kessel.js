@@ -114,7 +114,7 @@ describe('beanstalkAdapter', function () {
     });
     describe('tests which require truncating queue', function () {
         beforeEach(function (done) {
-            var adapter = new QueueAdapter(standardConfig);
+            const adapter = new QueueAdapter(standardConfig);
             adapter.initialize(function (err) {
                 assert.equal(err, null);
                 adapter.truncate(function (err) {
@@ -125,44 +125,44 @@ describe('beanstalkAdapter', function () {
         });
         describe('enqueue / dequeue', function () {
             it('dequeue on empty returns empty', function (done) {
-                var dequeueCallback = function (reservedJobRequest, commitJobA, rollbackJobA) {
+                const dequeueCallback = function (reservedJobRequest, commitJobA, rollbackJobA) {
                     assert.equal(reservedJobRequest, null);
                     done();
                 };
 
-                var queueAdapter = new QueueAdapter(standardConfig);
+                const queueAdapter = new QueueAdapter(standardConfig);
                 queueAdapter.initialize(function (err) {
                     assert.equal(err, null, "failed to initialize. Is beanstalk running?");
                     queueAdapter.dequeue(dequeueCallback);
                 });
             });
             it('enqueue then dequeue returns job request', function (done) {
-                var queueAdapter = new QueueAdapter(standardConfig);
+                const queueAdapter = new QueueAdapter(standardConfig);
 
-                var dequeueCallback = function (err, jobRequest, commitJobA, rollbackJobA) {
+                const dequeueCallback = function (err, jobRequest, commitJobA, rollbackJobA) {
                     assert.equal(err, null, 'error occurred: ' + err);
                     assert.equal(jobRequest.ref, 'testjob');
                     done();
                 }
 
-                var afterEnqueueCallback = function (err, jobRequest) {
+                const afterEnqueueCallback = function (err, jobRequest) {
                     assert.equal(err, null, 'error occurred: ' + err);
                     queueAdapter.dequeue(dequeueCallback);
                 }
 
                 queueAdapter.initialize(function (err) {
                     assert.equal(err, null, "failed to initialize. Is beanstalk running?");
-                    var request = createSampleJobRequest('testjob');
+                    const request = createSampleJobRequest('testjob');
                     queueAdapter.enqueue(request, afterEnqueueCallback);
                 });
             });
             it('truncate', function (done) {
-                var queueAdapter = new QueueAdapter(standardConfig);
+                const queueAdapter = new QueueAdapter(standardConfig);
                 queueAdapter.initialize(function (err) {
                     assert.equal(err, null, "failed to initialize. Is beanstalk running?");
-                    var requestA = createSampleJobRequest('A');
+                    const requestA = createSampleJobRequest('A');
                     queueAdapter.enqueue(requestA, function (err, jobRequest) {
-                        var requestB = createSampleJobRequest('B');
+                        const requestB = createSampleJobRequest('B');
                         queueAdapter.enqueue(requestB, function (err, jobRequest) {
                             queueAdapter.truncate(function () {
                                 queueAdapter.dequeue(function (jobRequest, commitJobA, rollbackJobA) {
@@ -177,11 +177,11 @@ describe('beanstalkAdapter', function () {
         });
         describe('enqueue / dequeue with transactions', function () {
             it('dequeue (without commit/rollback) makes item unavailable to another dequeue', function (done) {
-                var queueAdapter = new QueueAdapter(standardConfig);
+                const queueAdapter = new QueueAdapter(standardConfig);
                 queueAdapter.initialize(function (err) {
                     assert.equal(err, null, "failed to initialize. Is beanstalk running?");
 
-                    var jobRequestA = createSampleJobRequest('a');
+                    const jobRequestA = createSampleJobRequest('a');
                     queueAdapter.enqueue(jobRequestA, afterEnqueueCallback);
 
                     function afterEnqueueCallback(err, jobRequest) {
@@ -202,11 +202,11 @@ describe('beanstalkAdapter', function () {
                 });
             });
             it('dequeue (with commit) makes item unavailable to another dequeue', function (done) {
-                var queueAdapter = new QueueAdapter(standardConfig);
+                const queueAdapter = new QueueAdapter(standardConfig);
                 queueAdapter.initialize(function (err) {
                     assert.equal(err, null, "failed to initialize. Is beanstalk running?");
 
-                    var jobRequestA = createSampleJobRequest('a');
+                    const jobRequestA = createSampleJobRequest('a');
                     queueAdapter.enqueue(jobRequestA, afterEnqueueCallback);
 
                     function afterEnqueueCallback(err, jobRequest) {
@@ -230,11 +230,11 @@ describe('beanstalkAdapter', function () {
                 });
             });
             it('dequeue (with rollback) makes item available to another dequeue', function (done) {
-                var queueAdapter = new QueueAdapter(standardConfig);
+                const queueAdapter = new QueueAdapter(standardConfig);
                 queueAdapter.initialize(function (err) {
                     assert.equal(err, null, "failed to initialize. Is beanstalk running?");
 
-                    var jobRequestA = createSampleJobRequest('a');
+                    const jobRequestA = createSampleJobRequest('a');
                     queueAdapter.enqueue(jobRequestA, afterEnqueueCallback);
 
                     function afterEnqueueCallback(err, jobRequest) {
@@ -264,15 +264,15 @@ describe('beanstalkAdapter', function () {
                 //how to handle the callbacks on commit() and rollback() that would need to be overcome
                 //would need to decide between explicitly switching to promises or using bluebird.promisfy
 
-                var queueAdapter = new QueueAdapter(standardConfig);
+                const queueAdapter = new QueueAdapter(standardConfig);
                 queueAdapter.initialize(function (err) {
                     assert.equal(err, null, "failed to initialize. Is beanstalk running?");
 
-                    var jobRequestA = createSampleJobRequest('a');
+                    const jobRequestA = createSampleJobRequest('a');
                     queueAdapter.enqueue(jobRequestA, function () {
-                        var jobRequestB = createSampleJobRequest('b');
+                        const jobRequestB = createSampleJobRequest('b');
                         queueAdapter.enqueue(jobRequestB, function () {
-                            var jobRequestC = createSampleJobRequest('c');
+                            const jobRequestC = createSampleJobRequest('c');
                             queueAdapter.enqueue(jobRequestC, function () {
 
                                 //at this point there should be three items in the queue
@@ -314,9 +314,9 @@ describe('beanstalkAdapter', function () {
         });
         describe('expiration', function () {
             it('if expiration is set to 1 sec in future and requested before then, it will be processed normally', function (done) {
-                var adapter = new QueueAdapter();
+                const adapter = new QueueAdapter();
                 adapter.initialize(function (err) {
-                    var request = createSampleJobRequest('r');
+                    const request = createSampleJobRequest('r');
                     request.expiration = moment().add(1, "y").toDate();
                     adapter.enqueue(request, function () {
                         adapter.dequeue(function (err, reservedAttempt, commitJob1, rollbackJob1) {
@@ -327,9 +327,9 @@ describe('beanstalkAdapter', function () {
                 });
             });
             it('if expiration is set to future and requested after then, it will be not be processed', function (done) {
-                var adapter = new QueueAdapter();
+                const adapter = new QueueAdapter();
                 adapter.initialize(function (err) {
-                    var request = createSampleJobRequest('r');
+                    const request = createSampleJobRequest('r');
                     request.expiration = moment().add(1, "ms").toDate();
 
                     setTimeout(function () {
@@ -344,12 +344,12 @@ describe('beanstalkAdapter', function () {
                 });
             });
             it('with two items, expired item will be skipped to get to non-expired item', function (done) {
-                var adapter = new QueueAdapter();
+                const adapter = new QueueAdapter();
                 adapter.initialize(function (err) {
-                    var requestExpired = createSampleJobRequest('expired');
+                    const requestExpired = createSampleJobRequest('expired');
                     requestExpired.expiration = moment().subtract(1, "y").toDate();
 
-                    var requestNotExpired = createSampleJobRequest('not expired');
+                    const requestNotExpired = createSampleJobRequest('not expired');
                     requestNotExpired.expiration = moment().add(1, "y").toDate();
 
                     adapter.enqueue(requestExpired, function () {
@@ -365,9 +365,9 @@ describe('beanstalkAdapter', function () {
         });
         describe('delay', function () {
             it('if delay is set to 1 year in future it cannot be dequeued now', function (done) {
-                var adapter = new QueueAdapter();
+                const adapter = new QueueAdapter();
                 adapter.initialize(function (err) {
-                    var request = createSampleJobRequest('delayed item');
+                    const request = createSampleJobRequest('delayed item');
                     request.delay = moment().add(1, 'y').toDate();
                     adapter.enqueue(request, function () {
                         adapter.dequeue(function (err, reservedAttempt1, commitJob1, rollbackJob1) {
@@ -378,9 +378,9 @@ describe('beanstalkAdapter', function () {
                 });
             });
             it('if delay is set to 1 sec in future it will be dequeued after 1s', function (done) {
-                var adapter = new QueueAdapter();
+                const adapter = new QueueAdapter();
                 adapter.initialize(function (err) {
-                    var request = createSampleJobRequest('delayed item');
+                    const request = createSampleJobRequest('delayed item');
                     request.delay = moment().add(100, "ms").toDate();
                     adapter.enqueue(request, function () {
                         setTimeout(function () {
@@ -394,14 +394,14 @@ describe('beanstalkAdapter', function () {
             });
         });
         describe('priority', function () {
-            var low_priority = 10;
-            var high_priority = 1;
+            const low_priority = 10;
+            const high_priority = 1;
 
             it('insert item without priority does not cause issue', function (done) {
-                var queueAdapter = new QueueAdapter();
+                const queueAdapter = new QueueAdapter();
                 queueAdapter.initialize(function (err) {
-                    var request1 = createSampleJobRequest('apple');
-                    var request2 = createSampleJobRequest('banana');
+                    const request1 = createSampleJobRequest('apple');
+                    const request2 = createSampleJobRequest('banana');
 
                     queueAdapter.enqueue(request1, function () {
                         queueAdapter.enqueue(request2, function () {
@@ -417,10 +417,10 @@ describe('beanstalkAdapter', function () {
                 });
             });
             it('insert two items with same priority, should pop in same order', function (done) {
-                var queueAdapter = new QueueAdapter();
+                const queueAdapter = new QueueAdapter();
                 queueAdapter.initialize(function (err) {
-                    var request1 = createSampleJobRequest('apple', low_priority);
-                    var request2 = createSampleJobRequest('banana', low_priority);
+                    const request1 = createSampleJobRequest('apple', low_priority);
+                    const request2 = createSampleJobRequest('banana', low_priority);
 
                     queueAdapter.enqueue(request1, function () {
                         queueAdapter.enqueue(request2, function () {
@@ -436,10 +436,10 @@ describe('beanstalkAdapter', function () {
                 });
             });
             it('insert low priority, then high priorty, should pop high priority first', function (done) {
-                var queueAdapter = new QueueAdapter();
+                const queueAdapter = new QueueAdapter();
                 queueAdapter.initialize(function (err) {
-                    var request1 = createSampleJobRequest('apple', low_priority);
-                    var request2 = createSampleJobRequest('banana', high_priority);
+                    const request1 = createSampleJobRequest('apple', low_priority);
+                    const request2 = createSampleJobRequest('banana', high_priority);
 
                     queueAdapter.enqueue(request1, function () {
                         queueAdapter.enqueue(request2, function () {
@@ -455,10 +455,10 @@ describe('beanstalkAdapter', function () {
                 });
             });
             it('insert high priority, then low priority, should pop high priority first', function (done) {
-                var queueAdapter = new QueueAdapter();
+                const queueAdapter = new QueueAdapter();
                 queueAdapter.initialize(function (err) {
-                    var request1 = createSampleJobRequest('apple', high_priority);
-                    var request2 = createSampleJobRequest('banana', low_priority);
+                    const request1 = createSampleJobRequest('apple', high_priority);
+                    const request2 = createSampleJobRequest('banana', low_priority);
 
                     queueAdapter.enqueue(request1, function () {
                         queueAdapter.enqueue(request2, function () {

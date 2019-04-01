@@ -1,6 +1,5 @@
 # kessel [![Build Status](https://travis-ci.org/jasonray/kessel.svg?branch=master)](https://travis-ci.org/jasonray/kessel) [![on npm](http://img.shields.io/npm/v/kessel-run.svg?style=flat)](https://www.npmjs.org/package/kessel-run) [![Coverage Status](https://coveralls.io/repos/github/jasonray/kessel/badge.svg?branch=master)](https://coveralls.io/github/jasonray/kessel?branch=master) [![Greenkeeper badge](https://badges.greenkeeper.io/jasonray/kessel.svg)](https://greenkeeper.io/) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/543b3bb11cf54b9e8ce1920b35846764)](https://app.codacy.com/app/jasonray/kessel?utm_source=github.com&utm_medium=referral&utm_content=jasonray/kessel&utm_campaign=Badge_Grade_Settings)
 
-
 "You've never heard of the Millennium Falcon?…It's the ship that made the Kessel Run in less than twelve parsecs."
 
 ## Background
@@ -24,7 +23,7 @@ Consider the following scenarios:
 -   `job`: single delay processing tasks
 -   `job request`: request to Kessel to perform a single job in the future
 -   `handler`: the set of code to fulfil the `job request`.  This is where the extensibility of the system comes into play -> you create your own handlers with your logic and Kessel will delegate to your registered handlers.  Today, handlers are implemented in JavaScript
--   `queue`: Kessel uses an internal queue for holding the `job requests` that have not yet been implemented.  Currently there is support for a light weight in memory queue or beanstalkd [http://kr.github.io/beanstalkd/].
+-   `queue`: Kessel uses an internal queue for holding the `job requests` that have not yet been implemented.  Currently there is support for a light weight in memory queue or [beanstalkd](http://kr.github.io/beanstalkd/).
 
 ## API
 
@@ -74,22 +73,19 @@ Description: if this queue adapter needs to do anything to initialize (such as c
 -   callback(err, jobRequest)
 
 #### dequeue(callback)
--   where callback is a function(jobRequest, commit, rollback)
+-   callback is a function(jobRequest, commit, rollback)
 -   jobRequest represents the job dequeued.  Will be null/empty if there was no item on the queue
--   where commit is a function(commitComplete)
--- where, of course, commitComplete is a function indicating that commit is complete
--   where rollback is a function(rollbackComplete)
--- where, of course, rollbackComplete is a function indicating that rollback is complete
+-   commit is a function(commitComplete); commitComplete is a function indicating that commit is complete
+-   rollback is a function(rollbackComplete); rollbackComplete is a function indicating that rollback is complete
 -   TODO: consider error queue and rollback with delay
 
 ## Developer Support
-
-###  Developer Set up
+### Developer Setup
 First, make sure that you have `node`, `npm`, and `beanstalkd` installed.
 
-If you do not, and are on a mac, here I recommend to first install Homebrew [http://brew.sh/], then install using: `brew install node` and `brew install beanstalkd`
+If you do not, and are on a mac, here I recommend to first install [Homebrew](http://brew.sh/), then install using: `brew install node` and `brew install beanstalkd`
 
-Next, clone the source code from this repository [https://github.com/jasonray/kessel].
+Next, clone the source code from [this repository](https://github.com/jasonray/kessel).
 
 You will then need to setup dependencies: `npm install`
 
@@ -112,7 +108,6 @@ TODO
 TODO
 
 ## Development Guidelines
-
 ### Logging
 In order to make the logs consistent, the following guidelines should be used:
 
@@ -130,10 +125,3 @@ In order to make the logs consistent, the following guidelines should be used:
 | Unable to access dependant system                                                          | warn            |
 | Framework logging enqeue, dequeue, and completion of job (one or two log messages per job) | info            |
 | Handler logging                                                                            | debug or trace  |
-
-
-
-
-
-
-

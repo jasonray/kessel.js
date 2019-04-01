@@ -1,5 +1,5 @@
 /*jslint node: true */
-"use strict";
+'use strict';
 
 const mocha = require('mocha');
 const assert = require('assert');
@@ -242,7 +242,7 @@ describe('asyncQueueAdapter', function () {
         it('if expiration is set to 1 sec in future and requested before then, it will be processed normally', function (done) {
             getQueueAdapter(function (queueAdapter) {
                 const request = createSampleJobRequest('r');
-                request.expiration = moment().add(1, "y").toDate();
+                request.expiration = moment().add(1, 'y').toDate();
                 queueAdapter.enqueue(request, function () {
                     queueAdapter.dequeue(function (err, reservedAttempt, commitJob1, rollbackJob1) {
                         assert.equal(reservedAttempt.ref, 'r');
@@ -254,7 +254,7 @@ describe('asyncQueueAdapter', function () {
         it('if expiration is set to future and requested after then, it will be not be processed', function (done) {
             getQueueAdapter(function (queueAdapter) {
                 const request = createSampleJobRequest('r');
-                request.expiration = moment().add(1000, "ms").toDate();
+                request.expiration = moment().add(1000, 'ms').toDate();
                 setTimeout(function () {
                     queueAdapter.enqueue(request, function () {
                         queueAdapter.dequeue(function (err, reservedAttempt, commitJob1, rollbackJob1) {
@@ -269,10 +269,10 @@ describe('asyncQueueAdapter', function () {
         it('with two items, expired item will be skipped to get to non-expired item', function (done) {
             getQueueAdapter(function (queueAdapter) {
                 const requestExpired = createSampleJobRequest('expired');
-                requestExpired.expiration = moment().subtract(1, "y").toDate();
+                requestExpired.expiration = moment().subtract(1, 'y').toDate();
 
                 const requestNotExpired = createSampleJobRequest('not expired');
-                requestNotExpired.expiration = moment().add(1, "y").toDate();
+                requestNotExpired.expiration = moment().add(1, 'y').toDate();
 
                 queueAdapter.enqueue(requestExpired, function () {
                     queueAdapter.enqueue(requestNotExpired, function () {
@@ -289,7 +289,7 @@ describe('asyncQueueAdapter', function () {
         it('if delay is set to 1 year in future it cannot be dequeued now', function (done) {
             getQueueAdapter(function (queueAdapter) {
                 var request = createSampleJobRequest('delayed item');
-                request.delay = moment().add(1, "y").toDate();
+                request.delay = moment().add(1, 'y').toDate();
                 queueAdapter.enqueue(request, function () {
                     queueAdapter.dequeue(function (err, reservedAttempt1, commitJob1, rollbackJob1) {
                         assert.equal(reservedAttempt1, null, 'expected to not get an item as it should be delayed at this point');
@@ -301,7 +301,7 @@ describe('asyncQueueAdapter', function () {
         it('if delay is set to 1 sec in future it will be dequeued after 1s', function (done) {
             getQueueAdapter(function (queueAdapter) {
                 const request = createSampleJobRequest('delayed item');
-                request.delay = moment().add(500, "ms").toDate();
+                request.delay = moment().add(500, 'ms').toDate();
                 queueAdapter.enqueue(request, function () {
                     setTimeout(function () {
                         queueAdapter.dequeue(function (err, reservedAttempt1, commitJob1, rollbackJob1) {
@@ -315,7 +315,7 @@ describe('asyncQueueAdapter', function () {
         it('if delay is set to future, the first attempt to dequeue will come up empty, but will be dequeued after delay', function (done) {
             getQueueAdapter(function (queueAdapter) {
                 const request = createSampleJobRequest('delayed item');
-                request.delay = moment().add(500, "ms").toDate();
+                request.delay = moment().add(500, 'ms').toDate();
                 queueAdapter.enqueue(request, function () {
                     queueAdapter.dequeue(function (err, reservedAttempt1, commitJob1, rollbackJob1) {
                         assert.equal(reservedAttempt1, null);

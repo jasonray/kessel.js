@@ -3,7 +3,7 @@
 
 const mocha = require('mocha');
 const assert = require('assert');
-var QueueAdapter = require('../lib/queue/beanstalkAdapter');
+const QueueAdapter = require('../lib/queue/beanstalkAdapter');
 var moment = require('moment');
 const config = require('../lib/config')
 

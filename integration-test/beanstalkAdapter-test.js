@@ -120,7 +120,7 @@ describe('beanstalkAdapter', function () {
                 adapter.truncate(function (err) {
                     assert.equal(err, null);
                     done();
-                })
+                });
             });
         });
         describe('enqueue / dequeue', function () {

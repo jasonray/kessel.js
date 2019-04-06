@@ -1,5 +1,5 @@
 /*jslint node: true */
-"use strict";
+'use strict';
 
 const mocha = require('mocha');
 const assert = require('assert');
@@ -45,7 +45,7 @@ describe('jobManager', function () {
             const myCallback = function (err, result) {
                 assert.equal(result.value, 3);
                 done();
-            }
+            };
             const request = {
                 type: 'add',
                 callback: myCallback,
@@ -82,8 +82,8 @@ describe('jobManager', function () {
                 }
             };
             const manager = new JobManager();
-            assert.equal(manager.processSingleJob(request1).value, 5, "addition");
-            assert.equal(manager.processSingleJob(request2).value, 6, "multiplication");
+            assert.equal(manager.processSingleJob(request1).value, 5, 'addition');
+            assert.equal(manager.processSingleJob(request2).value, 6, 'multiplication');
         });
     });
     describe('jobManager with async queue adapter', function () {

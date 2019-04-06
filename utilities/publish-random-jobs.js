@@ -17,7 +17,7 @@ const config = {
         host: '127.0.0.1',
         port: '3000'
     }
-}
+};
 context.queue = new BeanstalkQueueAdapter(config);
 
 logger.info('starting kessel app script');

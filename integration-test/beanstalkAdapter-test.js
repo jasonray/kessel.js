@@ -5,7 +5,7 @@ const mocha = require('mocha');
 const assert = require('assert');
 const QueueAdapter = require('../lib/queue/beanstalkAdapter');
 const moment = require('moment');
-const config = require('../lib/config')
+const config = require('../lib/config');
 
 const standardConfig = {
     host: '127.0.0.1',

@@ -45,7 +45,7 @@ describe('jobManager', function () {
             const myCallback = function (err, result) {
                 assert.equal(result.value, 3);
                 done();
-            }
+            };
             const request = {
                 type: 'add',
                 callback: myCallback,

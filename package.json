@@ -25,7 +25,7 @@
     "nconf": "^0.10.0",
     "should": "13.2.3",
     "underscore": "1.9.1",
-    "uuid": "3.3.3"
+    "uuid": "7.0.2"
   },
   "devDependencies": {
     "mocha": "^6.2.1"
